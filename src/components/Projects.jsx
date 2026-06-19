@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowUpRight, Cpu, Cloud, Settings, Layers, Database, Timer } from 'lucide-react';
+import { ArrowUpRight, Cloud, Terminal } from 'lucide-react';
 import TiltCard from './TiltCard';
 
 const projectsData = [
@@ -14,12 +14,12 @@ const projectsData = [
       algorithm: "Gaussian Naive Bayes Classifier",
       inputs: "N-P-K Soil Ratios, Temperature, Humidity, pH, Rainfall",
       dataset: "2,200 Agricultural Soil samples",
-      notes: "Directly calculates optimal harvest configurations based on real-time sensor array inputs."
+      notes: "Calculates optimal harvest configurations based on real-time soil parameter inference inputs."
     },
     devops: {
       host: "GCP Cloud Run (Serverless)",
       baseImage: "python:3.10-slim",
-      database: "Local cache / CSV storage",
+      database: "Local CSV cache",
       latency: "42ms Response Latency",
       pipeline: "GitHub Actions CI/CD"
     },
@@ -69,8 +69,224 @@ const projectsData = [
   }
 ];
 
+function CropPlayground() {
+  const [nitrogen, setNitrogen] = useState(80);
+  const [rainfall, setRainfall] = useState(120);
+
+  let crop = "Lentils 🫘";
+  if (nitrogen > 70 && rainfall > 160) {
+    crop = "Rice 🌾";
+  } else if (nitrogen > 70 && rainfall <= 160) {
+    crop = "Maize 🌽";
+  } else if (nitrogen <= 70 && rainfall > 160) {
+    crop = "Cotton 🌿";
+  }
+
+  return (
+    <div className="bg-black/50 border border-white/5 rounded-xl p-3 font-mono text-[9px] mb-4 space-y-2 text-left relative z-20">
+      <div className="flex justify-between items-center text-slate-500 border-b border-white/5 pb-1">
+        <span>// INFERENCE: CROP_REC</span>
+        <span className="text-emerald-400">ACTIVE</span>
+      </div>
+      
+      <div className="space-y-1.5">
+        <div className="flex justify-between items-center">
+          <span className="text-slate-400">NITROGEN (N): {nitrogen} ppm</span>
+          <input 
+            type="range" min="0" max="120" value={nitrogen} 
+            onChange={(e) => setNitrogen(Number(e.target.value))}
+            className="w-20 accent-[#06b6d4] h-1 bg-white/10 rounded-lg appearance-none cursor-pointer"
+          />
+        </div>
+        <div className="flex justify-between items-center">
+          <span className="text-slate-400">RAINFALL: {rainfall} mm</span>
+          <input 
+            type="range" min="30" max="250" value={rainfall} 
+            onChange={(e) => setRainfall(Number(e.target.value))}
+            className="w-20 accent-[#06b6d4] h-1 bg-white/10 rounded-lg appearance-none cursor-pointer"
+          />
+        </div>
+      </div>
+
+      <div className="bg-white/[0.02] border border-[#06b6d4]/20 rounded-lg p-2 flex justify-between items-center mt-2.5">
+        <div>
+          <span className="text-slate-600 block text-[7px]">RECOMMENDED CROP</span>
+          <span className="text-white text-xs font-sans font-bold tracking-tight">{crop}</span>
+        </div>
+        <span className="text-lg">{crop.split(' ').pop()}</span>
+      </div>
+    </div>
+  );
+}
+
+function ChurnPlayground() {
+  const [freq, setFreq] = useState(4);
+  const [contract, setContract] = useState("month");
+
+  const base = 92;
+  const deduction = freq * 5;
+  const contractImpact = contract === "month" ? 5 : -25;
+  const risk = Math.max(3, Math.min(98, base - deduction + contractImpact));
+
+  let riskColor = "text-red-400 border-red-500/20 bg-red-500/5";
+  let status = "CRITICAL";
+  if (risk < 30) {
+    riskColor = "text-emerald-400 border-emerald-500/20 bg-emerald-500/5";
+    status = "LOW_RISK";
+  } else if (risk < 65) {
+    riskColor = "text-amber-400 border-amber-500/20 bg-amber-500/5";
+    status = "MODERATE";
+  }
+
+  return (
+    <div className="bg-black/50 border border-white/5 rounded-xl p-3 font-mono text-[9px] mb-4 space-y-2 text-left relative z-20">
+      <div className="flex justify-between items-center text-slate-500 border-b border-white/5 pb-1">
+        <span>// INFERENCE: CHURN_RISK</span>
+        <span className="text-emerald-400">ACTIVE</span>
+      </div>
+
+      <div className="space-y-1.5">
+        <div className="flex justify-between items-center">
+          <span className="text-slate-400">INTERACTIONS: {freq}/mo</span>
+          <input 
+            type="range" min="0" max="15" value={freq} 
+            onChange={(e) => setFreq(Number(e.target.value))}
+            className="w-20 accent-[#06b6d4] h-1 bg-white/10 rounded-lg appearance-none cursor-pointer"
+          />
+        </div>
+        <div className="flex justify-between items-center">
+          <span className="text-slate-400">CONTRACT TYPE</span>
+          <div className="flex gap-1">
+            <button 
+              onClick={() => setContract("month")}
+              className={`px-1.5 py-0.5 rounded text-[7px] border cursor-pointer font-bold ${
+                contract === "month" ? "bg-[#06b6d4] border-[#06b6d4]/20 text-black" : "border-white/5 text-slate-400"
+              }`}
+            >
+              MONTH
+            </button>
+            <button 
+              onClick={() => setContract("year")}
+              className={`px-1.5 py-0.5 rounded text-[7px] border cursor-pointer font-bold ${
+                contract === "year" ? "bg-[#06b6d4] border-[#06b6d4]/20 text-black" : "border-white/5 text-slate-400"
+              }`}
+            >
+              1-YEAR
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-white/[0.02] border border-[#06b6d4]/20 rounded-lg p-2 flex justify-between items-center mt-2.5">
+        <div>
+          <span className="text-slate-600 block text-[7px]">CHURN PROBABILITY</span>
+          <span className="text-white text-xs font-sans font-bold tracking-tight">{risk}%</span>
+        </div>
+        <span className={`text-[8px] font-bold border px-1.5 py-0.5 rounded ${riskColor}`}>
+          {status}
+        </span>
+      </div>
+    </div>
+  );
+}
+
+function TitanicPlayground() {
+  const [sex, setSex] = useState("female");
+  const [age, setAge] = useState(25);
+  const [pclass, setPclass] = useState(1);
+
+  const base = 40;
+  const sexImpact = sex === "female" ? 35 : -20;
+  const classImpact = pclass === 1 ? 20 : -20;
+  const ageImpact = age < 12 ? 15 : age > 60 ? -10 : 0;
+  const prob = Math.max(1, Math.min(99, base + sexImpact + classImpact + ageImpact));
+
+  let probColor = "text-red-400 border-red-500/20 bg-red-500/5";
+  let status = "PERISHED";
+  if (prob > 70) {
+    probColor = "text-emerald-400 border-emerald-500/20 bg-emerald-500/5";
+    status = "SURVIVED";
+  } else if (prob > 40) {
+    probColor = "text-amber-400 border-amber-500/20 bg-amber-500/5";
+    status = "UNCERTAIN";
+  }
+
+  return (
+    <div className="bg-black/50 border border-white/5 rounded-xl p-3 font-mono text-[9px] mb-4 space-y-2 text-left relative z-20">
+      <div className="flex justify-between items-center text-slate-500 border-b border-white/5 pb-1">
+        <span>// INFERENCE: TITANIC_SURV</span>
+        <span className="text-emerald-400">ACTIVE</span>
+      </div>
+
+      <div className="space-y-1.5">
+        <div className="flex justify-between items-center">
+          <span className="text-slate-400">SEX</span>
+          <div className="flex gap-1">
+            <button 
+              onClick={() => setSex("male")}
+              className={`px-1.5 py-0.5 rounded text-[7px] border cursor-pointer font-bold ${
+                sex === "male" ? "bg-[#06b6d4] border-[#06b6d4]/20 text-black" : "border-white/5 text-slate-400"
+              }`}
+            >
+              MALE
+            </button>
+            <button 
+              onClick={() => setSex("female")}
+              className={`px-1.5 py-0.5 rounded text-[7px] border cursor-pointer font-bold ${
+                sex === "female" ? "bg-[#06b6d4] border-[#06b6d4]/20 text-black" : "border-white/5 text-slate-400"
+              }`}
+            >
+              FEMALE
+            </button>
+          </div>
+        </div>
+
+        <div className="flex justify-between items-center">
+          <span className="text-slate-400">AGE: {age} yrs</span>
+          <input 
+            type="range" min="1" max="80" value={age} 
+            onChange={(e) => setAge(Number(e.target.value))}
+            className="w-20 accent-[#06b6d4] h-1 bg-white/10 rounded-lg appearance-none cursor-pointer"
+          />
+        </div>
+
+        <div className="flex justify-between items-center">
+          <span className="text-slate-400">CLASS</span>
+          <div className="flex gap-1">
+            <button 
+              onClick={() => setPclass(1)}
+              className={`px-1.5 py-0.5 rounded text-[7px] border cursor-pointer font-bold ${
+                pclass === 1 ? "bg-[#06b6d4] border-[#06b6d4]/20 text-black" : "border-white/5 text-slate-400"
+              }`}
+            >
+              1ST
+            </button>
+            <button 
+              onClick={() => setPclass(3)}
+              className={`px-1.5 py-0.5 rounded text-[7px] border cursor-pointer font-bold ${
+                pclass === 3 ? "bg-[#06b6d4] border-[#06b6d4]/20 text-black" : "border-white/5 text-slate-400"
+              }`}
+            >
+              3RD
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-white/[0.02] border border-[#06b6d4]/20 rounded-lg p-2 flex justify-between items-center mt-2.5">
+        <div>
+          <span className="text-slate-600 block text-[7px]">SURVIVAL CHANCE</span>
+          <span className="text-white text-xs font-sans font-bold tracking-tight">{prob}%</span>
+        </div>
+        <span className={`text-[8px] font-bold border px-1.5 py-0.5 rounded ${probColor}`}>
+          {status}
+        </span>
+      </div>
+    </div>
+  );
+}
+
 function ProjectCard({ project, isZeroG }) {
-  // Mode state: 'ai' or 'devops'
   const [mode, setMode] = useState('ai');
 
   return (
@@ -80,6 +296,11 @@ function ProjectCard({ project, isZeroG }) {
     >
       <div className="flex flex-col h-full justify-between">
         
+        {/* ML Mini-Simulator Playground inside the card header */}
+        {project.id === 1 && <CropPlayground />}
+        {project.id === 2 && <ChurnPlayground />}
+        {project.id === 3 && <TitanicPlayground />}
+
         {/* Toggle Switch Bar */}
         <div className="flex bg-black/40 border border-white/10 rounded-xl p-1 font-mono text-[9px] mb-5 relative z-20">
           <button
@@ -123,7 +344,6 @@ function ProjectCard({ project, isZeroG }) {
                       {project.title}
                     </h3>
                     
-                    {/* GitHub link */}
                     <a 
                       href={project.github}
                       target="_blank"
@@ -140,7 +360,6 @@ function ProjectCard({ project, isZeroG }) {
                     </span>
                   </div>
 
-                  {/* Diagnostic stats */}
                   <div className="space-y-2 font-mono text-[10px] text-slate-400 bg-white/[0.02] border border-white/5 rounded-xl p-3">
                     <div>
                       <span className="text-slate-600 block">ALGORITHM</span>
@@ -196,12 +415,10 @@ function ProjectCard({ project, isZeroG }) {
 
                   <div className="flex items-center gap-2">
                     <span className="font-mono text-[9px] font-bold text-white px-2.5 py-1 border border-indigo-500/20 bg-indigo-500/5 rounded-full flex items-center gap-1">
-                      <Cloud className="w-2.5 h-2.5 text-indigo-400" />
-                      DEPLOYED
+                      Cloud setup
                     </span>
                   </div>
 
-                  {/* Infrastructure stats */}
                   <div className="space-y-2 font-mono text-[10px] text-slate-400 bg-white/[0.02] border border-white/5 rounded-xl p-3">
                     <div className="flex items-center justify-between">
                       <span className="text-slate-600">TARGET HOST</span>
@@ -251,7 +468,7 @@ export default function Projects({ isZeroG }) {
         </h2>
         <div className="h-[2px] w-24 bg-[#06b6d4]" />
         <p className="text-slate-400 max-w-2xl mt-4 text-sm font-sans leading-relaxed">
-          Interactive MLOps system dashboards. Use the split-toggle switch to view model metrics vs. container infrastructure.
+          Interactive MLOps system playgrounds. Adjust input parameters inside the simulator dashboards to test real-time model inferences.
         </p>
       </div>
 
