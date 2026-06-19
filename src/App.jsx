@@ -38,21 +38,21 @@ export default function App() {
   // Dynamic Dossier download exporter
   const downloadDossier = () => {
     const dossierText = `==================================================================
-KRUTHIK T R | AI ENGINEER & CLOUD-NATIVE ARCHITECT DOSSIER
+KRUTHIK T R | AI & DEVOPS ENGINEER DOSSIER
 ==================================================================
 
 [PROFILE SUMMARY]
 An Artificial Intelligence & Data Science graduate, Co-Founder & CTO 
 of Berukodige Farm, and Cloud-Native systems enthusiast. Specializes
-in bridging the gap between Machine Learning pipelines and containerized
-deployments.
+in training Machine Learning models and automating their deployment
+to secure, scalable cloud environments.
 
 [CONTACT DETAILS]
 - Email: kruthiktrgowda24@gmail.com
 - Github: https://github.com/KRUTHIKTR
 - LinkedIn: https://linkedin.com/in/kruthiktrgowda
 
-[ORBIT TRAJECTORY (CHRONOLOGY)]
+[JOURNEY & EXPERIENCE]
 1. Co-Founder & Technical Lead (CTO) | Berukodige Farm (Jan 2025 - Present)
    * Directing software infrastructure and automating agricultural nursery workflows.
 2. Operations Automation Intern | Sanjivini Eco Solutions (Feb 2025 - June 2025)
@@ -64,16 +64,16 @@ deployments.
 5. BE in AI & Data Science | SDM Institute of Technology (2021 - 2025)
    * Academic core; Football & volleyball representative; District-level Veergase dancer.
 
-[THE LAB (KEY REPOSITORIES)]
+[AI & DEVOPS PROJECTS]
 1. Crop Recommendation Engine (Accuracy: 92.53%)
    * Gaussian Naive Bayes classification microservice inside a Docker container.
 2. Customer Churn Analytics Pipeline (Accuracy: 90.76%)
    * Automated ETL and feature engineering pipeline with Random Forest analysis.
 
-[THE SPHERE (SKILLS MATRIX)]
-* Intelligence: Machine Learning, Predictive Modeling, Agentic AI, SQL, Python
-* Infrastructure: GCP, Oracle Cloud (OCI), Kubernetes, Docker, APIs, Git
-* Instrumentation: Jupyter Notebook, Power BI, Excel, Figma
+[CORE SKILLS & TECH STACK]
+* AI & Machine Learning: Python, SQL, Predictive Modeling, Feature Engineering, Agentic AI, Data Analysis
+* Cloud & Deployment: GCP, Oracle Cloud (OCI), Kubernetes, Docker, APIs, Git
+* Software & Analytics: Jupyter Notebook, Power BI, Excel, Figma
 
 ==================================================================
 Generated from Antigravity Systems HUD Terminal.
@@ -108,10 +108,10 @@ Generated from Antigravity Systems HUD Terminal.
         </a>
         
         <div className="flex gap-4 md:gap-8 text-xs md:text-sm font-mono text-slate-400">
-          <a href="#orbit" className="hover:text-purple-400 transition-colors">01_ORBIT</a>
-          <a href="#lab" className="hover:text-blue-400 transition-colors">02_LAB</a>
-          <a href="#sphere" className="hover:text-emerald-400 transition-colors">03_SPHERE</a>
-          <a href="#contact" className="hover:text-white transition-colors">04_DOCK</a>
+          <a href="#orbit" className="hover:text-purple-400 transition-colors">01_JOURNEY</a>
+          <a href="#lab" className="hover:text-blue-400 transition-colors">02_PROJECTS</a>
+          <a href="#sphere" className="hover:text-emerald-400 transition-colors">03_SKILLS</a>
+          <a href="#contact" className="hover:text-white transition-colors">04_CONTACT</a>
         </div>
       </nav>
 
@@ -206,7 +206,7 @@ Generated from Antigravity Systems HUD Terminal.
               transition={{ duration: 0.8, delay: 0.4 }}
               className="text-sm sm:text-base text-slate-400 max-w-xl mx-auto leading-relaxed"
             >
-              Kruthik T R — AI & Data Science Graduate, Co-Founder & Technical Lead at Berukodige Farm. Specializing in bridging the gap between Machine Learning pipelines and Cloud-Native deployments.
+              Kruthik T R — AI & Data Science Graduate, Co-Founder & Technical Lead at Berukodige Farm. I specialize in training Machine Learning models and automating their deployment to secure, scalable cloud environments.
             </motion.p>
 
             {/* Action Buttons */}
@@ -279,7 +279,7 @@ Generated from Antigravity Systems HUD Terminal.
           <span className={`absolute inset-0 w-full h-full bg-gradient-to-r from-cyan-500/10 to-blue-500/10 transition-opacity duration-300 ${isZeroG ? 'opacity-100' : 'opacity-0'}`} />
           
           <Activity className={`w-4 h-4 ${isZeroG ? 'animate-spin text-cyan-400' : 'text-purple-400'}`} style={{ animationDuration: '4s' }} />
-          <span>{isZeroG ? 'ZERO-G MODE ACTIVE' : 'GRAVITY CONTROL'}</span>
+          <span>{isZeroG ? 'Gravity Controls: Active' : 'Gravity Control'}</span>
         </motion.button>
       </div>
     </div>

@@ -56,13 +56,13 @@ export default function ContactForm({ isZeroG }) {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <span className="text-xs uppercase tracking-widest text-cosmicBlue font-mono">Telemetry Endpoint</span>
+          <span className="text-xs font-mono uppercase tracking-widest text-cosmicBlue">[ 04 // CONTACT ]</span>
           <h2 className="text-3xl md:text-5xl font-extrabold text-white mt-2 mb-4 font-sans tracking-tight">
-            Docking Station
+            Get In Touch
           </h2>
           <div className="h-1 w-24 bg-gradient-to-r from-cosmicBlue to-electricPurple mx-auto rounded-full" />
           <p className="text-slate-400 max-w-xl mx-auto mt-4 text-sm md:text-base">
-            Establish a peer-to-peer transmission line. Submit telemetry questions or project inquiries.
+            Establish a direct connection. Submit your questions or project inquiries.
           </p>
         </motion.div>
       </div>
@@ -75,13 +75,13 @@ export default function ContactForm({ isZeroG }) {
           <TiltCard isZeroG={isZeroG} className="h-full bg-indigoSpace/60 border-blue-500/20 hover:border-blue-500/40 flex flex-col justify-between p-8 relative overflow-hidden">
             {/* Corner Decorative HUD Grid */}
             <div className="absolute top-0 right-0 p-3 opacity-20 font-mono text-[8px] text-slate-400 select-none">
-              SYS_TELEMETRY_LOG
+              [ CLIENT CONNECTIVITY ]
             </div>
             
             <div className="space-y-6">
               <h3 className="text-lg font-bold text-white font-mono tracking-wider flex items-center gap-2">
                 <HardDrive className="w-5 h-5 text-cosmicBlue animate-pulse" />
-                SYSTEM TELEMETRY
+                Uptime & System Status
               </h3>
               
               {/* Telemetry Metrics */}
@@ -114,17 +114,17 @@ export default function ContactForm({ isZeroG }) {
 
                 {/* Grid Gravity (Dynamic Reactivity to Zero Gravity Toggle) */}
                 <div className="flex justify-between items-center py-2 border-b border-white/5">
-                  <span className="text-slate-400">Grid Gravity:</span>
+                  <span className="text-slate-400">Visual Physics:</span>
                   <span className={`font-bold transition-colors duration-500 ${isZeroG ? 'text-cyan-400 animate-pulse' : 'text-slate-300'}`}>
-                    {isZeroG ? '0.00 m/s² (Zero-G)' : '9.81 m/s² (Earth)'}
+                    {isZeroG ? 'Zero-Gravity Active' : 'Earth Gravity Standard'}
                   </span>
                 </div>
 
                 {/* SSL Gateway */}
                 <div className="flex justify-between items-center py-2">
-                  <span className="text-slate-400">Secure Gateway:</span>
+                  <span className="text-slate-400">Security Status:</span>
                   <span className="text-emerald-400 font-semibold flex items-center gap-1">
-                    <ShieldCheck className="w-3.5 h-3.5" /> TLS v1.3 Secure
+                    <ShieldCheck className="w-3.5 h-3.5" /> 100% Encrypted & Secure
                   </span>
                 </div>
               </div>

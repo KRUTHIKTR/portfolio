@@ -72,9 +72,9 @@ export default function Timeline({ isZeroG }) {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <span className="text-xs uppercase tracking-widest text-cosmicBlue font-mono">Telemetry Log</span>
+          <span className="text-xs font-mono uppercase tracking-widest text-cosmicBlue">[ 01 // CAREER PATH ]</span>
           <h2 className="text-3xl md:text-5xl font-extrabold text-white mt-2 mb-4 font-sans tracking-tight">
-            The Orbital Trajectory
+            My Journey & Experience
           </h2>
           <div className="h-1 w-24 bg-gradient-to-r from-electricPurple to-cosmicBlue mx-auto rounded-full" />
           <p className="text-slate-400 max-w-xl mx-auto mt-4 text-sm md:text-base">
