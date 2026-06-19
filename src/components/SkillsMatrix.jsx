@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Terminal, Database, ShieldAlert, Cpu } from 'lucide-react';
+import { Terminal } from 'lucide-react';
 import TiltCard from './TiltCard';
 
 const skillsData = {
@@ -9,17 +9,20 @@ const skillsData = {
     color: "#06b6d4",
     items: [
       { name: "Python", usage: "Core development language for machine learning models, scripting automated pipelines, and building FastAPI backends." },
-      { name: "SQL", level: 86, usage: "Enables querying and manipulating relational data, structuring databases for predictive pipelines and dashboard analytics." },
-      { name: "Dart", usage: "Utilized for multi-platform application UI development and lightweight client-side scripts." }
+      { name: "SQL", usage: "Enables querying and manipulating relational data, structuring databases for predictive pipelines and dashboard analytics." },
+      { name: "Dart / HTML", usage: "Utilized for multi-platform application UI development and lightweight client-side scripts." }
     ]
   },
   mlData: {
-    title: "ML & Data",
+    title: "ML & Data Science",
     color: "#06b6d4",
     items: [
       { name: "Machine Learning", usage: "Applies statistical algorithms to identify patterns, classify datasets, and optimize predictive model variables." },
       { name: "Predictive Modeling", usage: "Formulates Naive Bayes and Random Forest classifiers to solve agricultural and customer retention problems." },
       { name: "Agentic AI", usage: "Explores autonomous execution paths and LLM orchestrations to automate business logic tasks." },
+      { name: "Data Analysis", usage: "Cleanses, structures, and audits incoming datasets to extract analytical insights." },
+      { name: "Feature Engineering", usage: "Transforms raw data dimensions into mathematical input variables to maximize classifier recall." },
+      { name: "Model Evaluation", usage: "Computes performance indicators like F1-Score, ROC-AUC, and confusion matrix dimensions." },
       { name: "Data Visualization", usage: "Constructs clean data dashboards to visualize agricultural yields and customer churn risk scores." }
     ]
   },
@@ -31,8 +34,18 @@ const skillsData = {
       { name: "Oracle Cloud (OCI)", usage: "Utilized for setting up lightweight compute VMs and testing host network ingress rules." },
       { name: "Kubernetes", usage: "Explores container orchestration patterns and auto-scaling logic for serverless deployments." },
       { name: "Docker", usage: "Packages model dependencies and code interfaces into lightweight container instances for isolated, clean runs." },
-      { name: "Git", usage: "Maintains version integrity, manages branch merges, and logs chronological code changes." },
       { name: "CI/CD", usage: "Automates code testing, lint validation, and Docker image build runs upon GitHub push actions." }
+    ]
+  },
+  tools: {
+    title: "Tools & IDEs",
+    color: "#06b6d4",
+    items: [
+      { name: "Jupyter Notebook", usage: "Core environment for exploratory data analysis, algorithm prototyping, and running machine learning validation checks." },
+      { name: "Git & GitHub", usage: "Handles distributed version control, pull request review logs, and coordinates CI/CD trigger webhooks." },
+      { name: "Microsoft Excel", usage: "Used for sorting baseline telemetry reports and performing quick data audits." },
+      { name: "Power BI", usage: "Integrates with relational databases to construct interactive analytical dashboard charts." },
+      { name: "Figma", usage: "Used for rapid UI layouts, vector blueprint prototyping, and application mockup blueprints." }
     ]
   }
 };
