@@ -1,40 +1,114 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import { GitBranch, ArrowUpRight, CheckCircle2 } from 'lucide-react';
+import { GitBranch, ArrowUpRight } from 'lucide-react';
 import TiltCard from './TiltCard';
 
 const projectsData = [
   {
     id: 1,
     title: "Crop Recommendation System",
-    accuracy: "92.53%",
-    status: "SUCCESS",
+    accuracy: "92.53% Accuracy",
     description: "Multi-parameter Machine Learning classifier using a Gaussian Naive Bayes algorithm to predict optimal crops based on real-time soil & meteorology metrics.",
     github: "https://github.com/KRUTHIKTR/Crop-recommendation-system",
     tags: ["Python", "Naive Bayes", "GCP"],
-    themeColor: "hover:border-[#06b6d4]/30"
+    themeColor: "#06b6d4",
+    glowColor: "group-hover:border-[#06b6d4]/30"
   },
   {
     id: 2,
     title: "Customer Churn Prediction Pipeline",
-    accuracy: "90.76%",
-    status: "SUCCESS",
+    accuracy: "90.76% Accuracy",
     description: "Automated end-to-end telemetry data pipeline deploying a Random Forest Classifier to identify high-risk customer accounts and retention opportunities.",
     github: "https://github.com/KRUTHIKTR/Customer-churn-prediction",
     tags: ["Random Forest", "ETL Pipeline", "PostgreSQL"],
-    themeColor: "hover:border-indigo-500/30"
+    themeColor: "#6366f1",
+    glowColor: "group-hover:border-indigo-500/30"
   },
   {
     id: 3,
     title: "Titanic Survival Predictor",
-    accuracy: "82.68%",
-    status: "COMPLETED",
+    accuracy: "82.68% Accuracy",
     description: "Robust binary classification engine utilizing data imputation layers and optimized decision forest models to predict passenger survival outcomes.",
     github: "https://github.com/KRUTHIKTR/Titanic-Survival-Prediction",
     tags: ["Random Forest", "Data Imputation", "Scikit-Learn"],
-    themeColor: "hover:border-emerald-500/30"
+    themeColor: "#10b981",
+    glowColor: "group-hover:border-emerald-500/30"
   }
 ];
+
+function CropAccuracyCurve() {
+  return (
+    <svg className="w-full h-full p-2" viewBox="0 0 200 80">
+      {/* Grid Lines */}
+      <line x1="20" y1="10" x2="20" y2="70" stroke="rgba(255,255,255,0.06)" strokeWidth="0.8" />
+      <line x1="80" y1="10" x2="80" y2="70" stroke="rgba(255,255,255,0.04)" strokeWidth="0.8" />
+      <line x1="140" y1="10" x2="140" y2="70" stroke="rgba(255,255,255,0.04)" strokeWidth="0.8" />
+      <line x1="20" y1="70" x2="190" y2="70" stroke="rgba(255,255,255,0.06)" strokeWidth="0.8" />
+      <line x1="20" y1="40" x2="190" y2="40" stroke="rgba(255,255,255,0.04)" strokeWidth="0.8" />
+      <line x1="20" y1="10" x2="190" y2="10" stroke="rgba(255,255,255,0.04)" strokeWidth="0.8" />
+      
+      {/* Axis Labels */}
+      <text x="8" y="14" fill="rgba(255,255,255,0.25)" className="font-mono text-[6px]">1.0</text>
+      <text x="8" y="44" fill="rgba(255,255,255,0.25)" className="font-mono text-[6px]">0.5</text>
+      <text x="8" y="74" fill="rgba(255,255,255,0.25)" className="font-mono text-[6px]">0.0</text>
+      <text x="180" y="77" fill="rgba(255,255,255,0.25)" className="font-mono text-[6px]">EPOCH</text>
+      <text x="24" y="20" fill="#06b6d4" className="font-mono text-[6px] tracking-widest font-bold">ACCURACY_CURVE</text>
+
+      {/* Logarithmic accuracy line */}
+      <path d="M 20 60 Q 60 25 100 20 T 190 14" fill="none" stroke="#06b6d4" strokeWidth="1.5" className="drop-shadow-[0_0_4px_#06b6d4]" />
+      <circle cx="190" cy="14" r="2.5" fill="#06b6d4" />
+    </svg>
+  );
+}
+
+function ChurnLossCurve() {
+  return (
+    <svg className="w-full h-full p-2" viewBox="0 0 200 80">
+      {/* Grid Lines */}
+      <line x1="20" y1="10" x2="20" y2="70" stroke="rgba(255,255,255,0.06)" strokeWidth="0.8" />
+      <line x1="80" y1="10" x2="80" y2="70" stroke="rgba(255,255,255,0.04)" strokeWidth="0.8" />
+      <line x1="140" y1="10" x2="140" y2="70" stroke="rgba(255,255,255,0.04)" strokeWidth="0.8" />
+      <line x1="20" y1="70" x2="190" y2="70" stroke="rgba(255,255,255,0.06)" strokeWidth="0.8" />
+      <line x1="20" y1="40" x2="190" y2="40" stroke="rgba(255,255,255,0.04)" strokeWidth="0.8" />
+      <line x1="20" y1="10" x2="190" y2="10" stroke="rgba(255,255,255,0.04)" strokeWidth="0.8" />
+      
+      {/* Axis Labels */}
+      <text x="8" y="14" fill="rgba(255,255,255,0.25)" className="font-mono text-[6px]">1.0</text>
+      <text x="8" y="44" fill="rgba(255,255,255,0.25)" className="font-mono text-[6px]">0.5</text>
+      <text x="8" y="74" fill="rgba(255,255,255,0.25)" className="font-mono text-[6px]">0.0</text>
+      <text x="180" y="77" fill="rgba(255,255,255,0.25)" className="font-mono text-[6px]">EPOCH</text>
+      <text x="24" y="20" fill="#6366f1" className="font-mono text-[6px] tracking-widest font-bold">LOG_LOSS_DECAY</text>
+
+      {/* Exponential loss decay line */}
+      <path d="M 20 18 Q 50 65 100 68 T 190 69" fill="none" stroke="#6366f1" strokeWidth="1.5" className="drop-shadow-[0_0_4px_#6366f1]" />
+      <circle cx="190" cy="69" r="2.5" fill="#6366f1" />
+    </svg>
+  );
+}
+
+function TitanicOptimizationCurve() {
+  return (
+    <svg className="w-full h-full p-2" viewBox="0 0 200 80">
+      {/* Grid Lines */}
+      <line x1="20" y1="10" x2="20" y2="70" stroke="rgba(255,255,255,0.06)" strokeWidth="0.8" />
+      <line x1="80" y1="10" x2="80" y2="70" stroke="rgba(255,255,255,0.04)" strokeWidth="0.8" />
+      <line x1="140" y1="10" x2="140" y2="70" stroke="rgba(255,255,255,0.04)" strokeWidth="0.8" />
+      <line x1="20" y1="70" x2="190" y2="70" stroke="rgba(255,255,255,0.06)" strokeWidth="0.8" />
+      <line x1="20" y1="40" x2="190" y2="40" stroke="rgba(255,255,255,0.04)" strokeWidth="0.8" />
+      <line x1="20" y1="10" x2="190" y2="10" stroke="rgba(255,255,255,0.04)" strokeWidth="0.8" />
+      
+      {/* Axis Labels */}
+      <text x="8" y="14" fill="rgba(255,255,255,0.25)" className="font-mono text-[6px]">1.0</text>
+      <text x="8" y="44" fill="rgba(255,255,255,0.25)" className="font-mono text-[6px]">0.5</text>
+      <text x="8" y="74" fill="rgba(255,255,255,0.25)" className="font-mono text-[6px]">0.0</text>
+      <text x="180" y="77" fill="rgba(255,255,255,0.25)" className="font-mono text-[6px]">STEPS</text>
+      <text x="24" y="20" fill="#10b981" className="font-mono text-[6px] tracking-widest font-bold">SGD_CONVERGENCE</text>
+
+      {/* Step optimization line */}
+      <path d="M 20 62 L 60 50 L 100 28 L 140 25 L 190 22" fill="none" stroke="#10b981" strokeWidth="1.5" className="drop-shadow-[0_0_4px_#10b981]" />
+      <circle cx="190" cy="22" r="2.5" fill="#10b981" />
+    </svg>
+  );
+}
 
 export default function Projects({ isZeroG }) {
   return (
@@ -47,71 +121,73 @@ export default function Projects({ isZeroG }) {
         </h2>
         <div className="h-[2px] w-24 bg-[#06b6d4]" />
         <p className="text-slate-400 max-w-2xl mt-4 text-sm font-sans leading-relaxed">
-          Continuous Integration workflow stack. All code compilation, testing suites, and container deployments verified successfully.
+          Mathematical coordinate profiles. Monitor optimization rates, loss convergence parameters, and validation accuracies.
         </p>
       </div>
 
-      {/* CI Dashboard Stack */}
-      <div className="flex flex-col gap-5">
+      {/* Projects Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {projectsData.map((project) => (
           <TiltCard 
             key={project.id} 
             isZeroG={isZeroG} 
-            className={`bg-[#080808]/90 border border-white/10 rounded-2xl p-5 md:p-6 backdrop-blur-xl transition-all duration-300 ${project.themeColor}`}
+            className={`bg-[#080808]/90 border border-white/10 rounded-2xl h-full flex flex-col justify-between p-6 relative group transition-all duration-300 ${project.glowColor}`}
           >
-            <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-6">
+            {/* Subtle Mathematical Grid Coordinate Background Pattern */}
+            <div className="absolute inset-0 z-0 pointer-events-none select-none opacity-5 bg-[radial-gradient(rgba(255,255,255,0.15)_1px,transparent_1px)] bg-[size:12px_12px]" />
+
+            <div className="flex flex-col h-full justify-between text-left relative z-10">
               
-              {/* Left Column: Build Status & Title (25% width) */}
-              <div className="md:w-1/4 flex flex-col items-start text-left border-b md:border-b-0 md:border-r border-white/5 pb-4 md:pb-0 md:pr-6">
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                  <span className="font-mono text-[9px] font-bold px-2 py-0.5 border border-emerald-500/20 bg-emerald-500/5 text-emerald-400 rounded uppercase">
-                    {project.status}
-                  </span>
-                </div>
-                <h3 className="text-base font-bold text-white mt-3 leading-snug group-hover:text-[#06b6d4] transition-colors duration-300">
-                  {project.title}
-                </h3>
+              {/* Top Section: Glowing Neon Statistical Curve */}
+              <div className="relative h-28 w-full overflow-hidden rounded-xl mb-5 bg-black/60 border border-white/5 flex items-center justify-center group-hover:border-[#06b6d4]/20 transition-all duration-500">
+                {project.id === 1 && <CropAccuracyCurve />}
+                {project.id === 2 && <ChurnLossCurve />}
+                {project.id === 3 && <TitanicOptimizationCurve />}
               </div>
 
-              {/* Center Column: Description & Accuracy (50% width) */}
-              <div className="md:w-1/2 flex flex-col justify-center text-left space-y-2.5">
-                <p className="text-xs text-slate-300 font-sans leading-relaxed">
+              {/* Title & Accuracy Tag */}
+              <div className="space-y-3.5 flex-grow">
+                <div className="flex flex-col gap-1.5">
+                  <span 
+                    style={{ color: project.themeColor, borderColor: project.themeColor + '30', backgroundColor: project.themeColor + '08' }}
+                    className="self-start font-mono text-[9px] font-bold px-2 py-0.5 border rounded-full"
+                  >
+                    {project.accuracy}
+                  </span>
+                  
+                  <h3 className="text-lg font-bold text-white leading-snug group-hover:text-[#06b6d4] transition-colors duration-300">
+                    {project.title}
+                  </h3>
+                </div>
+
+                <p className="text-xs text-slate-400 leading-relaxed font-sans font-normal h-16 overflow-hidden">
                   {project.description}
                 </p>
-                <div className="font-mono text-[9.5px] text-slate-500 flex items-center gap-1.5">
-                  <span className="w-1 h-1 rounded-full bg-[#06b6d4]" />
-                  <span>Validation Accuracy:</span>
-                  <span className="text-[#06b6d4] font-bold">{project.accuracy}</span>
-                </div>
               </div>
 
-              {/* Right Column: Tags & Explore Button (25% width) */}
-              <div className="md:w-1/4 flex flex-col md:items-end justify-between gap-4 border-t md:border-t-0 md:border-l border-white/5 pt-4 md:pt-0 md:pl-6">
-                {/* Tech Tags */}
-                <div className="flex flex-wrap md:justify-end gap-1.5">
-                  {project.tags.map((tag, tIdx) => (
-                    <span 
-                      key={tIdx} 
-                      className="text-[9px] font-mono font-semibold px-2 py-0.5 rounded bg-white/5 border border-white/10 text-slate-400"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-
-                {/* Explore button */}
-                <a 
-                  href={project.github}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="w-full md:w-auto inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg border border-white/10 hover:border-[#06b6d4] bg-white/5 hover:bg-[#06b6d4]/10 text-[9px] font-mono font-bold tracking-wider text-slate-300 hover:text-white transition-all duration-300"
-                >
-                  <GitBranch className="w-3 h-3 text-[#06b6d4]" />
-                  <span>CODE REPOSITORY</span>
-                  <ArrowUpRight className="w-3 h-3 opacity-60" />
-                </a>
+              {/* Technology Tags */}
+              <div className="mt-6 pt-4 border-t border-white/5 flex flex-wrap gap-1.5 mb-5">
+                {project.tags.map((tag, tIdx) => (
+                  <span 
+                    key={tIdx} 
+                    className="text-[9px] font-mono font-semibold px-2 py-0.5 rounded bg-white/5 border border-white/10 text-slate-400"
+                  >
+                    {tag}
+                  </span>
+                ))}
               </div>
+
+              {/* Wide Git Branch outline button */}
+              <a 
+                href={project.github}
+                target="_blank"
+                rel="noreferrer"
+                className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl border border-white/10 hover:border-[#06b6d4] bg-white/5 hover:bg-[#06b6d4]/10 text-[10px] font-mono font-bold tracking-wider text-slate-300 hover:text-white transition-all duration-300"
+              >
+                <GitBranch className="w-3.5 h-3.5 text-[#06b6d4]" />
+                <span>EXPLORE CODE</span>
+                <ArrowUpRight className="w-3 h-3 opacity-60" />
+              </a>
 
             </div>
           </TiltCard>
