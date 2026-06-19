@@ -1,46 +1,42 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Check, Play, PlayCircle, Loader2 } from 'lucide-react';
+import { Briefcase, Code, Award, Terminal, GitBranch, TrendingUp, Cpu, Server, Database, Layers } from 'lucide-react';
+import TiltCard from './TiltCard';
 
-const pipelineStages = [
+const layersData = [
   {
-    id: "initialize",
-    label: "01_INITIALIZE",
-    title: "Foundations & Academic Hackathons",
-    duration: "42s",
-    status: "PASSED",
-    color: "text-emerald-400 border-emerald-500/30",
-    jobs: [
+    id: 2,
+    level: "03",
+    name: "Orchestration & Strategy",
+    short: "Directing technology, high-level design, and automated MLOps pipelines.",
+    nodeId: "STACK_L3_ORCH",
+    color: "text-[#06b6d4]",
+    borderColor: "border-[#06b6d4]/30",
+    glowColor: "rgba(6, 182, 212, 0.15)",
+    roles: [
       {
-        role: "Data Infrastructure Assistant",
-        company: "CodeNimbus Solutions",
-        period: "Nov 2023 - Dec 2023",
+        role: "Chief Technology Officer (CTO) & MLOps Lead",
+        company: "Berukodige Farm",
+        period: "Jan 2025 - Present",
         bullets: [
-          "Evaluated target metrics, cleaned market datasets, and set up ETL scripts to support analytics pipelines.",
-          "Assisted in structuring relational database schemas to store analytics telemetry data."
-        ],
-        skills: ["SQL", "Data Analysis", "ETL Scripts", "Database Design"]
-      },
-      {
-        role: "Academic Hackathon Innovator",
-        company: "SDMIT / RVITM Teams",
-        period: "2024",
-        bullets: [
-          "Won 2nd and 3rd Places in national and regional hackathons/prototyping sprints.",
-          "Configured containerized systems and Edge-to-Cloud telemetry under 24-hour constraints."
-        ],
-        skills: ["IoT Automation", "Docker", "Rapid Prototyping"]
+          "Directing AI strategy and cloud-native software infrastructure for an early-stage agritech startup.",
+          "Engineering automated MLOps serving pipelines using Docker and GCP to deploy predictive models.",
+          "Designing automated IoT data collection workflows and serverless API endpoints for real-time model inference."
+        ]
       }
-    ]
+    ],
+    skills: ["GCP", "Docker", "FastAPI", "IoT Automation", "MLOps Pipelines"]
   },
   {
-    id: "build_verify",
-    label: "02_BUILD_VERIFY",
-    title: "Scale, Containerize & Validate",
-    duration: "1m 15s",
-    status: "PASSED",
-    color: "text-emerald-400 border-emerald-500/30",
-    jobs: [
+    id: 1,
+    level: "02",
+    name: "Automation & API Integration",
+    short: "LLM workflows, container orchestration, and continuous deployment systems.",
+    nodeId: "STACK_L2_AUTO",
+    color: "text-indigo-400",
+    borderColor: "border-indigo-500/30",
+    glowColor: "rgba(99, 102, 241, 0.15)",
+    roles: [
       {
         role: "Cloud & MLOps Engineer Intern",
         company: "Sanjivini Eco Solutions Pvt Ltd",
@@ -48,243 +44,225 @@ const pipelineStages = [
         bullets: [
           "Developed AI-driven CRM workflows and automated LLM-orchestrated content generation pipelines using Python.",
           "Containerized workflow services and configured automated CI/CD pipelines to deploy systems on Google Cloud Platform (GCP)."
-        ],
-        skills: ["Python", "Docker", "GCP Cloud Run", "LLM Orchestration", "CI/CD Pipelines"]
+        ]
       },
       {
-        role: "Google Cloud Innovator & Community Expert",
-        company: "Google Developers Community Support",
-        period: "2024 - 2026",
-        bullets: [
-          "Explored scale-up configurations including Kubernetes, GKE clusters, and Cloud Build pipelines.",
-          "Supported community technical audits and optimized user system troubleshooting workflows."
-        ],
-        skills: ["GCP", "Kubernetes (GKE)", "Docker Containers", "CI/CD", "Technical Support"]
-      },
-      {
-        role: "Open Source DevOps Contributor",
+        role: "Open Source DevOps Contributor (GSSoC'25)",
         company: "GirlScript Summer of Code",
         period: "July 2025 - Oct 2025",
         bullets: [
-          "Selected as a contributor for core DevOps configurations.",
-          "Fixed Docker setups and streamlined CI/CD pipeline verification files."
-        ],
-        skills: ["Git & GitHub", "DevOps Workflows", "Dockerfiles", "Bash Scripting"]
+          "Selected as an active contributor for open-source project deployment configurations.",
+          "Collaborated to audit codebases, streamline CI/CD configurations, and fix Docker setup issues."
+        ]
+      },
+      {
+        role: "Google Cloud Innovator & Community Expert",
+        company: "Google Developers",
+        period: "Nov 2024 - March 2026",
+        bullets: [
+          "Explored real-world scale and containerization workflows involving Kubernetes, GCP GKE clusters, and Cloud Build.",
+          "Supported technical audits and optimized user system troubleshooting workflows across key Google product suites."
+        ]
       }
-    ]
+    ],
+    skills: ["Python", "Docker", "CI/CD", "Kubernetes", "GCP Cloud Run", "Git & GitHub"]
   },
   {
-    id: "deploy",
-    label: "03_DEPLOY",
-    title: "Deploy to Production & Lead",
-    duration: "ACTIVE",
-    status: "DEPLOYED",
-    color: "text-cyan-400 border-cyan-500/30",
-    jobs: [
+    id: 0,
+    level: "01",
+    name: "Foundational Logic & Data Systems",
+    short: "Core algorithms, data engineering scripts, database schemas, and academic CS.",
+    nodeId: "STACK_L1_BASE",
+    color: "text-emerald-400",
+    borderColor: "border-emerald-500/30",
+    glowColor: "rgba(16, 185, 129, 0.15)",
+    roles: [
       {
-        role: "Chief Technology Officer (CTO) & MLOps Lead",
-        company: "Berukodige Farm",
-        period: "Jan 2025 - Present",
+        role: "Data Infrastructure Assistant",
+        company: "CodeNimbus Solutions",
+        period: "Nov 2023 - Dec 2023",
         bullets: [
-          "Directing AI strategy and cloud-native software infrastructure for an early-stage agri-tech startup.",
-          "Engineering automated MLOps serving pipelines using Docker and GCP to deploy predictive models.",
-          "Designing automated IoT data collection workflows and serverless API endpoints for real-time model inference."
-        ],
-        skills: ["Python", "MLOps Pipelines", "GCP", "Docker", "FastAPI", "IoT Automation"]
+          "Evaluated target metrics, clean market datasets, and set up simple ETL processing scripts to support analytics pipelines.",
+          "Assisted in structuring relational database schemas to store analytics telemetry data."
+        ]
+      },
+      {
+        role: "B.E. Computer Science & Engineering",
+        company: "SDMIT",
+        period: "Completed",
+        bullets: [
+          "Studied core concepts including Data Structures, Database Management Systems, Operating System Kernels, and Network Protocols."
+        ]
       }
-    ]
+    ],
+    skills: ["SQL", "Data Analysis", "ETL Scripts", "Database Design", "Core CS Algorithms"]
   }
 ];
 
-export default function Timeline({ isZeroG }) {
-  const [selectedStage, setSelectedStage] = useState("deploy");
-  const [animatedStage, setAnimatedStage] = useState(0);
+function ServerRackBlock({ layer, isActive, isHovered, onHover, onSelect }) {
+  return (
+    <motion.div
+      onMouseEnter={() => onHover(true)}
+      onMouseLeave={() => onHover(false)}
+      onClick={onSelect}
+      whileHover={{ scale: 1.02, y: -2 }}
+      style={{
+        boxShadow: isHovered || isActive ? `0 0 25px ${layer.glowColor}` : 'none'
+      }}
+      className={`bg-[#080808]/90 border ${
+        isActive || isHovered ? layer.borderColor.replace('/30', '') : 'border-white/10'
+      } rounded-xl p-5 cursor-pointer relative overflow-hidden transition-all duration-300 flex justify-between items-center group`}
+    >
+      {/* Grid Pattern Accent */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#111_1px,transparent_1px),linear-gradient(to_bottom,#111_1px,transparent_1px)] bg-[size:12px_12px] opacity-10 pointer-events-none" />
 
-  // Progressive pipeline run animation on mount
-  useEffect(() => {
-    const timers = [
-      setTimeout(() => setAnimatedStage(1), 800),
-      setTimeout(() => setAnimatedStage(2), 1600),
-      setTimeout(() => setAnimatedStage(3), 2400)
-    ];
-    return () => timers.forEach(clearTimeout);
-  }, []);
+      {/* Left side: Node ID & Level */}
+      <div className="flex items-center gap-4 relative z-10 text-left">
+        <div className={`font-mono text-xs border border-white/10 px-2 py-1 rounded bg-white/5 font-bold ${layer.color}`}>
+          L_{layer.level}
+        </div>
+        <div>
+          <h3 className="text-sm font-bold text-white uppercase font-mono tracking-wider">{layer.name}</h3>
+          <p className="text-[10px] text-slate-500 font-mono mt-0.5">{layer.nodeId} // READY</p>
+        </div>
+      </div>
+
+      {/* Right side: Blinking status LEDs */}
+      <div className="flex gap-1.5 relative z-10">
+        <span className={`w-2 h-2 rounded-full ${isActive || isHovered ? 'bg-emerald-400 animate-pulse' : 'bg-slate-700'}`} />
+        <span className={`w-2 h-2 rounded-full ${isActive || isHovered ? 'bg-cyan-400 animate-pulse' : 'bg-slate-700'}`} />
+        <span className="w-2 h-2 rounded-full bg-slate-700" />
+      </div>
+    </motion.div>
+  );
+}
+
+export default function Timeline({ isZeroG }) {
+  const [activeLayer, setActiveLayer] = useState(2); // Default to Top Layer (Orchestration)
+  const [hoveredLayer, setHoveredLayer] = useState(null);
+
+  const displayLayerIndex = hoveredLayer !== null ? hoveredLayer : activeLayer;
+  const currentLayer = layersData.find(l => l.id === displayLayerIndex);
 
   return (
     <section id="orbit" className="relative py-28 px-6 md:px-12 max-w-6xl mx-auto z-10 border-b border-white/5">
       {/* Section Header */}
-      <div className="text-left mb-16">
+      <div className="text-left mb-12">
         <span className="text-xs font-mono uppercase tracking-widest text-[#06b6d4] font-semibold">// 03_WORK_HISTORY</span>
         <h2 className="text-3xl md:text-5xl font-extrabold text-white mt-2 mb-4 font-sans tracking-tight">
           Professional Experience
         </h2>
         <div className="h-[2px] w-24 bg-[#06b6d4] mb-4" />
         <p className="text-slate-400 max-w-xl text-sm font-sans leading-relaxed">
-          Your career progress styled as an automated CI/CD pipeline run. Select a pipeline stage to decrypt build stdout logs.
+          A physical server rack visualization mapping your career progression from foundational systems up to high-level architecture.
         </p>
       </div>
 
-      {/* CI/CD Pipeline Board */}
-      <div className="relative max-w-4xl mx-auto bg-slate-950/40 border border-white/5 rounded-2xl p-6 md:p-8 backdrop-blur-md mb-8">
+      {/* Two Column Blueprint Stack Layout */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
         
-        {/* Horizontal connections grid */}
-        <div className="flex flex-col md:flex-row justify-between items-center gap-8 md:gap-4 relative">
+        {/* Left Column: Interactive 3D Server Blocks (5/12 width) */}
+        <div className="lg:col-span-5 flex flex-col justify-between gap-4 h-full">
+          {layersData.map((layer) => (
+            <ServerRackBlock
+              key={layer.id}
+              layer={layer}
+              isActive={activeLayer === layer.id}
+              isHovered={hoveredLayer === layer.id}
+              onHover={(hovering) => setHoveredLayer(hovering ? layer.id : null)}
+              onSelect={() => setActiveLayer(layer.id)}
+            />
+          ))}
           
-          {/* Connector Line 1 (Initialize to Build) */}
-          <div className="absolute left-[16%] right-[60%] top-[20px] -translate-y-1/2 h-[2px] bg-white/5 pointer-events-none hidden md:block z-0">
-            <motion.div 
-              className="absolute top-0 left-0 h-full bg-emerald-400"
-              initial={{ width: 0 }}
-              animate={animatedStage >= 1 ? { width: "100%" } : { width: 0 }}
-              transition={{ duration: 0.6, ease: "easeInOut" }}
-            />
+          {/* Tech Spec Box */}
+          <div className="border border-white/5 bg-[#080808]/40 rounded-xl p-4 font-mono text-[9px] text-slate-500 text-left">
+            <span className="text-white font-bold block mb-1">SYSTEM_SPECIFICATION:</span>
+            <span>STACK_LAYER_COUPLING: LOOSELY_COUPLED</span>
+            <br />
+            <span>DEPLOYMENT_STRATEGY: CONTINUOUS_DEPLOYMENT</span>
           </div>
-
-          {/* Connector Line 2 (Build to Deploy) */}
-          <div className="absolute left-[50%] right-[20%] top-[20px] -translate-y-1/2 h-[2px] bg-white/5 pointer-events-none hidden md:block z-0">
-            <motion.div 
-              className="absolute top-0 left-0 h-full bg-emerald-400"
-              initial={{ width: 0 }}
-              animate={animatedStage >= 2 ? { width: "100%" } : { width: 0 }}
-              transition={{ duration: 0.6, ease: "easeInOut" }}
-            />
-          </div>
-
-          {pipelineStages.map((stage, idx) => {
-            const isSelected = selectedStage === stage.id;
-            const isStageActive = animatedStage >= idx;
-            const isDeployStage = stage.id === "deploy";
-
-            return (
-              <button
-                key={stage.id}
-                onClick={() => setSelectedStage(stage.id)}
-                className={`flex-1 flex flex-col items-center md:items-start text-center md:text-left group relative z-10 focus:outline-none cursor-pointer w-full max-w-xs md:max-w-none`}
-              >
-                {/* Node Top Row: Badge + Status */}
-                <div className="flex items-center gap-3 mb-3">
-                  {/* Status Indicator checkmark */}
-                  <motion.div
-                    initial={{ scale: 0.8, opacity: 0 }}
-                    animate={isStageActive ? { scale: 1, opacity: 1 } : { scale: 0.8, opacity: 0.2 }}
-                    className={`w-10 h-10 rounded-xl border flex items-center justify-center transition-all ${
-                      isSelected 
-                        ? 'border-[#06b6d4] bg-[#06b6d4]/10 shadow-[0_0_12px_rgba(6,182,212,0.3)]' 
-                        : isStageActive
-                        ? isDeployStage
-                          ? 'border-cyan-500/40 bg-cyan-500/5'
-                          : 'border-emerald-500/40 bg-emerald-500/5'
-                        : 'border-white/10 bg-slate-950'
-                    }`}
-                  >
-                    {isDeployStage && isStageActive ? (
-                      <Loader2 className="w-5 h-5 text-cyan-400 animate-spin" />
-                    ) : isStageActive ? (
-                      <Check className="w-5 h-5 text-emerald-400" />
-                    ) : (
-                      <span className="text-[10px] font-mono text-slate-600">WAIT</span>
-                    )}
-                  </motion.div>
-
-                  {/* Stage metadata */}
-                  <div className="flex flex-col items-start font-mono text-left">
-                    <span className={`text-[10px] font-bold tracking-wider transition-colors ${
-                      isSelected ? 'text-[#06b6d4]' : 'text-slate-400 group-hover:text-slate-200'
-                    }`}>
-                      {stage.label}
-                    </span>
-                    <span className="text-[8px] text-slate-500 uppercase tracking-widest">
-                      {stage.status === 'ACTIVE' || stage.id === 'deploy' ? 'STATUS: ACTIVE' : `PASS in ${stage.duration}`}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Node Title */}
-                <h3 className={`text-sm font-bold text-white transition-colors duration-300 pl-1 ${
-                  isSelected ? 'text-white' : 'text-slate-300 group-hover:text-white'
-                }`}>
-                  {stage.title}
-                </h3>
-              </button>
-            );
-          })}
         </div>
 
-      </div>
-
-      {/* Expandable Build Log console under the active stage */}
-      <div className="min-h-[260px] relative">
-        <AnimatePresence mode="wait">
-          {selectedStage && (
+        {/* Right Column: Layer Spec Panel (7/12 width) */}
+        <div className="lg:col-span-7 flex flex-col justify-between">
+          <AnimatePresence mode="wait">
             <motion.div
-              key={selectedStage}
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -15 }}
-              transition={{ duration: 0.3 }}
-              className="max-w-4xl mx-auto border border-white/10 bg-[#080808]/95 rounded-2xl p-5 md:p-6 font-mono text-left relative overflow-hidden backdrop-blur-xl shadow-[0_0_30px_rgba(6,182,212,0.03)] z-10"
+              key={displayLayerIndex}
+              initial={{ opacity: 0, x: 15 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -15 }}
+              transition={{ duration: 0.25 }}
+              className="h-full"
             >
-              <div className="absolute inset-0 bg-[linear-gradient(to_right,#111_1px,transparent_1px),linear-gradient(to_bottom,#111_1px,transparent_1px)] bg-[size:16px_16px] opacity-15 pointer-events-none" />
-
-              {/* Terminal Log Header */}
-              <div className="flex justify-between items-center border-b border-white/5 pb-3 mb-6 relative z-10">
-                <div className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
-                  <span className="text-[9px] font-bold text-slate-300 uppercase tracking-wider">
-                    BUILD_LOG_SCANNER // STAGE: {selectedStage.toUpperCase()}
-                  </span>
-                </div>
-                <span className="text-[8px] text-slate-500 uppercase tracking-widest font-mono">// RUN_ID: #GHA-48201</span>
-              </div>
-
-              {/* Logs Stream */}
-              <div className="space-y-8 relative z-10">
-                {pipelineStages.find(s => s.id === selectedStage).jobs.map((job, jIdx) => (
-                  <div key={jIdx} className="space-y-4">
-                    {/* Job banner block */}
-                    <div className="bg-white/[0.02] border border-white/5 rounded-lg p-3 text-[10px] space-y-1.5">
-                      <div className="flex justify-between items-center text-emerald-400 font-bold">
-                        <span>&gt; RUNNING JOB: {job.role.toUpperCase().replace(/ /g, "_")}</span>
-                        <span className={`text-[7px] border px-1.5 py-0.5 rounded ${
-                          selectedStage === 'deploy' 
-                            ? 'border-cyan-500/30 text-cyan-400 bg-cyan-500/5' 
-                            : 'border-emerald-500/30 text-emerald-400 bg-emerald-500/5'
-                        }`}>
-                          {selectedStage === 'deploy' ? '[ ACTIVE ]' : '[ SUCCESS ]'}
-                        </span>
-                      </div>
-                      <div className="text-slate-400 font-sans font-semibold text-[11px]">{job.company} // {job.period}</div>
+              <TiltCard isZeroG={isZeroG} className="relative overflow-hidden h-full flex flex-col justify-between border-white/15">
+                <div className="flex flex-col gap-1 text-left">
+                  
+                  {/* Layer HUD Header */}
+                  <div className="flex items-center justify-between gap-4 border-b border-white/5 pb-3 mb-4 font-mono text-[10px]">
+                    <div className="flex items-center gap-2">
+                      <Layers className={`w-3.5 h-3.5 ${currentLayer.color}`} />
+                      <span className={`font-bold uppercase tracking-wider ${currentLayer.color}`}>
+                        LAYER_{currentLayer.level}: {currentLayer.name}
+                      </span>
                     </div>
+                    <span className="text-slate-500 font-bold">{currentLayer.nodeId}</span>
+                  </div>
 
-                    {/* Stdout metrics logs */}
-                    <div className="space-y-2 pl-3">
-                      {job.bullets.map((bullet, bIdx) => (
-                        <div key={bIdx} className="flex gap-2.5 items-start text-[11px] text-slate-300 font-sans">
-                          <span className="text-emerald-400 font-mono font-bold select-none">[OK]</span>
-                          <span className="leading-relaxed">{bullet}</span>
+                  {/* Short Description */}
+                  <p className="text-xs text-slate-400 mb-6 italic font-sans leading-relaxed">
+                    {currentLayer.short}
+                  </p>
+
+                  {/* List of Specific Roles/Experiences in this Layer */}
+                  <div className="space-y-6">
+                    {currentLayer.roles.map((roleItem, rIdx) => (
+                      <div key={rIdx} className="space-y-3">
+                        <div className="flex flex-col md:flex-row md:items-center justify-between gap-1">
+                          <h4 className="text-sm md:text-base font-bold text-white">
+                            {roleItem.role}
+                          </h4>
+                          <span className="text-[9px] font-mono text-[#06b6d4] border border-[#06b6d4]/20 px-2 py-0.5 rounded bg-[#06b6d4]/5 md:self-center self-start">
+                            {roleItem.period}
+                          </span>
                         </div>
-                      ))}
-                    </div>
+                        <h5 className="text-xs font-semibold text-slate-400 -mt-1">
+                          {roleItem.company}
+                        </h5>
 
-                    {/* Tags */}
-                    <div className="flex flex-wrap gap-2 pl-3 pt-1">
-                      {job.skills.map((skill, sIdx) => (
+                        <ul className="text-xs space-y-2 list-none text-slate-400">
+                          {roleItem.bullets.map((bullet, bIdx) => (
+                            <li key={bIdx} className="flex gap-2 items-start font-mono leading-relaxed">
+                              <span className="text-emerald-400 font-bold select-none">[OK]</span>
+                              <span className="font-sans text-[11px] text-slate-300">{bullet}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Floating Glowing Tech Tags */}
+                  <div className="border-t border-white/5 pt-4 mt-6">
+                    <span className="text-[9px] font-mono text-slate-500 block mb-2">// DETECTED_TECHNOLOGIES:</span>
+                    <div className="flex flex-wrap gap-2">
+                      {currentLayer.skills.map((skill, sIdx) => (
                         <span 
                           key={sIdx} 
-                          className="text-[9px] px-2 py-0.5 rounded font-mono bg-white/5 border border-white/10 text-slate-400"
+                          className="text-[9px] px-2.5 py-1 rounded-full font-mono bg-white/5 border border-white/10 text-slate-300 hover:border-[#06b6d4]/40 hover:bg-[#06b6d4]/5 transition-all duration-300"
                         >
                           {skill}
                         </span>
                       ))}
                     </div>
                   </div>
-                ))}
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
 
+                </div>
+              </TiltCard>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+      </div>
     </section>
   );
 }
