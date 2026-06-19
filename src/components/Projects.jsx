@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import { GitBranch, ArrowUpRight } from 'lucide-react';
 import TiltCard from './TiltCard';
 
@@ -11,7 +12,8 @@ const projectsData = [
     github: "https://github.com/KRUTHIKTR/Crop-recommendation-system",
     tags: ["Python", "Naive Bayes", "GCP"],
     themeColor: "#06b6d4",
-    glowColor: "group-hover:border-[#06b6d4]/30"
+    lightColor: "rgba(6, 182, 212, 0.08)",
+    glowColor: "group-hover:border-[#06b6d4]/40"
   },
   {
     id: 2,
@@ -21,7 +23,8 @@ const projectsData = [
     github: "https://github.com/KRUTHIKTR/Customer-churn-prediction",
     tags: ["Random Forest", "ETL Pipeline", "PostgreSQL"],
     themeColor: "#6366f1",
-    glowColor: "group-hover:border-indigo-500/30"
+    lightColor: "rgba(99, 102, 241, 0.08)",
+    glowColor: "group-hover:border-indigo-500/40"
   },
   {
     id: 3,
@@ -31,11 +34,12 @@ const projectsData = [
     github: "https://github.com/KRUTHIKTR/Titanic-Survival-Prediction",
     tags: ["Random Forest", "Data Imputation", "Scikit-Learn"],
     themeColor: "#10b981",
-    glowColor: "group-hover:border-emerald-500/30"
+    lightColor: "rgba(16, 185, 129, 0.08)",
+    glowColor: "group-hover:border-emerald-500/40"
   }
 ];
 
-function CropAccuracyCurve() {
+function CropAccuracyCurve({ isHovered }) {
   return (
     <svg className="w-full h-full p-2" viewBox="0 0 200 80">
       {/* Grid Lines */}
@@ -54,13 +58,28 @@ function CropAccuracyCurve() {
       <text x="24" y="20" fill="#06b6d4" className="font-mono text-[6px] tracking-widest font-bold">ACCURACY_CURVE</text>
 
       {/* Logarithmic accuracy line */}
-      <path d="M 20 60 Q 60 25 100 20 T 190 14" fill="none" stroke="#06b6d4" strokeWidth="1.5" className="drop-shadow-[0_0_4px_#06b6d4]" />
-      <circle cx="190" cy="14" r="2.5" fill="#06b6d4" />
+      <motion.path 
+        d="M 20 60 Q 60 25 100 20 T 190 14" 
+        fill="none" 
+        stroke="#06b6d4" 
+        strokeWidth="1.5" 
+        className="drop-shadow-[0_0_4px_#06b6d4]"
+        initial={{ pathLength: 0.1 }}
+        animate={isHovered ? { pathLength: 1 } : { pathLength: 0.85 }}
+        transition={{ duration: 1.2, ease: "easeOut" }}
+      />
+      <motion.circle 
+        cx="190" 
+        cy="14" 
+        r="2.5" 
+        fill="#06b6d4"
+        animate={isHovered ? { r: 4, fill: "#fff" } : { r: 2.5, fill: "#06b6d4" }}
+      />
     </svg>
   );
 }
 
-function ChurnLossCurve() {
+function ChurnLossCurve({ isHovered }) {
   return (
     <svg className="w-full h-full p-2" viewBox="0 0 200 80">
       {/* Grid Lines */}
@@ -79,13 +98,28 @@ function ChurnLossCurve() {
       <text x="24" y="20" fill="#6366f1" className="font-mono text-[6px] tracking-widest font-bold">LOG_LOSS_DECAY</text>
 
       {/* Exponential loss decay line */}
-      <path d="M 20 18 Q 50 65 100 68 T 190 69" fill="none" stroke="#6366f1" strokeWidth="1.5" className="drop-shadow-[0_0_4px_#6366f1]" />
-      <circle cx="190" cy="69" r="2.5" fill="#6366f1" />
+      <motion.path 
+        d="M 20 18 Q 50 65 100 68 T 190 69" 
+        fill="none" 
+        stroke="#6366f1" 
+        strokeWidth="1.5" 
+        className="drop-shadow-[0_0_4px_#6366f1]"
+        initial={{ pathLength: 0.1 }}
+        animate={isHovered ? { pathLength: 1 } : { pathLength: 0.85 }}
+        transition={{ duration: 1.2, ease: "easeOut" }}
+      />
+      <motion.circle 
+        cx="190" 
+        cy="69" 
+        r="2.5" 
+        fill="#6366f1"
+        animate={isHovered ? { r: 4, fill: "#fff" } : { r: 2.5, fill: "#6366f1" }}
+      />
     </svg>
   );
 }
 
-function TitanicOptimizationCurve() {
+function TitanicOptimizationCurve({ isHovered }) {
   return (
     <svg className="w-full h-full p-2" viewBox="0 0 200 80">
       {/* Grid Lines */}
@@ -104,9 +138,118 @@ function TitanicOptimizationCurve() {
       <text x="24" y="20" fill="#10b981" className="font-mono text-[6px] tracking-widest font-bold">SGD_CONVERGENCE</text>
 
       {/* Step optimization line */}
-      <path d="M 20 62 L 60 50 L 100 28 L 140 25 L 190 22" fill="none" stroke="#10b981" strokeWidth="1.5" className="drop-shadow-[0_0_4px_#10b981]" />
-      <circle cx="190" cy="22" r="2.5" fill="#10b981" />
+      <motion.path 
+        d="M 20 62 L 60 50 L 100 28 L 140 25 L 190 22" 
+        fill="none" 
+        stroke="#10b981" 
+        strokeWidth="1.5" 
+        className="drop-shadow-[0_0_4px_#10b981]"
+        initial={{ pathLength: 0.1 }}
+        animate={isHovered ? { pathLength: 1 } : { pathLength: 0.85 }}
+        transition={{ duration: 1.2, ease: "easeOut" }}
+      />
+      <motion.circle 
+        cx="190" 
+        cy="22" 
+        r="2.5" 
+        fill="#10b981"
+        animate={isHovered ? { r: 4, fill: "#fff" } : { r: 2.5, fill: "#10b981" }}
+      />
     </svg>
+  );
+}
+
+function ProjectCard({ project, isZeroG }) {
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    setMousePos({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top
+    });
+  };
+
+  return (
+    <div
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onMouseMove={handleMouseMove}
+      className="h-full relative"
+    >
+      <TiltCard 
+        isZeroG={isZeroG} 
+        className={`bg-[#080808]/90 border border-white/10 rounded-2xl h-full flex flex-col justify-between p-6 relative group transition-all duration-300 ${project.glowColor}`}
+      >
+        {/* Subtle Mathematical Grid Coordinate Background Pattern */}
+        <div className="absolute inset-0 z-0 pointer-events-none select-none opacity-5 bg-[radial-gradient(rgba(255,255,255,0.15)_1px,transparent_1px)] bg-[size:12px_12px]" />
+
+        {/* Dynamic Cursor Spotlight Radial Glow */}
+        <div 
+          className="absolute inset-0 z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+          style={{
+            background: `radial-gradient(280px circle at ${mousePos.x}px ${mousePos.y}px, ${project.lightColor}, transparent 80%)`
+          }}
+        />
+
+        <div className="flex flex-col h-full justify-between text-left relative z-10">
+          
+          {/* Top Section: Glowing Neon Statistical Curve */}
+          <div className="relative h-28 w-full overflow-hidden rounded-xl mb-5 bg-black/60 border border-white/5 flex items-center justify-center group-hover:border-white/15 transition-all duration-500">
+            {project.id === 1 && <CropAccuracyCurve isHovered={isHovered} />}
+            {project.id === 2 && <ChurnLossCurve isHovered={isHovered} />}
+            {project.id === 3 && <TitanicOptimizationCurve isHovered={isHovered} />}
+          </div>
+
+          {/* Title & Accuracy Tag */}
+          <div className="space-y-3.5 flex-grow">
+            <div className="flex flex-col gap-1.5">
+              <span 
+                style={{ color: project.themeColor, borderColor: project.themeColor + '30', backgroundColor: project.themeColor + '08' }}
+                className="self-start font-mono text-[9px] font-bold px-2 py-0.5 border rounded-full"
+              >
+                {project.accuracy}
+              </span>
+              
+              <h3 className="text-lg font-bold text-white leading-snug group-hover:text-[#06b6d4] transition-colors duration-300">
+                {project.title}
+              </h3>
+            </div>
+
+            {/* Description without rigid height limitations to avoid half-cut text */}
+            <p className="text-xs text-slate-400 leading-relaxed font-sans font-normal">
+              {project.description}
+            </p>
+          </div>
+
+          {/* Technology Tags */}
+          <div className="mt-6 pt-4 border-t border-white/5 flex flex-wrap gap-1.5 mb-5">
+            {project.tags.map((tag, tIdx) => (
+              <span 
+                key={tIdx} 
+                className="text-[9px] font-mono font-semibold px-2 py-0.5 rounded bg-white/5 border border-white/10 text-slate-400"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+
+          {/* Wide Git Branch outline button */}
+          <a 
+            href={project.github}
+            target="_blank"
+            rel="noreferrer"
+            className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl border border-white/10 hover:border-[#06b6d4] bg-white/5 hover:bg-[#06b6d4]/10 text-[10px] font-mono font-bold tracking-wider text-slate-300 hover:text-white transition-all duration-300"
+          >
+            <GitBranch className="w-3.5 h-3.5 text-[#06b6d4]" />
+            <span>EXPLORE CODE</span>
+            <ArrowUpRight className="w-3 h-3 opacity-60" />
+          </a>
+
+        </div>
+      </TiltCard>
+    </div>
   );
 }
 
@@ -128,69 +271,11 @@ export default function Projects({ isZeroG }) {
       {/* Projects Grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {projectsData.map((project) => (
-          <TiltCard 
+          <ProjectCard 
             key={project.id} 
+            project={project} 
             isZeroG={isZeroG} 
-            className={`bg-[#080808]/90 border border-white/10 rounded-2xl h-full flex flex-col justify-between p-6 relative group transition-all duration-300 ${project.glowColor}`}
-          >
-            {/* Subtle Mathematical Grid Coordinate Background Pattern */}
-            <div className="absolute inset-0 z-0 pointer-events-none select-none opacity-5 bg-[radial-gradient(rgba(255,255,255,0.15)_1px,transparent_1px)] bg-[size:12px_12px]" />
-
-            <div className="flex flex-col h-full justify-between text-left relative z-10">
-              
-              {/* Top Section: Glowing Neon Statistical Curve */}
-              <div className="relative h-28 w-full overflow-hidden rounded-xl mb-5 bg-black/60 border border-white/5 flex items-center justify-center group-hover:border-[#06b6d4]/20 transition-all duration-500">
-                {project.id === 1 && <CropAccuracyCurve />}
-                {project.id === 2 && <ChurnLossCurve />}
-                {project.id === 3 && <TitanicOptimizationCurve />}
-              </div>
-
-              {/* Title & Accuracy Tag */}
-              <div className="space-y-3.5 flex-grow">
-                <div className="flex flex-col gap-1.5">
-                  <span 
-                    style={{ color: project.themeColor, borderColor: project.themeColor + '30', backgroundColor: project.themeColor + '08' }}
-                    className="self-start font-mono text-[9px] font-bold px-2 py-0.5 border rounded-full"
-                  >
-                    {project.accuracy}
-                  </span>
-                  
-                  <h3 className="text-lg font-bold text-white leading-snug group-hover:text-[#06b6d4] transition-colors duration-300">
-                    {project.title}
-                  </h3>
-                </div>
-
-                <p className="text-xs text-slate-400 leading-relaxed font-sans font-normal h-16 overflow-hidden">
-                  {project.description}
-                </p>
-              </div>
-
-              {/* Technology Tags */}
-              <div className="mt-6 pt-4 border-t border-white/5 flex flex-wrap gap-1.5 mb-5">
-                {project.tags.map((tag, tIdx) => (
-                  <span 
-                    key={tIdx} 
-                    className="text-[9px] font-mono font-semibold px-2 py-0.5 rounded bg-white/5 border border-white/10 text-slate-400"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-
-              {/* Wide Git Branch outline button */}
-              <a 
-                href={project.github}
-                target="_blank"
-                rel="noreferrer"
-                className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl border border-white/10 hover:border-[#06b6d4] bg-white/5 hover:bg-[#06b6d4]/10 text-[10px] font-mono font-bold tracking-wider text-slate-300 hover:text-white transition-all duration-300"
-              >
-                <GitBranch className="w-3.5 h-3.5 text-[#06b6d4]" />
-                <span>EXPLORE CODE</span>
-                <ArrowUpRight className="w-3 h-3 opacity-60" />
-              </a>
-
-            </div>
-          </TiltCard>
+          />
         ))}
       </div>
     </section>
