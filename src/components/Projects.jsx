@@ -1,142 +1,66 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FileCode, Terminal, Cloud, Play, CheckCircle2, ArrowUpRight, Cpu } from 'lucide-react';
+import { ArrowUpRight, Cpu, Cloud, Terminal, Compass, Layers } from 'lucide-react';
 import TiltCard from './TiltCard';
 
 const projectsData = [
   {
     id: 1,
-    fileName: "crop_recommendation.py",
     title: "Crop Recommendation System",
-    accuracy: "92.53%",
-    latency: "42ms",
+    accuracy: "92.53% Accuracy",
     host: "GCP Cloud Run (Serverless)",
-    baseImage: "python:3.10-slim",
-    database: "Local CSV cache",
+    latency: "42ms Latency",
+    algorithm: "Gaussian Naive Bayes Classifier",
     github: "https://github.com/KRUTHIKTR/Crop-recommendation-system",
-    code: `import pandas as pd
-from sklearn.naive_bayes import GaussianNB
-from mlops import ModelRegistry
-
-# Load agricultural feature logs
-df = pd.read_csv("data/soil_metrics.csv")
-X = df[['N', 'P', 'K', 'temp', 'hum', 'pH', 'rain']]
-y = df['crop']
-
-# Train Naive Bayes classifier
-model = GaussianNB()
-model.fit(X, y)
-
-# Log and register model telemetry
-registry = ModelRegistry.connect()
-registry.log_model(model, "crop-bayes-v1")`,
-    logs: [
-      "[INFO] Loading data/soil_metrics.csv... [OK]",
-      "[INFO] Executing GaussianNB model training...",
-      "[SUCCESS] Model fitted. Accuracy score: 92.53%",
-      "[INFO] Registering artifact 'crop-bayes-v1' in GCP Registry...",
-      "[SUCCESS] Serving API endpoint deployed on GCP Cloud Run."
-    ]
+    details: [
+      "Calculates optimal harvest options from soil sensor telemetry.",
+      "Engineered automated MLOps serving using Docker containers."
+    ],
+    skills: ["Python", "GCP", "Docker", "Naive Bayes"],
+    posClass: "left-[8%] lg:left-[12%] top-[10%] lg:top-[12%]",
+    coreX: "22%",
+    coreY: "25%"
   },
   {
     id: 2,
-    fileName: "churn_prediction.py",
-    title: "Customer Churn Prediction",
-    accuracy: "90.76%",
-    latency: "65ms",
+    title: "Customer Churn Prediction Pipeline",
+    accuracy: "90.76% Accuracy",
     host: "FastAPI + Docker Container",
-    baseImage: "python:3.10-alpine",
-    database: "PostgreSQL (GCP Cloud SQL)",
+    latency: "65ms Latency",
+    algorithm: "Random Forest Classifier",
     github: "https://github.com/KRUTHIKTR/Customer-churn-prediction",
-    code: `import pandas as pd
-from sklearn.ensemble import RandomForestClassifier
-from mlops.pipelines import ETLPipeline
-
-# Execute ETL data preparation
-etl = ETLPipeline(source="postgresql://db:5432/telecom")
-df = etl.extract_and_clean()
-
-# Fit Random Forest Classifier
-clf = RandomForestClassifier(n_estimators=100)
-clf.fit(df.drop('churn', axis=1), df['churn'])
-
-# Serve inference API inside Docker container
-app = etl.package_as_fastapi(clf)`,
-    logs: [
-      "[INFO] Extracting raw datasets from PostgreSQL database...",
-      "[INFO] Running ETL cleanup pipeline...",
-      "[INFO] Training RandomForestClassifier (100 estimators)...",
-      "[SUCCESS] Training complete. Accuracy score: 90.76%",
-      "[SUCCESS] Packaged API model inside python:3.10-alpine container."
-    ]
+    details: [
+      "Tracks customer churn risks with weighted feature importances.",
+      "Configured automated CI/CD builds on GCP Cloud SQL databases."
+    ],
+    skills: ["Random Forest", "ETL", "PostgreSQL", "FastAPI"],
+    posClass: "right-[8%] lg:right-[12%] top-[12%] lg:top-[15%]",
+    coreX: "78%",
+    coreY: "28%"
   },
   {
     id: 3,
-    fileName: "titanic_imputation.py",
     title: "Titanic Survival Predictor",
-    accuracy: "82.68%",
-    latency: "120ms",
-    host: "Streamlit + HuggingFace Spaces",
-    baseImage: "python:3.9-slim",
-    database: "In-memory cached state",
+    accuracy: "82.68% Accuracy",
+    host: "Streamlit UI + HuggingFace Spaces",
+    latency: "120ms Latency",
+    algorithm: "Random Forest + KNN Imputer",
     github: "https://github.com/KRUTHIKTR/Titanic-Survival-Prediction",
-    code: `import pandas as pd
-from sklearn.impute import KNNImputer
-from sklearn.ensemble import RandomForestClassifier
-
-# Read passenger list logs
-train = pd.read_csv("train.csv")
-
-# Impute missing passenger ages via KNN
-imputer = KNNImputer(n_neighbors=5)
-age_imputed = imputer.fit_transform(train[['Age']])
-
-# Train baseline forest classifier
-clf = RandomForestClassifier(max_depth=6)
-clf.fit(train[['Pclass', 'Sex', 'Age', 'Fare']], train['Survived'])`,
-    logs: [
-      "[INFO] Loading passenger registry train.csv...",
-      "[INFO] Executing KNNImputer for missing values...",
-      "[INFO] Training baseline RandomForest Classifier...",
-      "[SUCCESS] Training complete. Accuracy score: 82.68%",
-      "[SUCCESS] UI dashboard deployed successfully on HuggingFace."
-    ]
+    details: [
+      "Handles missing tabular features with KNN imputation layers.",
+      "Interactive Streamlit web frontend for real-time inference checks."
+    ],
+    skills: ["Scikit-Learn", "KNN Impute", "Streamlit", "HuggingFace"],
+    posClass: "left-1/2 -translate-x-1/2 bottom-[5%] lg:bottom-[8%]",
+    coreX: "50%",
+    coreY: "72%"
   }
 ];
 
 export default function Projects({ isZeroG }) {
-  const [activeFileId, setActiveFileId] = useState(1);
-  const currentProject = projectsData.find(p => p.id === activeFileId);
+  const [hoveredId, setHoveredId] = useState(null);
 
-  // Syntax highlighting mock helper
-  const highlightCode = (codeText) => {
-    return codeText.split('\n').map((line, idx) => {
-      // Very simple syntax highlighting for mockup presentation
-      let styledLine = line;
-      if (line.startsWith('#')) {
-        styledLine = <span className="text-slate-500">{line}</span>;
-      } else {
-        // Highlight import
-        styledLine = line.replace(/(import|from|as)/g, '<span class="text-purple-400 font-bold">$1</span>')
-                         // Highlight strings
-                         .replace(/("[^"]*")/g, '<span class="text-emerald-400">$1</span>')
-                         // Highlight functions
-                         .replace(/(\.\w+)(?=\()/g, '.<span class="text-cyan-400">$1</span>');
-      }
-
-      return (
-        <div key={idx} className="flex font-mono text-[10px] md:text-xs leading-relaxed text-slate-300">
-          <span className="w-8 select-none text-slate-600 pr-3 border-r border-white/5 text-right mr-3">
-            {idx + 1}
-          </span>
-          <span 
-            className="flex-1 text-left" 
-            dangerouslySetInnerHTML={{ __html: typeof styledLine === 'string' ? styledLine : line }}
-          />
-        </div>
-      );
-    });
-  };
+  const activeProject = projectsData.find(p => p.id === hoveredId);
 
   return (
     <section id="lab" className="relative py-28 px-6 md:px-12 max-w-6xl mx-auto z-10 border-b border-white/5">
@@ -148,148 +72,183 @@ export default function Projects({ isZeroG }) {
         </h2>
         <div className="h-[2px] w-24 bg-[#06b6d4]" />
         <p className="text-slate-400 max-w-xl mt-4 text-sm font-sans leading-relaxed">
-          Interactive development workspace displaying model logic, infrastructure pipelines, and build status telemetry.
+          Hover near any orbital project satellite node to connect a laser telemetry tether and pull system details.
         </p>
       </div>
 
-      {/* Code Editor Workspace */}
-      <TiltCard 
-        isZeroG={isZeroG} 
-        className="bg-[#080808]/90 border border-white/10 rounded-2xl overflow-hidden backdrop-blur-xl p-0 flex flex-col shadow-[0_0_50px_rgba(6,182,212,0.02)]"
-      >
-        {/* Editor Title Bar */}
-        <div className="flex items-center justify-between border-b border-white/5 bg-[#0b0b0b] px-4 py-3 font-mono text-[10px]">
-          <div className="flex items-center gap-2">
-            <div className="flex gap-1.5 mr-3">
-              <span className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
-              <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/80" />
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/80" />
+      {/* 3D Gravitational Orbit Container */}
+      <div className="relative w-full h-[520px] md:h-[580px] border border-white/5 bg-[#080808]/40 rounded-2xl overflow-hidden mb-8">
+        <div className="absolute inset-0 bg-[radial-gradient(#111_1px,transparent_1px)] [background-size:20px_20px] opacity-25 pointer-events-none" />
+
+        {/* Orbit Background Guides */}
+        <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-20">
+          <circle cx="50%" cy="50%" r="35%" fill="none" stroke="white" strokeWidth="0.5" strokeDasharray="4 8" />
+          <circle cx="50%" cy="50%" r="20%" fill="none" stroke="white" strokeWidth="0.5" strokeDasharray="2 4" />
+        </svg>
+
+        {/* Laser Tether Layer */}
+        <svg className="absolute inset-0 w-full h-full pointer-events-none z-10">
+          {hoveredId !== null && (
+            <>
+              {/* Base Line */}
+              <motion.line
+                x1="50%"
+                y1="50%"
+                x2={activeProject.coreX}
+                y2={activeProject.coreY}
+                stroke="#06b6d4"
+                strokeWidth="1.5"
+                className="opacity-40"
+              />
+              {/* Pulsing Light particle */}
+              <motion.circle
+                r="4.5"
+                fill="#06b6d4"
+                className="shadow-[0_0_12px_#06b6d4]"
+                animate={{
+                  cx: ["50%", activeProject.coreX],
+                  cy: ["50%", activeProject.coreY]
+                }}
+                transition={{ repeat: Infinity, duration: 1.5, ease: "linear" }}
+              />
+            </>
+          )}
+        </svg>
+
+        {/* Center Deployment Core */}
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 flex flex-col items-center">
+          <div className="relative w-20 h-20 md:w-28 md:h-28 flex items-center justify-center">
+            <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-[#06b6d4]/40 to-emerald-500/40 blur-xl animate-pulse" />
+            <div className="absolute w-full h-full rounded-full border border-[#06b6d4]/20 animate-[spin_12s_linear_infinite]" />
+            <div className="absolute w-4/5 h-4/5 rounded-full border border-emerald-500/20 border-dashed animate-[spin_8s_linear_infinite_reverse]" />
+            <div className="absolute w-12 h-12 md:w-16 md:h-16 rounded-full bg-gradient-to-tr from-[#06b6d4] to-emerald-400 shadow-[0_0_20px_rgba(6,182,212,0.4)] flex flex-col items-center justify-center text-slate-950 select-none">
+              <Cpu className="w-4 h-4 md:w-5 md:h-5 text-slate-950 animate-pulse" />
+              <span className="text-[7px] font-mono font-bold mt-0.5 tracking-wider">CORE</span>
             </div>
-            <Terminal className="w-3.5 h-3.5 text-[#06b6d4]" />
-            <span className="text-slate-400">MLOPS_WORKSPACE // {currentProject.fileName}</span>
-          </div>
-          <div className="flex items-center gap-1.5 text-emerald-400 font-bold uppercase tracking-wider bg-emerald-500/5 border border-emerald-500/20 px-2 py-0.5 rounded text-[8px]">
-            <CheckCircle2 className="w-2.5 h-2.5" />
-            STABLE_BUILD
           </div>
         </div>
 
-        {/* 3-Column Split Area */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[380px] items-stretch">
-          
-          {/* Column 1: Explorer Sidebar (3/12 width) */}
-          <div className="lg:col-span-3 border-r border-white/5 bg-[#090909] p-4 flex flex-col gap-4 text-left">
-            <span className="text-[9px] font-mono text-slate-500 uppercase tracking-widest block font-bold">// File Explorer</span>
-            
-            <div className="space-y-1.5">
-              {projectsData.map((project) => {
-                const isActive = project.id === activeFileId;
+        {/* Orbiting Satellite Cards */}
+        {projectsData.map((project) => {
+          const isSelected = hoveredId === project.id;
+          const isDimmed = hoveredId !== null && hoveredId !== project.id;
 
-                return (
-                  <button
-                    key={project.id}
-                    onClick={() => setActiveFileId(project.id)}
-                    className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-lg font-mono text-[10px] md:text-xs transition-all border text-left cursor-pointer ${
-                      isActive 
-                        ? 'border-[#06b6d4]/30 bg-[#06b6d4]/5 text-white font-bold' 
-                        : 'border-transparent text-slate-400 hover:bg-white/[0.02] hover:text-slate-200'
-                    }`}
-                  >
-                    <FileCode className={`w-4 h-4 ${isActive ? 'text-[#06b6d4]' : 'text-slate-500'}`} />
-                    <span>{project.fileName}</span>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Column 2: Code Editor Center (6/12 width) */}
-          <div className="lg:col-span-6 bg-[#080808] p-4 md:p-6 flex flex-col gap-4 overflow-x-auto">
-            {/* Active File Tab Header */}
-            <div className="flex border-b border-white/5 pb-2.5 font-mono text-[9px] text-[#06b6d4] items-center gap-1.5 text-left">
-              <FileCode className="w-3 h-3" />
-              <span>{currentProject.fileName}</span>
-            </div>
-
-            {/* Syntax Highlighted Code block */}
-            <div className="space-y-1.5 select-all overflow-x-auto min-w-[300px]">
-              {highlightCode(currentProject.code)}
-            </div>
-          </div>
-
-          {/* Column 3: Live Telemetry & Metrics Right Panel (3/12 width) */}
-          <div className="lg:col-span-3 border-l border-white/5 bg-[#090909] p-4 md:p-5 flex flex-col justify-between text-left">
-            
-            {/* Metrics block */}
-            <div className="space-y-5">
-              <span className="text-[9px] font-mono text-slate-500 uppercase tracking-widest block font-bold">// Telemetry Specs</span>
-              
-              <div className="space-y-3 font-mono text-[9px] md:text-[10px]">
-                <div className="border border-white/5 bg-white/[0.02] p-2.5 rounded-xl">
-                  <span className="text-slate-600 block mb-0.5">PROJECT TITLE</span>
-                  <span className="text-white font-bold font-sans text-xs md:text-sm block leading-snug">{currentProject.title}</span>
-                </div>
-
-                <div className="border border-emerald-500/20 bg-emerald-500/5 p-2.5 rounded-xl flex items-center justify-between">
-                  <span className="text-slate-400">ACCURACY</span>
-                  <span className="text-emerald-400 font-bold text-xs">{currentProject.accuracy}</span>
-                </div>
-
-                <div className="border border-[#06b6d4]/20 bg-[#06b6d4]/5 p-2.5 rounded-xl flex items-center justify-between">
-                  <span className="text-slate-400">API LATENCY</span>
-                  <span className="text-[#06b6d4] font-bold text-xs">{currentProject.latency}</span>
-                </div>
-
-                <div className="border border-white/5 bg-white/[0.02] p-2.5 rounded-xl space-y-1.5">
-                  <div className="flex justify-between items-center">
-                    <span className="text-slate-500">TARGET HOST:</span>
-                    <span className="text-slate-300 font-bold text-[8px]">{currentProject.host}</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-slate-500">BASE IMAGE:</span>
-                    <span className="text-slate-300 font-bold text-[8px]">{currentProject.baseImage}</span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-slate-500">DATABASE:</span>
-                    <span className="text-slate-300 font-bold text-[8px]">{currentProject.database}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Outbound Link Button */}
-            <div className="mt-6 pt-4 border-t border-white/5">
-              <a
-                href={currentProject.github}
-                target="_blank"
-                rel="noreferrer"
-                className="w-full flex items-center justify-center gap-2 py-2 px-3 border border-[#06b6d4]/30 bg-[#06b6d4]/5 hover:bg-[#06b6d4]/10 text-white rounded-xl font-mono text-[10px] transition-all duration-300"
+          return (
+            <div
+              key={project.id}
+              onMouseEnter={() => setHoveredId(project.id)}
+              onMouseLeave={() => setHoveredId(null)}
+              className={`absolute z-30 transition-all duration-500 cursor-pointer ${project.posClass}`}
+            >
+              <motion.div
+                animate={{
+                  scale: isSelected ? 1.05 : 1,
+                  y: isSelected ? -5 : [0, 4, 0],
+                }}
+                transition={{
+                  scale: { duration: 0.3 },
+                  y: { repeat: isSelected ? 0 : Infinity, duration: 4, ease: "easeInOut", delay: project.id * 0.5 }
+                }}
+                className={`w-64 border rounded-xl p-4 text-left font-mono backdrop-blur-md transition-opacity duration-500 ${
+                  isSelected 
+                    ? 'border-[#06b6d4] bg-[#06b6d4]/5 shadow-[0_0_20px_rgba(6,182,212,0.15)]' 
+                    : isDimmed 
+                      ? 'border-white/5 bg-[#080808]/20 opacity-30 blur-[0.5px]' 
+                      : 'border-white/10 bg-[#080808]/60 hover:border-white/20'
+                }`}
               >
-                <span>OPEN_GITHUB_REPO</span>
-                <ArrowUpRight className="w-3.5 h-3.5" />
-              </a>
+                <div className="flex justify-between items-start gap-2 mb-2">
+                  <span className="text-[9px] text-[#06b6d4] font-bold">NODE_{project.id} // ACTIVE</span>
+                  <span className="text-[8px] text-slate-500 border border-white/5 px-1.5 py-0.5 rounded">{project.accuracy}</span>
+                </div>
+                <h3 className="text-xs font-bold text-white leading-normal truncate">{project.title}</h3>
+                <p className="text-[9px] text-slate-500 mt-1 truncate">{project.algorithm}</p>
+
+                {/* Micro path connector indicator */}
+                {isSelected && (
+                  <div className="h-0.5 w-12 bg-[#06b6d4] mt-3 animate-pulse" />
+                )}
+              </motion.div>
             </div>
+          );
+        })}
+      </div>
 
-          </div>
+      {/* Slide-Open Details Telemetry Drawer */}
+      <div className="border border-white/10 bg-[#080808]/90 rounded-2xl p-5 md:p-6 font-mono text-left relative overflow-hidden backdrop-blur-xl min-h-[160px] flex flex-col justify-center">
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#111_1px,transparent_1px),linear-gradient(to_bottom,#111_1px,transparent_1px)] bg-[size:16px_16px] opacity-15 pointer-events-none" />
 
-        </div>
-
-        {/* Console logs output drawer */}
-        <div className="border-t border-white/5 bg-[#060606] p-4 text-left font-mono text-[9px] text-slate-500">
-          <div className="flex items-center gap-2 mb-2">
-            <Play className="w-3 h-3 text-emerald-400 animate-pulse" />
-            <span className="text-slate-400 font-bold">TERMINAL_STDOUT:</span>
-          </div>
-          <div className="space-y-1 pl-4">
-            {currentProject.logs.map((logLine, lIdx) => (
-              <div key={lIdx} className={logLine.startsWith('[SUCCESS]') ? 'text-emerald-400' : 'text-slate-400'}>
-                {logLine}
+        <AnimatePresence mode="wait">
+          {hoveredId ? (
+            <motion.div
+              key={hoveredId}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.2 }}
+              className="relative z-10 grid grid-cols-1 md:grid-cols-12 gap-6 items-center"
+            >
+              {/* Left Column: Title & Metrics */}
+              <div className="md:col-span-4 space-y-3">
+                <div>
+                  <span className="text-[8px] text-[#06b6d4] font-bold tracking-widest block uppercase">// SYSTEM_DETAILS_PULL</span>
+                  <h3 className="text-base md:text-lg font-bold text-white leading-snug mt-1 font-sans">{activeProject.title}</h3>
+                </div>
+                
+                <div className="flex gap-2">
+                  <span className="text-[9px] font-bold text-white px-2 py-0.5 border border-emerald-500/20 bg-emerald-500/5 rounded">
+                    {activeProject.accuracy}
+                  </span>
+                  <span className="text-[9px] font-bold text-white px-2 py-0.5 border border-[#06b6d4]/20 bg-[#06b6d4]/5 rounded">
+                    {activeProject.latency}
+                  </span>
+                </div>
               </div>
-            ))}
-          </div>
-        </div>
 
-      </TiltCard>
+              {/* Center Column: Description Logs */}
+              <div className="md:col-span-5 space-y-1.5 text-xs text-slate-300">
+                <span className="text-[8px] text-slate-600 block">// INFERENCE STDOUT</span>
+                {activeProject.details.map((detail, dIdx) => (
+                  <div key={dIdx} className="flex gap-2 items-start text-[11px] font-sans">
+                    <span className="text-emerald-400 font-bold font-mono">[OK]</span>
+                    <span>{detail}</span>
+                  </div>
+                ))}
+              </div>
+
+              {/* Right Column: Hosting & Link */}
+              <div className="md:col-span-3 space-y-3 flex flex-col items-stretch justify-center md:border-l md:border-white/5 md:pl-6">
+                <div className="text-[9px]">
+                  <span className="text-slate-600 block">HOST TARGET:</span>
+                  <span className="text-slate-300 font-bold block truncate">{activeProject.host}</span>
+                </div>
+                
+                <a
+                  href={activeProject.github}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center justify-center gap-2 py-1.5 px-3 border border-[#06b6d4]/30 bg-[#06b6d4]/5 hover:bg-[#06b6d4]/10 text-white rounded-lg text-[9px] font-mono transition-all duration-300 cursor-pointer"
+                >
+                  <span>SYNC_GITHUB</span>
+                  <ArrowUpRight className="w-3.5 h-3.5" />
+                </a>
+              </div>
+            </motion.div>
+          ) : (
+            <motion.div
+              key="empty"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="relative z-10 text-center py-6 text-slate-600 text-[10px] uppercase tracking-wider flex flex-col items-center justify-center gap-2"
+            >
+              <Compass className="w-5 h-5 text-slate-700 animate-spin" />
+              <span>[ STATUS: WAITING_FOR_INFRASTRUCTURE_LINK_STIMULATION ... HOVER_NODE_TO_PULL_TELEMETRY ]</span>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+
     </section>
   );
 }
