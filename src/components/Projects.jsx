@@ -1,194 +1,115 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Cpu, Server, CheckCircle2, Cloud, Code } from 'lucide-react';
+import React from 'react';
+import { motion } from 'framer-motion';
+import { ArrowUpRight } from 'lucide-react';
 import TiltCard from './TiltCard';
 
-function ProjectCard({ project, isZeroG }) {
-  const [activeTab, setActiveTab] = useState('ai'); // 'ai' or 'devops'
-
-  return (
-    <TiltCard 
-      isZeroG={isZeroG} 
-      className="w-full flex flex-col justify-between border-purple-500/20 hover:border-purple-500/40 bg-indigoSpace/60 min-h-[420px]"
-    >
-      <div>
-        {/* Toggle Switch at Top */}
-        <div className="flex justify-between items-center mb-6 pb-4 border-b border-white/5">
-          <div className="flex bg-black/40 p-1 rounded-xl border border-white/10 gap-1">
-            <button
-              onClick={() => setActiveTab('ai')}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[10px] md:text-xs font-mono font-bold transition-all ${
-                activeTab === 'ai'
-                  ? 'bg-purple-600 text-white shadow-[0_0_10px_rgba(139,92,246,0.3)]'
-                  : 'text-slate-400 hover:text-slate-200'
-              }`}
-            >
-              🤖 AI Details
-            </button>
-            <button
-              onClick={() => setActiveTab('devops')}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[10px] md:text-xs font-mono font-bold transition-all ${
-                activeTab === 'devops'
-                  ? 'bg-blue-600 text-white shadow-[0_0_10px_rgba(59,130,246,0.3)]'
-                  : 'text-slate-400 hover:text-slate-200'
-              }`}
-            >
-              ☁️ Cloud & Ops
-            </button>
-          </div>
-
-          <span className="text-[10px] md:text-xs font-mono font-bold px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center gap-1.5">
-            <CheckCircle2 className="w-3.5 h-3.5" /> {project.accuracy} Accuracy
-          </span>
-        </div>
-
-        {/* Project Meta Info */}
-        <div className="mb-6">
-          <h3 className="text-xl md:text-2xl font-extrabold text-white mb-1">
-            {project.title}
-          </h3>
-          <span className="text-[10px] font-mono tracking-widest text-cosmicBlue uppercase">
-            {project.subType}
-          </span>
-        </div>
-
-        {/* Content Display based on active tab */}
-        <div className="min-h-[160px]">
-          <AnimatePresence mode="wait">
-            {activeTab === 'ai' ? (
-              <motion.div
-                key="ai-content"
-                initial={{ opacity: 0, y: 5 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -5 }}
-                transition={{ duration: 0.2 }}
-                className="space-y-4"
-              >
-                <div>
-                  <h4 className="text-xs uppercase font-mono text-purple-400 tracking-wider mb-1.5 flex items-center gap-1.5">
-                    <Cpu className="w-3.5 h-3.5" /> Core Algorithm
-                  </h4>
-                  <p className="text-sm text-slate-300 font-mono font-semibold">{project.aiSpecs.algorithm}</p>
-                </div>
-                <div>
-                  <h4 className="text-xs uppercase font-mono text-purple-400 tracking-wider mb-1.5">Target Inputs</h4>
-                  <p className="text-sm text-slate-300">{project.aiSpecs.inputs}</p>
-                </div>
-                <div>
-                  <h4 className="text-xs uppercase font-mono text-purple-400 tracking-wider mb-1.5">Use Case Description</h4>
-                  <p className="text-sm text-slate-400 leading-relaxed">{project.aiSpecs.description}</p>
-                </div>
-              </motion.div>
-            ) : (
-              <motion.div
-                key="devops-content"
-                initial={{ opacity: 0, y: 5 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -5 }}
-                transition={{ duration: 0.2 }}
-                className="space-y-4"
-              >
-                <div>
-                  <h4 className="text-xs uppercase font-mono text-blue-400 tracking-wider mb-1.5 flex items-center gap-1.5">
-                    <Cloud className="w-3.5 h-3.5" /> Deployed Platform
-                  </h4>
-                  <p className="text-sm text-slate-300 font-mono font-semibold">{project.devopsSpecs.platform}</p>
-                </div>
-                <div>
-                  <h4 className="text-xs uppercase font-mono text-blue-400 tracking-wider mb-1.5">Container & Setup</h4>
-                  <p className="text-sm text-slate-300">{project.devopsSpecs.setup}</p>
-                </div>
-                <div>
-                  <h4 className="text-xs uppercase font-mono text-blue-400 tracking-wider mb-1.5">Deployment Operations</h4>
-                  <p className="text-sm text-slate-400 leading-relaxed">{project.devopsSpecs.operations}</p>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-      </div>
-
-      {/* Bottom Technology Tags */}
-      <div className="mt-8 flex flex-wrap gap-2 border-t border-white/5 pt-4">
-        {project.tags.map((tag, tIdx) => (
-          <span 
-            key={tIdx} 
-            className="text-[10px] font-mono text-slate-400 bg-white/5 border border-white/10 px-2.5 py-1 rounded-md"
-          >
-            {tag}
-          </span>
-        ))}
-      </div>
-    </TiltCard>
-  );
-}
+const projectsData = [
+  {
+    id: 1,
+    title: "Crop Recommendation System",
+    accuracy: "92.53% Accuracy",
+    description: "Machine learning system using a Gaussian Naive Bayes algorithm to recommend crops based on soil and meteorology metrics.",
+    github: "https://github.com/KRUTHIKTR/Crop-recommendation-system",
+    tags: ["Python", "Naive Bayes", "Agriculture ML"],
+    gradient: "from-emerald-600/30 to-[#06b6d4]/5"
+  },
+  {
+    id: 2,
+    title: "Customer Churn Prediction Pipeline",
+    accuracy: "90.76% Accuracy",
+    description: "Automated data pipeline deploying a Random Forest Classifier to detect customer retention risks.",
+    github: "https://github.com/KRUTHIKTR/Customer-churn-prediction",
+    tags: ["Random Forest", "ETL Pipeline", "PostgreSQL"],
+    gradient: "from-blue-600/30 to-[#06b6d4]/5"
+  },
+  {
+    id: 3,
+    title: "Titanic Survival Predictor",
+    accuracy: "82.68% Accuracy",
+    description: "Baseline ML classification engine utilizing data imputation and Random Forest models.",
+    github: "https://github.com/KRUTHIKTR/Titanic-Survival-Prediction",
+    tags: ["Random Forest", "Data Imputation", "Scikit-Learn"],
+    gradient: "from-cyan-600/30 to-[#06b6d4]/5"
+  }
+];
 
 export default function Projects({ isZeroG }) {
-  const projectsData = [
-    {
-      id: 1,
-      title: "Crop Recommendation Engine",
-      subType: "Automated Classification System",
-      accuracy: "92.53%",
-      tags: ["Machine Learning", "Docker", "GCP", "Python API"],
-      aiSpecs: {
-        algorithm: "Gaussian Naive Bayes Model",
-        inputs: "Soil metrics (Nitrogen, Phosphorus, Potassium), pH levels, temperature, and local rainfall.",
-        description: "Classifies and matches complex soil telemetry values with high-yield crops to automate agricultural decision-making."
-      },
-      devopsSpecs: {
-        platform: "Google Cloud Platform (GCP)",
-        setup: "Containerized microservice packaged in Docker.",
-        operations: "Ensures scalable HTTP response routes via Flask API. Auto-deploys with isolated dependencies, optimizing server overhead."
-      }
-    },
-    {
-      id: 2,
-      title: "Customer Churn Analytics",
-      subType: "Predictive Analytics Pipeline",
-      accuracy: "90.76%",
-      tags: ["Random Forest", "ETL Pipelines", "PostgreSQL", "Data Analytics"],
-      aiSpecs: {
-        algorithm: "Random Forest Classifier",
-        inputs: "User behavior logs, interaction history, session details, and demographic parameters.",
-        description: "Evaluates key patterns to flag churning users, calculating correlation coefficients to isolate risk vectors."
-      },
-      devopsSpecs: {
-        platform: "Secure Environment & Storage",
-        setup: "Relational storage schemas inside a PostgreSQL database.",
-        operations: "Orchestrates scheduled ETL runs. Automated data preprocessing cleans raw telemetry into structured tables for predictive scoring."
-      }
-    }
-  ];
-
   return (
-    <section id="lab" className="relative py-24 px-4 md:px-8 max-w-6xl mx-auto z-10">
-      {/* Background Section Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-purple-900/10 rounded-full blur-[120px] pointer-events-none" />
-
+    <section id="lab" className="relative py-32 px-6 md:px-12 max-w-6xl mx-auto z-10 border-b border-white/5">
       {/* Section Header */}
-      <div className="text-center mb-16">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-          <span className="text-xs font-mono uppercase tracking-widest text-electricPurple">[ 02 // TECHNICAL PROJECTS ]</span>
-          <h2 className="text-3xl md:text-5xl font-extrabold text-white mt-2 mb-4 font-sans tracking-tight">
-            AI & DevOps Projects
-          </h2>
-          <div className="h-1 w-24 bg-gradient-to-r from-cosmicBlue to-electricPurple mx-auto rounded-full" />
-          <p className="text-slate-400 max-w-xl mx-auto mt-4 text-sm md:text-base">
-            Demonstrating MLOps: training accurate predictive models and setting up clean cloud pipelines for secure deployments.
-          </p>
-        </motion.div>
+      <div className="text-left mb-16">
+        <span className="text-xs font-mono uppercase tracking-widest text-[#06b6d4] font-semibold">// 05_FEATURED_WORK</span>
+        <h2 className="text-3xl md:text-5xl font-extrabold text-white mt-2 mb-4 font-sans tracking-tight">
+          Featured Work
+        </h2>
+        <div className="h-[2px] w-24 bg-[#06b6d4]" />
+        <p className="text-slate-400 max-w-2xl mt-4 text-base font-sans leading-relaxed">
+          A selection of machine learning pipeline architectures and predictive modeling systems complete with active repositories.
+        </p>
       </div>
 
       {/* Projects Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {projectsData.map((project) => (
-          <ProjectCard key={project.id} project={project} isZeroG={isZeroG} />
+          <TiltCard 
+            key={project.id} 
+            isZeroG={isZeroG} 
+            className="bg-white/5 border border-white/10 rounded-2xl h-full flex flex-col justify-between"
+          >
+            <div className="flex flex-col h-full justify-between">
+              
+              {/* Image Module with Grayscale-to-Color hover transition */}
+              <div className="relative h-40 w-full overflow-hidden rounded-xl mb-6 bg-slate-950 border border-white/5 flex items-center justify-center group-hover:border-[#06b6d4]/20 transition-all duration-500">
+                
+                {/* Graphic layout inside image container */}
+                <div className={`absolute inset-0 bg-gradient-to-br ${project.gradient} transition-all duration-500 filter grayscale group-hover:grayscale-0`} />
+                
+                {/* Tech Line Art Pattern (Abstract Pipeline design) */}
+                <div className="absolute inset-0 opacity-20 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px] pointer-events-none" />
+                
+                {/* Accuracy HUD tag */}
+                <span className="relative z-10 font-mono text-xs font-bold text-white px-3 py-1.5 border border-white/15 bg-black/60 rounded-full shadow-[0_4px_12px_rgba(0,0,0,0.5)]">
+                  {project.accuracy}
+                </span>
+              </div>
+
+              {/* Title & Description */}
+              <div className="text-left space-y-3 flex-grow">
+                <div className="flex justify-between items-start gap-4">
+                  <h3 className="text-lg font-bold text-white leading-snug group-hover:text-[#06b6d4] transition-colors duration-300">
+                    {project.title}
+                  </h3>
+                  
+                  {/* GitHub Outbound Link */}
+                  <a 
+                    href={project.github}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="p-1.5 border border-white/10 hover:border-[#06b6d4] bg-white/5 hover:bg-[#06b6d4]/10 rounded-full text-slate-400 hover:text-white transition-all duration-300 flex-shrink-0"
+                  >
+                    <ArrowUpRight className="w-4 h-4" />
+                  </a>
+                </div>
+
+                <p className="text-xs text-white/60 leading-relaxed font-sans">
+                  {project.description}
+                </p>
+              </div>
+
+              {/* Tags and Metadata */}
+              <div className="mt-6 pt-4 border-t border-white/5 flex flex-wrap gap-2">
+                {project.tags.map((tag, tIdx) => (
+                  <span 
+                    key={tIdx} 
+                    className="text-[9px] font-mono font-semibold px-2 py-0.5 rounded-full bg-white/5 border border-white/10 text-slate-400"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+              
+            </div>
+          </TiltCard>
         ))}
       </div>
     </section>

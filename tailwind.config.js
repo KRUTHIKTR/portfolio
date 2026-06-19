@@ -7,16 +7,20 @@ export default {
   theme: {
     extend: {
       colors: {
-        void: "#05030A",
-        space: "#0C091A",
-        indigoSpace: "#0B0813",
+        void: "#06040A",
+        space: "#06040A",
+        indigoSpace: "#0D0B14",
         nebulaViolet: "#130F26",
-        glassBg: "#1F193B",
+        glassBg: "#161224",
         electricPurple: "#8B5CF6",
         cosmicBlue: "#3B82F6",
+        hyperCyan: "#06B6D4",
+        emeraldGreen: "#10B981",
+        spotifyGreen: "#06b6d4",
       },
       fontFamily: {
-        sans: ['Outfit', 'Inter', 'sans-serif'],
+        sans: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
+        mono: ['JetBrains Mono', 'monospace'],
       },
       animation: {
         'slow-drift': 'drift 20s ease-in-out infinite',

@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Rocket, Download, Globe, Activity, ShieldAlert, Sparkles, Compass, Cpu, Info } from 'lucide-react';
+import { ArrowUpRight, Download, Activity, ShieldAlert, Cpu } from 'lucide-react';
 
 // Subcomponents
-import ParticleBackground from './components/ParticleBackground';
+import AboutServices from './components/AboutServices';
 import Timeline from './components/Timeline';
 import Projects from './components/Projects';
 import SkillsMatrix from './components/SkillsMatrix';
+import TechnicalWriting from './components/TechnicalWriting';
+import EducationCertifications from './components/EducationCertifications';
 import ContactForm from './components/ContactForm';
 
 export default function App() {
@@ -14,7 +16,15 @@ export default function App() {
   const [showWarning, setShowWarning] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
 
-  // Track scroll progress for custom cyber progress bar
+  // Typing animation text state
+  const textToType = "I am Kruthik T R. Co-Founder & CTO.";
+  const [typedText, setTypedText] = useState("");
+
+  // WordRotate text state
+  const rotationWords = ["Intelligent", "Automated", "Scalable"];
+  const [wordIndex, setWordIndex] = useState(0);
+
+  // Track scroll progress for custom top progress bar
   useEffect(() => {
     const handleScroll = () => {
       const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
@@ -26,54 +36,79 @@ export default function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Run typing animation
+  useEffect(() => {
+    let idx = 0;
+    const interval = setInterval(() => {
+      setTypedText(textToType.slice(0, idx + 1));
+      idx++;
+      if (idx >= textToType.length) {
+        clearInterval(interval);
+      }
+    }, 60);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Run word rotation animation
+  useEffect(() => {
+    const wordInterval = setInterval(() => {
+      setWordIndex((prev) => (prev + 1) % rotationWords.length);
+    }, 2500);
+    return () => clearInterval(wordInterval);
+  }, []);
+
   const toggleGravity = () => {
     setIsZeroG(!isZeroG);
     setShowWarning(true);
-    // Auto fade warning banner after 3.5s
     setTimeout(() => {
       setShowWarning(false);
     }, 3500);
   };
 
-  // Dynamic Dossier download exporter
+  // Dossier exporter logic
   const downloadDossier = () => {
     const dossierText = `==================================================================
-KRUTHIK T R | AI & DEVOPS ENGINEER DOSSIER
+KRUTHIK T R | MLOPS ENGINEER RESUME DOSSIER
 ==================================================================
 
 [PROFILE SUMMARY]
-An Artificial Intelligence & Data Science graduate, Co-Founder & CTO 
-of Berukodige Farm, and Cloud-Native systems enthusiast. Specializes
-in training Machine Learning models and automating their deployment
-to secure, scalable cloud environments.
+A graduate in Artificial Intelligence & Data Science, Co-Founder & CTO 
+of Berukodige Farm. Specializes in building accurate Machine Learning
+models and automating their deployment to secure, production-ready
+cloud environments.
 
 [CONTACT DETAILS]
+- Phone: +91-7676174246
 - Email: kruthiktrgowda24@gmail.com
 - Github: https://github.com/KRUTHIKTR
 - LinkedIn: https://linkedin.com/in/kruthiktrgowda
 
 [JOURNEY & EXPERIENCE]
 1. Co-Founder & Technical Lead (CTO) | Berukodige Farm (Jan 2025 - Present)
-   * Directing software infrastructure and automating agricultural nursery workflows.
-2. Operations Automation Intern | Sanjivini Eco Solutions (Feb 2025 - June 2025)
-   * Developed AI-driven CRM workflows and automated content pipelines.
-3. Google Product Expert & Cloud Innovator (Nov 2024 - Mar 2026)
-   * Explored cloud deployments and supported technical queries on scaling.
-4. Open Source Contributor | GSSoC'25 (July 2025 - Oct 2025)
-   * Audited codebase workflows and managed pipeline configurations.
-5. BE in AI & Data Science | SDM Institute of Technology (2021 - 2025)
-   * Academic core; Football & volleyball representative; District-level Veergase dancer.
+   * Directing startup technology infrastructure and automating nursery workflows using Python and data-driven cultivation systems.
+2. Operations Automation Intern | Sanjivini Eco Solutions Pvt Ltd (Feb 2025 - June 2025)
+   * Developed AI-driven CRM workflows and automated content generation pipelines using Python and Large Language Model (LLM) interfaces. Built, optimized, and deployed automated data workflows on GCP.
+3. Google Product Expert | Google Community Support (July 2025 - March 2026)
+   * Supported users by analyzing and resolving technical system queries across key products like Google Photos, Gmail, and Google Drive.
+4. Google Cloud Innovator | Google (Nov 2024 - March 2026)
+   * Explored real-world deployments involving cloud infrastructure, AI/ML pipelines, and GCP services.
+5. Open Source Contributor | GirlScript Summer of Code (July 2025 - October 2025)
+   * Collaborated with project maintainers to audit, document, and submit pull requests across complex codebases.
+6. Market Research Intern | CodeNimbus Solutions (Nov 2023 - Dec 2023)
+   * Evaluated market datasets to detect emerging user trends.
 
 [AI & DEVOPS PROJECTS]
-1. Crop Recommendation Engine (Accuracy: 92.53%)
-   * Gaussian Naive Bayes classification microservice inside a Docker container.
-2. Customer Churn Analytics Pipeline (Accuracy: 90.76%)
-   * Automated ETL and feature engineering pipeline with Random Forest analysis.
+1. Crop Recommendation Engine (92.53% Accuracy)
+   * Machine learning system using a Gaussian Naive Bayes algorithm to recommend crops based on soil and meteorology metrics.
+2. Customer Churn Prediction Pipeline (90.76% Accuracy)
+   * Automated data pipeline deploying a Random Forest Classifier to detect customer retention risks.
+3. Titanic Survival Predictor (82.68% Accuracy)
+   * Baseline ML classification engine utilizing data imputation and Random Forest models.
 
 [CORE SKILLS & TECH STACK]
-* AI & Machine Learning: Python, SQL, Predictive Modeling, Feature Engineering, Agentic AI, Data Analysis
-* Cloud & Deployment: GCP, Oracle Cloud (OCI), Kubernetes, Docker, APIs, Git
-* Software & Analytics: Jupyter Notebook, Power BI, Excel, Figma
+- Languages: Python, SQL, Dart
+- ML & Data: Machine Learning, Predictive Modeling, Agentic AI, Data Visualization
+- DevOps & Cloud: Google Cloud (GCP), Oracle Cloud (OCI), Kubernetes, Docker, Git, CI/CD
 
 ==================================================================
 Generated from Antigravity Systems HUD Terminal.
@@ -83,35 +118,32 @@ Generated from Antigravity Systems HUD Terminal.
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.setAttribute('download', 'Kruthik_TR_Dossier.txt');
+    link.setAttribute('download', 'Kruthik_TR_Resume_Dossier.txt');
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
   };
 
   return (
-    <div className="relative min-h-screen text-slate-100 overflow-x-hidden">
-      {/* Canvas Space Particle Engine */}
-      <ParticleBackground isZeroG={isZeroG} />
-
-      {/* Cyber progress bar at the very top */}
+    <div className="relative min-h-screen text-slate-100 overflow-x-hidden bg-[#080808] cyber-grid">
+      {/* Top scroll progress indicator */}
       <div 
-        className="fixed top-0 left-0 h-1 bg-gradient-to-r from-electricPurple via-cosmicBlue to-emerald-400 z-50 transition-all duration-300"
+        className="fixed top-0 left-0 h-[2px] bg-[#06b6d4] z-50 transition-all duration-300 shadow-[0_0_10px_#06b6d4]"
         style={{ width: `${scrollProgress}%` }}
       />
 
-      {/* Sleek Navigation Bar */}
-      <nav className="sticky top-0 w-full bg-void/50 backdrop-blur-md border-b border-white/5 py-4 px-6 md:px-12 flex justify-between items-center z-40">
-        <a href="#hero" className="flex items-center gap-2.5 font-mono text-sm md:text-base font-extrabold text-white tracking-widest group">
-          <span className="w-2.5 h-2.5 rounded-full bg-purple-500 animate-pulse-glow group-hover:bg-blue-400 transition-colors" />
-          KRUTHIK T R <span className="text-[10px] text-slate-500 font-normal hidden sm:inline">| SYS_ENGINEER</span>
+      {/* Navigation Header */}
+      <nav className="fixed top-0 left-0 right-0 w-full bg-[#080808]/85 backdrop-blur-md border-b border-white/5 py-5 px-8 md:px-16 flex justify-between items-center z-40">
+        <a href="#hero" className="flex items-center gap-2.5 font-mono text-sm md:text-lg font-extrabold text-white tracking-widest group">
+          <span className="w-1.5 h-1.5 bg-[#06b6d4] shadow-[0_0_8px_#06b6d4] transition-all" />
+          KRUTHIK T R <span className="text-[10px] text-[#06b6d4] font-bold bg-[#06b6d4]/10 border border-[#06b6d4]/25 px-2 py-0.5 ml-2 tracking-wider rounded">[ MLOPS_ENG ]</span>
         </a>
         
-        <div className="flex gap-4 md:gap-8 text-xs md:text-sm font-mono text-slate-400">
-          <a href="#orbit" className="hover:text-purple-400 transition-colors">01_JOURNEY</a>
-          <a href="#lab" className="hover:text-blue-400 transition-colors">02_PROJECTS</a>
-          <a href="#sphere" className="hover:text-emerald-400 transition-colors">03_SKILLS</a>
-          <a href="#contact" className="hover:text-white transition-colors">04_CONTACT</a>
+        <div className="flex gap-2 md:gap-4 text-xs md:text-sm font-sans font-bold tracking-widest text-slate-400">
+          <a href="#about" className="hover:text-[#06b6d4] hover:bg-white/[0.04] px-4 py-2 rounded-full transition-all duration-300">ABOUT</a>
+          <a href="#lab" className="hover:text-[#06b6d4] hover:bg-white/[0.04] px-4 py-2 rounded-full transition-all duration-300">PROJECTS</a>
+          <a href="#sphere" className="hover:text-[#06b6d4] hover:bg-white/[0.04] px-4 py-2 rounded-full transition-all duration-300">SKILLS</a>
+          <a href="#contact" className="hover:text-white hover:bg-white/[0.04] px-4 py-2 rounded-full transition-all duration-300">CONTACT</a>
         </div>
       </nav>
 
@@ -122,9 +154,9 @@ Generated from Antigravity Systems HUD Terminal.
             initial={{ opacity: 0, y: -50 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -50 }}
-            className="fixed top-20 left-1/2 -translate-x-1/2 z-50 bg-[#1F193B]/90 border border-purple-500/50 rounded-full px-6 py-2.5 backdrop-blur-md flex items-center gap-3 shadow-[0_0_20px_rgba(139,92,246,0.3)]"
+            className="fixed top-24 left-1/2 -translate-x-1/2 z-50 bg-[#080808]/95 border border-[#06b6d4]/50 rounded-full px-6 py-2.5 backdrop-blur-md flex items-center gap-3 shadow-[0_0_20px_rgba(29,185,84,0.3)]"
           >
-            <ShieldAlert className="w-4 h-4 text-purple-400 animate-bounce" />
+            <ShieldAlert className="w-4 h-4 text-[#06b6d4] animate-bounce" />
             <span className="text-xs font-mono text-white tracking-wide">
               {isZeroG ? 'WARNING: ZERO-G PHYSICS ACTIVATED. LAYOUT FLOATING ENGAGED.' : 'GRAVITY RESTORED. SYSTEM ENFORCING STANDARD LAYOUT.'}
             </span>
@@ -132,7 +164,7 @@ Generated from Antigravity Systems HUD Terminal.
         )}
       </AnimatePresence>
 
-      {/* Extra floating background trash elements under Zero-G */}
+      {/* Floating zero-g structural overlays */}
       {isZeroG && (
         <div className="absolute inset-0 pointer-events-none overflow-hidden z-20">
           {Array.from({ length: 8 }).map((_, i) => (
@@ -151,7 +183,7 @@ Generated from Antigravity Systems HUD Terminal.
                 repeat: Infinity,
                 ease: "easeInOut"
               }}
-              className="absolute w-3 h-3 rounded-full border border-purple-500/20 bg-purple-500/5 blur-[1px]"
+              className="absolute w-2 h-2 rounded-full border border-[#06b6d4]/20 bg-[#06b6d4]/5"
               style={{
                 top: `${20 + i * 10}%`,
                 left: `${10 + i * 12}%`,
@@ -161,124 +193,135 @@ Generated from Antigravity Systems HUD Terminal.
         </div>
       )}
 
-      {/* Main Container */}
-      <main className="relative">
+      {/* Main Page Layout */}
+      <main className="relative z-10">
         
-        {/* SECTION 1: HERO ("Escape Velocity") */}
-        <section id="hero" className="min-h-[85vh] flex flex-col items-center justify-center text-center px-6 relative z-10">
-          <div className="max-w-4xl mx-auto space-y-6">
+        {/* Section 1: Hero ("Introduction") */}
+        <section id="hero" className="relative min-h-screen flex items-center justify-center pt-20 pb-16 px-6 md:px-12 overflow-hidden border-b border-white/5">
+          
+          {/* Neon Light Backing Orbs */}
+          <div className="absolute top-1/4 left-1/10 w-[550px] h-[550px] rounded-full bg-cyan-500/[0.04] blur-[130px] pointer-events-none mix-blend-screen animate-pulse-glow z-0" />
+          <div className="absolute bottom-1/4 right-1/10 w-[550px] h-[550px] rounded-full bg-[#06b6d4]/[0.05] blur-[150px] pointer-events-none mix-blend-screen animate-pulse-glow z-0" style={{ animationDelay: '1.2s' }} />
+
+          <div className="max-w-5xl mx-auto w-full text-center space-y-6 relative z-10">
             
-            {/* Mission Identifier Badge */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-mono text-slate-400"
-            >
-              <Rocket className="w-3.5 h-3.5 text-purple-400" />
-              STATUS: ESCAPE VELOCITY READY
-            </motion.div>
+            {/* System Status Tag instead of duplicate Name */}
+            <div className="pb-2">
+              <div className="inline-flex items-center gap-2 border border-[#06b6d4]/20 bg-[#06b6d4]/5 rounded-full px-5 py-2 font-mono text-xs text-[#06b6d4] font-bold uppercase tracking-wider">
+                <span className="w-1.5 h-1.5 bg-[#06b6d4] rounded-full shadow-[0_0_8px_#06b6d4] animate-pulse" />
+                [ SYSTEM: MLOPS_ACTIVE ]
+              </div>
+            </div>
 
-            {/* Headline */}
-            <motion.h1
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.1 }}
-              className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-tight"
-            >
-              Engineering <span className="bg-gradient-to-r from-electricPurple via-cosmicBlue to-emerald-400 bg-clip-text text-transparent glow-text">Intelligent Systems</span>.
-            </motion.h1>
-
-            {/* Subtitle */}
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.25 }}
-              className="text-lg sm:text-2xl font-semibold text-slate-200 max-w-2xl mx-auto"
-            >
-              I build the predictive engines and deploy the cloud pipelines that power modern automation.
-            </motion.p>
-
-            {/* Biography */}
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className="text-sm sm:text-base text-slate-400 max-w-xl mx-auto leading-relaxed"
-            >
-              Kruthik T R — AI & Data Science Graduate, Co-Founder & Technical Lead at Berukodige Farm. I specialize in training Machine Learning models and automating their deployment to secure, scalable cloud environments.
-            </motion.p>
-
-            {/* Action Buttons */}
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.55 }}
-              className="pt-6 flex flex-wrap gap-4 justify-center"
-            >
-              <a 
-                href="#orbit" 
-                className="flex items-center gap-2 font-mono text-xs font-bold text-white bg-gradient-to-r from-purple-600 via-indigo-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 px-6 py-3.5 rounded-xl transition-all duration-300 shadow-[0_4px_15px_rgba(139,92,246,0.3)] hover:shadow-[0_4px_25px_rgba(139,92,246,0.5)] border border-purple-400/20"
+            {/* Large Main Name Heading (H1 centerpiece with Plus Jakarta Sans) */}
+            <div className="space-y-4">
+              <motion.h1
+                initial={{ opacity: 0, y: 25 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                className="text-6xl sm:text-8xl md:text-9xl lg:text-[7.5rem] font-extrabold tracking-tighter text-white font-sans uppercase whitespace-nowrap block hover:text-[#06b6d4] transition-colors duration-500 cursor-default select-none leading-none"
               >
-                EXPLORE ORBIT <Compass className="w-4 h-4" />
+                KRUTHIK T R
+              </motion.h1>
+
+              {/* Subheading (H2) with WordRotate */}
+              <motion.h2
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.25 }}
+                className="text-base md:text-2xl font-bold tracking-tight text-slate-300 font-sans flex items-center justify-center gap-2 flex-wrap"
+              >
+                <span>Deploying</span>
+                <span className="text-[#06b6d4] font-extrabold min-w-[120px] text-center inline-block">
+                  <AnimatePresence mode="wait">
+                    <motion.span
+                      key={rotationWords[wordIndex]}
+                      initial={{ opacity: 0, y: 5 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -5 }}
+                      transition={{ duration: 0.2 }}
+                      className="inline-block"
+                    >
+                      {rotationWords[wordIndex]}
+                    </motion.span>
+                  </AnimatePresence>
+                </span>
+                <span>AI & DevOps Systems</span>
+              </motion.h2>
+            </div>
+
+            {/* Description */}
+            <p className="text-base md:text-lg text-white/70 max-w-3xl mx-auto leading-relaxed font-sans">
+              I am an AI & Data Science graduate and Co-Founder at Berukodige Farm. I specialize in training accurate machine learning models and hosting them securely on cloud-native infrastructure.
+            </p>
+
+            {/* CTA Buttons */}
+            <div className="pt-4 flex justify-center gap-4 flex-wrap">
+              <a 
+                href="#lab" 
+                className="flex items-center gap-2 font-mono text-sm font-bold text-black bg-[#06b6d4] hover:bg-[#06b6d4]/90 px-10 py-4.5 rounded-full transition-all duration-300 shadow-[0_4px_15px_rgba(6,182,212,0.3)] hover:shadow-[0_4px_25px_rgba(6,182,212,0.5)] hover:scale-[1.02]"
+              >
+                View Projects <ArrowUpRight className="w-4 h-4" />
               </a>
               
               <button 
                 onClick={downloadDossier}
-                className="flex items-center gap-2 font-mono text-xs font-bold text-slate-300 hover:text-white border border-white/10 hover:border-white/20 bg-white/5 hover:bg-white/10 px-6 py-3.5 rounded-xl transition-all duration-300 relative group overflow-hidden"
+                className="flex items-center gap-2 font-mono text-xs font-bold text-white border border-white/10 hover:border-[#06b6d4] bg-white/5 hover:bg-white/10 px-8 py-3.5 rounded-full transition-all duration-300 hover:scale-[1.02]"
               >
-                {/* Subtle Shimmer background on hover */}
-                <div className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-[200%] transition-transform duration-1000 ease-out" />
-                DOWNLOAD DOSSIER <Download className="w-4 h-4" />
+                Download CV <Download className="w-4 h-4" />
               </button>
-            </motion.div>
-          </div>
+            </div>
 
-          {/* Slow drift decorator elements in background */}
-          <div className="absolute top-1/4 left-10 w-48 h-48 bg-purple-900/10 rounded-full blur-[80px] pointer-events-none float-slow" />
-          <div className="absolute bottom-1/4 right-10 w-64 h-64 bg-blue-900/10 rounded-full blur-[100px] pointer-events-none float-slow-delayed" />
+          </div>
         </section>
 
-        {/* SECTION 2: THE ORBIT (Experience & Timeline) */}
+        {/* Section 2 & 3: About Me, Milestones, and Expertise Services */}
+        <AboutServices isZeroG={isZeroG} />
+
+        {/* Section 7: Professional Experience Timeline */}
         <Timeline isZeroG={isZeroG} />
 
-        {/* SECTION 3: THE LAB (AI/ML & DevOps Projects) */}
+        {/* Section 5: Featured Work (Projects) */}
         <Projects isZeroG={isZeroG} />
 
-        {/* SECTION 4: THE SPHERE (Interactive Skills Matrix) */}
+        {/* Section 4: Skills Matrix (Rounded Badges & Console) */}
         <SkillsMatrix isZeroG={isZeroG} />
 
-        {/* SECTION 5: DOCKING STATION (Contact & Telemetry) */}
+        {/* Section 6: Technical Writing & Blogs */}
+        <TechnicalWriting isZeroG={isZeroG} />
+
+        {/* Section 8: Education & Credentials */}
+        <EducationCertifications isZeroG={isZeroG} />
+
+        {/* Section 9: Contact Form & Social Hub */}
         <ContactForm isZeroG={isZeroG} />
       </main>
 
       {/* Footer copyright */}
-      <footer className="relative py-12 px-6 border-t border-white/5 z-10 bg-void/80 text-center text-xs font-mono text-slate-500">
+      <footer className="relative py-12 px-6 border-t border-white/5 z-10 bg-[#080808]/95 text-center text-xs font-mono text-slate-500">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
-          <p>© 2026 KRUTHIK T R. All rights and orbital assets reserved.</p>
+          <p>© 2026 KRUTHIK T R. All rights and systems reserved.</p>
           <div className="flex gap-6">
             <span className="flex items-center gap-1.5"><Cpu className="w-3.5 h-3.5" /> STACK: REACT + TAILWIND</span>
-            <span>PING: ACTIVE</span>
+            <span>STATUS: ACTIVE</span>
           </div>
         </div>
       </footer>
 
-      {/* GRAVITY CONTROL FLOATING WIDGET */}
+      {/* GRAVITY WIDGET */}
       <div className="fixed bottom-6 right-6 z-50">
         <motion.button
           onClick={toggleGravity}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          className={`flex items-center gap-2.5 font-mono text-xs font-bold px-4 py-3 rounded-full border transition-all duration-300 relative group overflow-hidden ${
+          className={`flex items-center gap-2.5 font-mono text-xs font-bold px-5 py-3 rounded-full border transition-all duration-300 relative group overflow-hidden ${
             isZeroG 
-              ? 'bg-[#1F193B]/90 border-cyan-400 text-cyan-400 shadow-[0_0_20px_rgba(34,211,238,0.4)]' 
-              : 'bg-[#120F26]/90 border-purple-500/40 text-purple-300 hover:border-purple-400 hover:text-white shadow-[0_4px_12px_rgba(139,92,246,0.15)]'
+              ? 'bg-[#080808]/90 border-[#06b6d4] text-[#06b6d4] shadow-[0_0_20px_rgba(29,185,84,0.4)]' 
+              : 'bg-[#080808]/90 border-white/10 text-slate-400 hover:border-[#06b6d4]/50 hover:text-white shadow-[0_4px_12px_rgba(0,0,0,0.3)]'
           }`}
         >
-          {/* Internal energy pulse background */}
-          <span className={`absolute inset-0 w-full h-full bg-gradient-to-r from-cyan-500/10 to-blue-500/10 transition-opacity duration-300 ${isZeroG ? 'opacity-100' : 'opacity-0'}`} />
-          
-          <Activity className={`w-4 h-4 ${isZeroG ? 'animate-spin text-cyan-400' : 'text-purple-400'}`} style={{ animationDuration: '4s' }} />
+          <span className={`absolute inset-0 w-full h-full bg-gradient-to-r from-[#06b6d4]/10 to-emerald-500/10 transition-opacity duration-300 ${isZeroG ? 'opacity-100' : 'opacity-0'}`} />
+          <Activity className={`w-4 h-4 ${isZeroG ? 'animate-spin text-[#06b6d4]' : 'text-slate-500'}`} style={{ animationDuration: '4s' }} />
           <span>{isZeroG ? 'Gravity Controls: Active' : 'Gravity Control'}</span>
         </motion.button>
       </div>

@@ -1,51 +1,52 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&family=Syne:wght@700;800&family=JetBrains+Mono:wght@300;400;500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+.font-space {
+  font-family: 'Space Grotesk', sans-serif;
+}
+.font-syne {
+  font-family: 'Syne', sans-serif;
+}
+
 @layer base {
   body {
-    @apply bg-void text-slate-300 font-sans antialiased overflow-x-hidden selection:bg-purple-500/30 selection:text-purple-200;
+    @apply bg-[#040406] text-[#ECECF1] font-sans antialiased overflow-x-hidden selection:bg-cyan-500/30 selection:text-cyan-200;
   }
 }
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #05030A;
+  background: #040406;
 }
 ::-webkit-scrollbar-thumb {
-  background: #1F193B;
-  border-radius: 4px;
+  background: #1E293B;
+  border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #8B5CF6;
+  background: #06B6D4;
 }
 
-/* Custom glow classes */
-.glow-text {
-  text-shadow: 0 0 10px rgba(139, 92, 246, 0.4), 0 0 20px rgba(59, 130, 246, 0.2);
-}
-
-.glow-text-blue {
-  text-shadow: 0 0 10px rgba(59, 130, 246, 0.4), 0 0 20px rgba(139, 92, 246, 0.2);
-}
-
-.glow-border {
-  box-shadow: 0 0 15px rgba(139, 92, 246, 0.1), inset 0 0 15px rgba(59, 130, 246, 0.1);
-}
-
-/* Star background animation */
-.stars-bg {
+/* Cyber-Grid Pattern Overlay (slate-900 at 0.15 opacity, spaced at 40px) */
+.cyber-grid {
+  background-size: 40px 40px;
   background-image: 
-    radial-gradient(white, rgba(255,255,255,.2) 1.5px, transparent 30px),
-    radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 20px),
-    radial-gradient(white, rgba(255,255,255,.1) 1.5px, transparent 25px);
-  background-size: 550px 550px, 350px 350px, 250px 250px;
-  background-position: 0 0, 40px 60px, 130px 270px;
+    linear-gradient(to right, rgba(15, 23, 42, 0.15) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(15, 23, 42, 0.15) 1px, transparent 1px);
+}
+
+/* Accent Glows */
+.glow-cyan {
+  box-shadow: 0 0 20px rgba(6, 182, 212, 0.15), inset 0 0 15px rgba(6, 182, 212, 0.05);
+}
+
+.glow-emerald {
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.15), inset 0 0 15px rgba(16, 185, 129, 0.05);
 }
 
 /* Custom animations for drift */
@@ -54,7 +55,7 @@
     transform: translateY(0px) rotate(0deg);
   }
   50% {
-    transform: translateY(-8px) rotate(0.5deg);
+    transform: translateY(-4px) rotate(0.2deg);
   }
 }
 
@@ -67,18 +68,30 @@
   animation-delay: 2s;
 }
 
-.perspective-1000 {
-  perspective: 1000px;
+/* Shimmer & Glow for name centerpiece */
+@keyframes textShimmer {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
 }
 
-.transform-style-3d {
-  transform-style: preserve-3d;
+@keyframes textGlow {
+  0%, 100% {
+    filter: drop-shadow(0 0 8px rgba(6, 182, 212, 0.05));
+  }
+  50% {
+    filter: drop-shadow(0 0 20px rgba(6, 182, 212, 0.35));
+  }
 }
 
-.backface-hidden {
-  backface-visibility: hidden;
+.animate-text-shimmer {
+  background-size: 200% auto;
+  animation: textShimmer 5s linear infinite;
 }
 
-.rotate-y-180 {
-  transform: rotateY(180deg);
+.animate-text-glow {
+  animation: textGlow 4s ease-in-out infinite;
 }
