@@ -1,55 +1,38 @@
 import React from 'react';
-import { GitBranch, ArrowUpRight } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { GitBranch, ArrowUpRight, CheckCircle2 } from 'lucide-react';
 import TiltCard from './TiltCard';
 
 const projectsData = [
   {
     id: 1,
-    index: "01",
-    nodeId: "CROP_RECS_PIPELINE",
-    status: "Active",
-    statusColor: "bg-emerald-400 shadow-[0_0_8px_#10b981]",
     title: "Crop Recommendation System",
+    accuracy: "92.53%",
+    status: "SUCCESS",
     description: "Multi-parameter Machine Learning classifier using a Gaussian Naive Bayes algorithm to predict optimal crops based on real-time soil & meteorology metrics.",
     github: "https://github.com/KRUTHIKTR/Crop-recommendation-system",
-    metrics: {
-      accuracy: "92.53%",
-      inference: "Real-time API",
-      deploy: "Docker + GCP Cloud Run"
-    },
-    themeColor: "group-hover:border-[#06b6d4]/30"
+    tags: ["Python", "Naive Bayes", "GCP"],
+    themeColor: "hover:border-[#06b6d4]/30"
   },
   {
     id: 2,
-    index: "02",
-    nodeId: "CHURN_PRED_PIPELINE",
-    status: "Active",
-    statusColor: "bg-emerald-400 shadow-[0_0_8px_#10b981]",
     title: "Customer Churn Prediction Pipeline",
+    accuracy: "90.76%",
+    status: "SUCCESS",
     description: "Automated end-to-end telemetry data pipeline deploying a Random Forest Classifier to identify high-risk customer accounts and retention opportunities.",
     github: "https://github.com/KRUTHIKTR/Customer-churn-prediction",
-    metrics: {
-      accuracy: "90.76%",
-      inference: "Real-time API",
-      deploy: "Docker + GCP Cloud Run"
-    },
-    themeColor: "group-hover:border-indigo-500/30"
+    tags: ["Random Forest", "ETL Pipeline", "PostgreSQL"],
+    themeColor: "hover:border-indigo-500/30"
   },
   {
     id: 3,
-    index: "03",
-    nodeId: "TITANIC_SURV_NODE",
-    status: "Completed",
-    statusColor: "bg-cyan-400 shadow-[0_0_8px_#06b6d4]",
     title: "Titanic Survival Predictor",
+    accuracy: "82.68%",
+    status: "COMPLETED",
     description: "Robust binary classification engine utilizing data imputation layers and optimized decision forest models to predict passenger survival outcomes.",
     github: "https://github.com/KRUTHIKTR/Titanic-Survival-Prediction",
-    metrics: {
-      accuracy: "82.68%",
-      inference: "Batch inference",
-      deploy: "Docker + Streamlit"
-    },
-    themeColor: "group-hover:border-emerald-500/30"
+    tags: ["Random Forest", "Data Imputation", "Scikit-Learn"],
+    themeColor: "hover:border-emerald-500/30"
   }
 ];
 
@@ -64,68 +47,71 @@ export default function Projects({ isZeroG }) {
         </h2>
         <div className="h-[2px] w-24 bg-[#06b6d4]" />
         <p className="text-slate-400 max-w-2xl mt-4 text-sm font-sans leading-relaxed">
-          Unified deployment hub logs. View pipeline profiles, server states, and inference metrics for each active codebase.
+          Continuous Integration workflow stack. All code compilation, testing suites, and container deployments verified successfully.
         </p>
       </div>
 
-      {/* Projects 3-Column Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {/* CI Dashboard Stack */}
+      <div className="flex flex-col gap-5">
         {projectsData.map((project) => (
           <TiltCard 
             key={project.id} 
             isZeroG={isZeroG} 
-            className={`bg-[#080808]/90 border border-white/10 rounded-2xl h-full flex flex-col justify-between p-6 relative group transition-all duration-300 ${project.themeColor}`}
+            className={`bg-[#080808]/90 border border-white/10 rounded-2xl p-5 md:p-6 backdrop-blur-xl transition-all duration-300 ${project.themeColor}`}
           >
-            <div className="flex flex-col h-full justify-between text-left">
+            <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-6">
               
-              {/* High-Tech Index Header */}
-              <div className="flex items-center justify-between border-b border-white/5 pb-3 mb-4 font-mono text-[9px]">
-                <span className="text-slate-500">{project.index} // {project.nodeId}</span>
-                <span className="flex items-center gap-1.5">
-                  <span className={`w-1.5 h-1.5 rounded-full ${project.statusColor}`} />
-                  <span className="text-slate-400 font-bold uppercase">
-                    Status: {project.status}
+              {/* Left Column: Build Status & Title (25% width) */}
+              <div className="md:w-1/4 flex flex-col items-start text-left border-b md:border-b-0 md:border-r border-white/5 pb-4 md:pb-0 md:pr-6">
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                  <span className="font-mono text-[9px] font-bold px-2 py-0.5 border border-emerald-500/20 bg-emerald-500/5 text-emerald-400 rounded uppercase">
+                    {project.status}
                   </span>
-                </span>
-              </div>
-
-              {/* Title & Description */}
-              <div className="space-y-3">
-                <h3 className="text-lg font-bold text-white leading-snug group-hover:text-[#06b6d4] transition-colors duration-300">
+                </div>
+                <h3 className="text-base font-bold text-white mt-3 leading-snug group-hover:text-[#06b6d4] transition-colors duration-300">
                   {project.title}
                 </h3>
-                <p className="text-xs text-slate-400 leading-relaxed font-sans font-normal h-16 overflow-hidden">
+              </div>
+
+              {/* Center Column: Description & Accuracy (50% width) */}
+              <div className="md:w-1/2 flex flex-col justify-center text-left space-y-2.5">
+                <p className="text-xs text-slate-300 font-sans leading-relaxed">
                   {project.description}
                 </p>
-              </div>
-
-              {/* Tabular Monospace Metrics Panel */}
-              <div className="bg-white/[0.02] border border-white/5 rounded-xl p-3.5 font-mono text-[10px] text-slate-400 space-y-2 mt-5">
-                <div className="flex justify-between items-center border-b border-white/5 pb-1.5">
-                  <span className="text-slate-600 uppercase">Accuracy</span>
-                  <span className="text-[#06b6d4] font-bold">{project.metrics.accuracy}</span>
-                </div>
-                <div className="flex justify-between items-center border-b border-white/5 pb-1.5">
-                  <span className="text-slate-600 uppercase">Inference</span>
-                  <span className="text-slate-300">{project.metrics.inference}</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-slate-600 uppercase">Deploy</span>
-                  <span className="text-slate-300">{project.metrics.deploy}</span>
+                <div className="font-mono text-[9.5px] text-slate-500 flex items-center gap-1.5">
+                  <span className="w-1 h-1 rounded-full bg-[#06b6d4]" />
+                  <span>Validation Accuracy:</span>
+                  <span className="text-[#06b6d4] font-bold">{project.accuracy}</span>
                 </div>
               </div>
 
-              {/* Wide Git Branch outline button */}
-              <a 
-                href={project.github}
-                target="_blank"
-                rel="noreferrer"
-                className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl border border-white/10 hover:border-[#06b6d4] bg-white/5 hover:bg-[#06b6d4]/10 text-[10px] font-mono font-bold tracking-wider text-slate-300 hover:text-white transition-all duration-300 mt-6"
-              >
-                <GitBranch className="w-3.5 h-3.5 text-[#06b6d4]" />
-                <span>SOURCE CODE</span>
-                <ArrowUpRight className="w-3 h-3 opacity-60" />
-              </a>
+              {/* Right Column: Tags & Explore Button (25% width) */}
+              <div className="md:w-1/4 flex flex-col md:items-end justify-between gap-4 border-t md:border-t-0 md:border-l border-white/5 pt-4 md:pt-0 md:pl-6">
+                {/* Tech Tags */}
+                <div className="flex flex-wrap md:justify-end gap-1.5">
+                  {project.tags.map((tag, tIdx) => (
+                    <span 
+                      key={tIdx} 
+                      className="text-[9px] font-mono font-semibold px-2 py-0.5 rounded bg-white/5 border border-white/10 text-slate-400"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Explore button */}
+                <a 
+                  href={project.github}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="w-full md:w-auto inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg border border-white/10 hover:border-[#06b6d4] bg-white/5 hover:bg-[#06b6d4]/10 text-[9px] font-mono font-bold tracking-wider text-slate-300 hover:text-white transition-all duration-300"
+                >
+                  <GitBranch className="w-3 h-3 text-[#06b6d4]" />
+                  <span>CODE REPOSITORY</span>
+                  <ArrowUpRight className="w-3 h-3 opacity-60" />
+                </a>
+              </div>
 
             </div>
           </TiltCard>
