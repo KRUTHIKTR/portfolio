@@ -1,287 +1,297 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Terminal, Activity, ShieldAlert, Cpu } from 'lucide-react';
+import { Terminal, Cpu, HardDrive, ShieldCheck, RefreshCw } from 'lucide-react';
 import TiltCard from './TiltCard';
 
-const domainData = {
-  aiml: {
-    id: "aiml",
-    title: "AI/ML Engineering",
-    score: "92.5%",
-    color: "#06b6d4",
-    skills: [
-      { name: "Machine Learning", pct: 95 },
-      { name: "Predictive Modeling", pct: 92 },
-      { name: "Agentic AI", pct: 90 },
-      { name: "Feature Engineering", pct: 92 },
-      { name: "Model Evaluation", pct: 90 }
-    ],
-    defaultVals: { ai: 64.4, cloud: 42, data: 40, infra: 40 }
+const servicesData = [
+  {
+    id: "python-ml-core",
+    name: "python-ml-core",
+    uptime: "95%",
+    status: "Critical Resource",
+    statusColor: "text-emerald-400 border-emerald-500/20 bg-emerald-500/5",
+    dotColor: "bg-emerald-400 shadow-[0_0_8px_#10b981]",
+    cost: "$0.15/hr",
+    resource: "8 Core vCPU // 32GB RAM",
+    skills: ["Python", "Machine Learning", "Predictive Modeling", "Agentic AI", "Model Evaluation"],
+    bootLogs: [
+      "INGESTING python-ml-core environment configurations...",
+      "LOADING PyTorch, Scikit-Learn libraries...",
+      "VERIFYING neural network model coefficients...",
+      "SYSTEM RUNNING: Inference API ready."
+    ]
   },
-  cloud: {
-    id: "cloud",
-    title: "Cloud-Native Systems",
-    score: "88.0%",
-    color: "#6366f1",
-    skills: [
-      { name: "Google Cloud (GCP)", pct: 92 },
-      { name: "Docker", pct: 90 },
-      { name: "Kubernetes", pct: 85 },
-      { name: "Oracle Cloud (OCI)", pct: 85 }
-    ],
-    defaultVals: { ai: 40, cloud: 61.6, data: 40, infra: 40 }
+  {
+    id: "gcp-infrastructure",
+    name: "gcp-infrastructure",
+    uptime: "85%",
+    status: "Fully Configured",
+    statusColor: "text-[#06b6d4] border-[#06b6d4]/20 bg-[#06b6d4]/5",
+    dotColor: "bg-[#06b6d4] shadow-[0_0_8px_#06b6d4]",
+    cost: "$0.22/hr",
+    resource: "GCP Ingress VMs // VPC Subnets",
+    skills: ["Google Cloud (GCP)", "Oracle Cloud (OCI)", "Git & GitHub"],
+    bootLogs: [
+      "RESOLVING gcp-infrastructure VPC route tables...",
+      "CHECKING ingress ports 80, 443 safety status...",
+      "VERIFYING OCI compute instances credentials...",
+      "SYSTEM RUNNING: Virtual Cloud Network fully synced."
+    ]
   },
-  data: {
-    id: "data",
-    title: "Data Analytics",
-    score: "85.2%",
-    color: "#10b981",
-    skills: [
-      { name: "Python", pct: 95 },
-      { name: "SQL", pct: 88 },
-      { name: "Data Analysis", pct: 90 },
-      { name: "Jupyter Notebook", pct: 92 },
-      { name: "Microsoft Excel", pct: 80 }
-    ],
-    defaultVals: { ai: 40, cloud: 42, data: 59.5, infra: 40 }
+  {
+    id: "k8s-orchestration",
+    name: "k8s-orchestration",
+    uptime: "75%",
+    status: "Provisioned",
+    statusColor: "text-amber-400 border-amber-500/20 bg-amber-500/5",
+    dotColor: "bg-amber-400 shadow-[0_0_8px_#f59e0b]",
+    cost: "$0.45/hr",
+    resource: "4 Active Pods // Auto-scaler",
+    skills: ["Kubernetes", "Docker"],
+    bootLogs: [
+      "AUDITING k8s cluster health status...",
+      "VERIFYING deployment replica controllers...",
+      "BOOTING container configurations from docker.io...",
+      "SYSTEM RUNNING: Pods 4/4 ready to scale."
+    ]
   },
-  infra: {
-    id: "infra",
-    title: "Automation & Infra",
-    score: "90.0%",
-    color: "#e11d48",
-    skills: [
-      { name: "Git & GitHub", pct: 92 },
-      { name: "CI/CD", pct: 90 },
-      { name: "Dart / HTML", pct: 85 },
-      { name: "Power BI", pct: 85 },
-      { name: "Figma", pct: 80 }
-    ],
-    defaultVals: { ai: 40, cloud: 42, data: 40, infra: 63.0 }
+  {
+    id: "sql-analytics-db",
+    name: "sql-analytics-db",
+    uptime: "90%",
+    status: "Active Pipeline",
+    statusColor: "text-emerald-400 border-emerald-500/20 bg-emerald-500/5",
+    dotColor: "bg-emerald-400 shadow-[0_0_8px_#10b981]",
+    cost: "$0.12/hr",
+    resource: "PostgreSQL Database // 250GB SSD",
+    skills: ["SQL", "Data Analysis", "Jupyter Notebook", "Microsoft Excel"],
+    bootLogs: [
+      "OPENING PostgreSQL server connection...",
+      "VERIFYING database schema migrations...",
+      "ESTABLISHING data extraction pipelines...",
+      "SYSTEM RUNNING: Schema online, query interface ready."
+    ]
+  },
+  {
+    id: "cicd-runner",
+    name: "cicd-runner",
+    uptime: "92%",
+    status: "High Priority",
+    statusColor: "text-[#06b6d4] border-[#06b6d4]/20 bg-[#06b6d4]/5",
+    dotColor: "bg-[#06b6d4] shadow-[0_0_8px_#06b6d4]",
+    cost: "$0.08/hr",
+    resource: "GitHub Action Node // Webhooks",
+    skills: ["CI/CD", "Power BI", "Figma", "Dart / HTML"],
+    bootLogs: [
+      "CONNECTING to GitHub actions build hook...",
+      "CHECKING docker compile target build caches...",
+      "SYNCING metrics telemetry to Power BI dashboard...",
+      "SYSTEM RUNNING: Webhook listener running successfully."
+    ]
   }
-};
+];
 
 export default function SkillsMatrix({ isZeroG }) {
-  const [activeDomain, setActiveDomain] = useState("aiml");
+  const [selectedId, setSelectedId] = useState("python-ml-core");
+  const [isBooting, setIsBooting] = useState(false);
+  const [bootProgress, setBootProgress] = useState(0);
 
-  const activeInfo = domainData[activeDomain];
+  const activeService = servicesData.find(s => s.id === selectedId);
 
-  // Base coordinates for center
-  const cx = 150;
-  const cy = 150;
+  // Trigger boot sequence animation when selected service changes
+  useEffect(() => {
+    setIsBooting(true);
+    setBootProgress(0);
+    
+    let current = 0;
+    const interval = setInterval(() => {
+      current += 10;
+      setBootProgress(current);
+      if (current >= 100) {
+        clearInterval(interval);
+        setIsBooting(false);
+      }
+    }, 80);
 
-  // Render the current radar polygon dimensions based on active domain
-  // We stretch the active axis slightly for a clean hover shift effect
-  const getRadarPolygon = () => {
-    let aiR = 55;
-    let cloudR = 52;
-    let dataR = 50;
-    let infraR = 54;
-
-    if (activeDomain === "aiml") aiR = 72;
-    if (activeDomain === "cloud") cloudR = 70;
-    if (activeDomain === "data") dataR = 68;
-    if (activeDomain === "infra") infraR = 71;
-
-    // Up (AI), Right (Cloud), Down (Data), Left (Infra)
-    const p1 = `${cx},${cy - aiR}`;
-    const p2 = `${cx + cloudR},${cy}`;
-    const p3 = `${cx},${cy + dataR}`;
-    const p4 = `${cx - infraR},${cy}`;
-
-    return `${p1} ${p2} ${p3} ${p4}`;
-  };
+    return () => clearInterval(interval);
+  }, [selectedId]);
 
   return (
     <section id="sphere" className="relative py-32 px-6 md:px-12 max-w-6xl mx-auto z-10 border-b border-white/5">
       {/* Section Header */}
       <div className="text-left mb-16">
-        <span className="text-xs font-mono uppercase tracking-widest text-[#06b6d4] font-semibold">// 04_OBSERVABILITY_RADAR</span>
+        <span className="text-xs font-mono uppercase tracking-widest text-[#06b6d4] font-semibold">// 04_RESOURCE_ALLOCATION</span>
         <h2 className="text-3xl md:text-5xl font-extrabold text-white mt-2 mb-4 font-sans tracking-tight">
-          System Diagnostics
+          Resource Allocation
         </h2>
         <div className="h-[2px] w-24 bg-[#06b6d4]" />
         <p className="text-slate-400 max-w-2xl mt-4 text-sm font-sans leading-relaxed">
-          Real-time MLOps domain monitoring. Hover over or click any metric axis on the radar chart to query system capabilities and verify telemetry metrics.
+          Cloud Resource Management & FinOps Dashboard. Boot up active technical microservices to inspect deployment specifications and loaded skill packages.
         </p>
       </div>
 
       {/* Main Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
         
-        {/* Left Column: Interactive Radar (6 cols) */}
-        <div className="lg:col-span-6 flex flex-col items-center justify-center relative">
-          
-          <div className="w-[300px] h-[300px] relative">
-            
-            {/* The SVG Radar Graph */}
-            <svg className="w-full h-full" viewBox="0 0 300 300">
-              
-              {/* Concentric grid diamonds (25%, 50%, 75%, 100%) */}
-              {[25, 50, 75, 95].map((val, idx) => {
-                const r = val * 0.8;
-                return (
-                  <polygon
-                    key={idx}
-                    points={`${cx},${cy - r} ${cx + r},${cy} ${cx},${cy + r} ${cx - r},${cy}`}
-                    fill="none"
-                    stroke="rgba(255, 255, 255, 0.04)"
-                    strokeWidth="0.8"
-                  />
-                );
-              })}
+        {/* Left Column: Deployed Services list (7 cols) */}
+        <div className="lg:col-span-7 flex flex-col gap-3">
+          <h3 className="text-xs uppercase font-mono tracking-widest text-slate-500 font-bold mb-2 text-left">
+            Deployed Services Console
+          </h3>
 
-              {/* Axis lines */}
-              <line x1={cx} y1={cy - 90} x2={cx} y2={cy + 90} stroke="rgba(255, 255, 255, 0.06)" strokeWidth="1" />
-              <line x1={cx - 90} y1={cy} x2={cx + 90} y2={cy} stroke="rgba(255, 255, 255, 0.06)" strokeWidth="1" />
+          <div className="space-y-3">
+            {servicesData.map((service) => {
+              const isSelected = selectedId === service.id;
+              return (
+                <div
+                  key={service.id}
+                  onClick={() => setSelectedId(service.id)}
+                  className={`border rounded-xl p-4 transition-all duration-300 cursor-pointer relative overflow-hidden flex flex-col sm:flex-row sm:items-center justify-between gap-4 group text-left ${
+                    isSelected 
+                      ? 'border-[#06b6d4] bg-[#06b6d4]/5 shadow-[0_0_15px_rgba(6,182,212,0.1)]' 
+                      : 'border-white/5 bg-[#080808]/40 hover:border-white/20'
+                  }`}
+                >
+                  {/* Left elements: Service name */}
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 rounded-lg border border-white/5 bg-white/[0.02]">
+                      <Cpu className={`w-4 h-4 ${isSelected ? 'text-[#06b6d4]' : 'text-slate-500'}`} />
+                    </div>
+                    <div>
+                      <h4 className={`text-xs font-bold font-mono tracking-wider ${isSelected ? 'text-white' : 'text-slate-300 group-hover:text-white'}`}>
+                        Service: {service.name}
+                      </h4>
+                      <p className="text-[10px] text-slate-500 font-mono mt-0.5">Cost: {service.cost}</p>
+                    </div>
+                  </div>
 
-              {/* Interactive Radar Area Polygon */}
-              <motion.polygon
-                points={getRadarPolygon()}
-                fill={`${activeInfo.color}15`}
-                stroke={activeInfo.color}
-                strokeWidth="1.8"
-                className="drop-shadow-[0_0_6px_var(--glow)]"
-                style={{ "--glow": activeInfo.color }}
-                layout
-                transition={{ type: "spring", stiffness: 80, damping: 15 }}
-              />
+                  {/* Right elements: Uptime & Status */}
+                  <div className="flex items-center justify-between sm:justify-end gap-6">
+                    <div className="flex flex-col text-left sm:text-right font-mono text-[9px] text-slate-500">
+                      <span>Uptime</span>
+                      <span className={`font-bold ${isSelected ? 'text-[#06b6d4]' : 'text-slate-300'}`}>{service.uptime}</span>
+                    </div>
 
-              {/* Axis Target Interactive Dots */}
-              <circle cx={cx} cy={cy - 72} r="5" fill={activeDomain === 'aiml' ? '#fff' : '#06b6d4'} className="cursor-pointer" onClick={() => setActiveDomain('aiml')} />
-              <circle cx={cx + 70} cy={cy} r="5" fill={activeDomain === 'cloud' ? '#fff' : '#6366f1'} className="cursor-pointer" onClick={() => setActiveDomain('cloud')} />
-              <circle cx={cx} cy={cy + 68} r="5" fill={activeDomain === 'data' ? '#fff' : '#10b981'} className="cursor-pointer" onClick={() => setActiveDomain('data')} />
-              <circle cx={cx - 71} cy={cy} r="5" fill={activeDomain === 'infra' ? '#fff' : '#e11d48'} className="cursor-pointer" onClick={() => setActiveDomain('infra')} />
-            </svg>
-
-            {/* Labels overlay placed perfectly around the radar */}
-            <button 
-              onClick={() => setActiveDomain('aiml')}
-              className={`absolute top-0 left-1/2 -translate-x-1/2 font-mono text-[9px] font-bold tracking-widest px-3 py-1 border rounded-md transition-all ${
-                activeDomain === 'aiml' 
-                  ? 'border-[#06b6d4] bg-[#06b6d4]/10 text-white' 
-                  : 'border-white/5 bg-black/40 text-slate-500 hover:text-slate-300'
-              }`}
-            >
-              AI/ML_ENGINEERING
-            </button>
-
-            <button 
-              onClick={() => setActiveDomain('cloud')}
-              className={`absolute right-[-24px] top-1/2 -translate-y-1/2 font-mono text-[9px] font-bold tracking-widest px-3 py-1 border rounded-md transition-all ${
-                activeDomain === 'cloud' 
-                  ? 'border-indigo-500 bg-indigo-500/10 text-white' 
-                  : 'border-white/5 bg-black/40 text-slate-500 hover:text-slate-300'
-              }`}
-            >
-              CLOUD_NATIVE
-            </button>
-
-            <button 
-              onClick={() => setActiveDomain('data')}
-              className={`absolute bottom-0 left-1/2 -translate-x-1/2 font-mono text-[9px] font-bold tracking-widest px-3 py-1 border rounded-md transition-all ${
-                activeDomain === 'data' 
-                  ? 'border-emerald-500 bg-emerald-500/10 text-white' 
-                  : 'border-white/5 bg-black/40 text-slate-500 hover:text-slate-300'
-              }`}
-            >
-              DATA_ANALYTICS
-            </button>
-
-            <button 
-              onClick={() => setActiveDomain('infra')}
-              className={`absolute left-[-24px] top-1/2 -translate-y-1/2 font-mono text-[9px] font-bold tracking-widest px-3 py-1 border rounded-md transition-all ${
-                activeDomain === 'infra' 
-                  ? 'border-rose-500 bg-rose-500/10 text-white' 
-                  : 'border-white/5 bg-black/40 text-slate-500 hover:text-slate-300'
-              }`}
-            >
-              INFRA_AUTOMATION
-            </button>
-
+                    <div className={`text-[8.5px] font-mono border px-2 py-0.5 rounded uppercase flex items-center gap-1.5 ${service.statusColor}`}>
+                      <span className={`w-1.5 h-1.5 rounded-full ${service.dotColor}`} />
+                      <span>{service.status}</span>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
 
-        {/* Right Column: Console Metrics Output (6 cols) */}
-        <div className="lg:col-span-6 flex flex-col justify-between">
+        {/* Right Column: Systems Query / Diagnostics Output (5 cols) */}
+        <div className="lg:col-span-5 flex flex-col justify-between">
           <TiltCard 
             isZeroG={isZeroG} 
-            className="border-white/10 bg-white/5 h-full min-h-[340px] flex flex-col justify-between relative overflow-hidden"
+            className="border-white/10 bg-white/5 h-full min-h-[360px] flex flex-col justify-between relative overflow-hidden"
           >
             <div className="absolute top-0 right-0 p-2 text-[8px] font-mono text-slate-700 select-none">
-              DIAG_v2.0
+              ALLOC_v2.0
             </div>
             
             <div className="space-y-6 text-left">
               <div className="flex items-center justify-between">
                 <span className="text-[9px] font-mono font-semibold text-[#06b6d4] uppercase tracking-wider flex items-center gap-1.5">
-                  <Activity className="w-3.5 h-3.5" /> DIAGNOSTICS TELEMETRY
+                  <Terminal className="w-3.5 h-3.5" /> SERVICE_RESOURCE_SPECS
                 </span>
                 <span className="w-2 h-2 rounded-full bg-[#06b6d4] shadow-[0_0_8px_#06b6d4]" />
               </div>
 
               {/* Console Screen */}
-              <div className="border border-white/5 bg-black/60 rounded-xl p-5 min-h-[220px] flex flex-col justify-between">
+              <div className="border border-white/5 bg-black/60 rounded-xl p-5 min-h-[240px] flex flex-col justify-between">
                 <AnimatePresence mode="wait">
-                  <motion.div
-                    key={activeDomain}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.2 }}
-                    className="space-y-5"
-                  >
-                    {/* Header Details */}
-                    <div className="flex justify-between items-end">
-                      <div>
-                        <span className="text-[8px] uppercase font-mono tracking-widest text-slate-600 block mb-0.5">
-                          Active Domain:
-                        </span>
-                        <h4 className="text-base font-extrabold text-white font-mono uppercase tracking-tight">
-                          {activeInfo.title}
-                        </h4>
-                      </div>
-                      <div className="text-right">
-                        <span className="text-[8px] uppercase font-mono tracking-widest text-slate-600 block mb-0.5">
-                          CAPACITY:
-                        </span>
-                        <span 
-                          style={{ color: activeInfo.color }}
-                          className="text-base font-mono font-bold"
-                        >
-                          {activeInfo.score}
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Progress Bars for Skills */}
-                    <div className="space-y-3">
-                      {activeInfo.skills.map((skill) => (
-                        <div key={skill.name} className="space-y-1">
-                          <div className="flex justify-between text-[9px] font-mono text-slate-400">
-                            <span>{skill.name}</span>
-                            <span>{skill.pct}%</span>
+                  {isBooting ? (
+                    /* Booting terminal loader */
+                    <motion.div
+                      key="booting"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      className="space-y-4 font-mono text-[9px] text-slate-400 flex flex-col justify-between h-full"
+                    >
+                      <div className="space-y-1.5 text-left">
+                        <div className="text-slate-500 border-b border-white/5 pb-1 flex justify-between">
+                          <span>$ boot --service {activeService.name}</span>
+                          <RefreshCw className="w-2.5 h-2.5 animate-spin text-[#06b6d4]" />
+                        </div>
+                        {activeService.bootLogs.map((log, idx) => (
+                          <div key={idx} className="flex gap-2 items-start text-left">
+                            <span className="text-[#06b6d4] font-bold select-none">&gt;&gt;</span>
+                            <span className="leading-relaxed">{log}</span>
                           </div>
-                          {/* Outer Bar */}
-                          <div className="h-1.5 w-full bg-white/[0.03] border border-white/5 rounded-full overflow-hidden">
-                            {/* Inner Glowing Bar */}
-                            <motion.div 
-                              initial={{ width: 0 }}
-                              animate={{ width: `${skill.pct}%` }}
-                              transition={{ duration: 0.8, ease: "easeOut" }}
-                              style={{ backgroundColor: activeInfo.color }}
-                              className="h-full rounded-full"
-                            />
+                        ))}
+                      </div>
+
+                      <div className="space-y-1">
+                        <div className="flex justify-between text-[8px] text-slate-500 uppercase tracking-widest">
+                          <span>Allocating Resources</span>
+                          <span>{bootProgress}%</span>
+                        </div>
+                        <div className="h-1 w-full bg-white/[0.03] border border-white/5 rounded-full overflow-hidden">
+                          <div style={{ width: `${bootProgress}%` }} className="h-full bg-[#06b6d4] rounded-full" />
+                        </div>
+                      </div>
+                    </motion.div>
+                  ) : (
+                    /* Loaded Service Specifications */
+                    <motion.div
+                      key="loaded"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      transition={{ duration: 0.2 }}
+                      className="space-y-4 text-left"
+                    >
+                      <div className="flex items-center gap-2 text-emerald-400 font-mono text-[9px] font-bold px-2 py-0.5 border border-emerald-500/20 bg-emerald-500/5 rounded self-start">
+                        <ShieldCheck className="w-3.5 h-3.5" /> SERVICE STATUS: RUNNING
+                      </div>
+
+                      <div className="space-y-2 text-xs">
+                        <div>
+                          <span className="text-[8px] uppercase font-mono tracking-widest text-slate-500 block mb-0.5">
+                            Core Service Name:
+                          </span>
+                          <h4 className="text-sm font-extrabold text-white font-mono">
+                            {activeService.name}
+                          </h4>
+                        </div>
+
+                        <div>
+                          <span className="text-[8px] uppercase font-mono tracking-widest text-slate-500 block mb-0.5">
+                            Resource Footprint:
+                          </span>
+                          <p className="text-xs text-slate-300 font-mono font-medium">
+                            {activeService.resource}
+                          </p>
+                        </div>
+
+                        <div>
+                          <span className="text-[8px] uppercase font-mono tracking-widest text-slate-500 block mb-2">
+                            Skills & Packages Loaded:
+                          </span>
+                          <div className="flex flex-wrap gap-1.5">
+                            {activeService.skills.map((skill, sIdx) => (
+                              <span 
+                                key={sIdx} 
+                                className="text-[9px] px-2.5 py-0.5 rounded bg-white/5 border border-white/10 text-slate-300"
+                              >
+                                {skill}
+                              </span>
+                            ))}
                           </div>
                         </div>
-                      ))}
-                    </div>
-                  </motion.div>
+                      </div>
+                    </motion.div>
+                  )}
                 </AnimatePresence>
                 
                 <div className="mt-4 pt-3 border-t border-white/5 flex justify-between items-center text-[8px] font-mono text-slate-600">
-                  <span>ACTIVE_NODE: 0x{activeDomain.toUpperCase()}</span>
-                  <span>STATUS: RUNNING</span>
+                  <span>DEPLOY_ID: 0x{selectedId.toUpperCase()}</span>
+                  <span>INGRESS: OK</span>
                 </div>
               </div>
             </div>
