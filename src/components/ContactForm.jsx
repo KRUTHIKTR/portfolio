@@ -1,30 +1,15 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { HardDrive, Wifi, Globe, ExternalLink, Phone, Mail, MapPin, Terminal, ShieldAlert, CheckCircle, TerminalSquare } from 'lucide-react';
+import { HardDrive, Wifi, Globe, ExternalLink, Phone, Mail, MapPin, Send, CheckCircle } from 'lucide-react';
 import TiltCard from './TiltCard';
 
 export default function ContactForm({ isZeroG }) {
   const [latency, setLatency] = useState(45);
-  const [terminalHistory, setTerminalHistory] = useState([
-    "Welcome to Kruthik T R's Secure SSH Shell (v1.4.5-LTS)",
-    "Connection: Established under SSL/TLS standards.",
-    "Select an interactive script option below to execute command.",
-    ""
-  ]);
-  const [activeStep, setActiveStep] = useState(null); // 'name', 'email', 'message', 'submitting'
-  const [inputs, setInputs] = useState({ name: '', email: '', message: '' });
-  const [currentInputValue, setCurrentInputValue] = useState('');
-  
-  const terminalEndRef = useRef(null);
+  const [formData, setFormData] = useState({ name: '', purpose: '', email: '', message: '' });
+  const [isSending, setIsSending] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
-  // Auto scroll terminal to bottom
-  useEffect(() => {
-    if (terminalEndRef.current) {
-      terminalEndRef.current.scrollIntoView({ behavior: 'smooth' });
-    }
-  }, [terminalHistory, activeStep]);
-
-  // Telemetry fluctuation simulator
+  // Live telemetry updates
   useEffect(() => {
     const latencyInterval = setInterval(() => {
       setLatency(Math.floor(44 + Math.random() * 5));
@@ -33,86 +18,23 @@ export default function ContactForm({ isZeroG }) {
     return () => clearInterval(latencyInterval);
   }, []);
 
-  const appendToHistory = (lines) => {
-    setTerminalHistory(prev => [...prev, ...(Array.isArray(lines) ? lines : [lines])]);
-  };
-
-  const handleConnect = () => {
-    if (activeStep) return;
-    setActiveStep('name');
-    setCurrentInputValue('');
-    appendToHistory([
-      "kruthik@portfolio:~$ ./connect_pipeline.sh",
-      "[SYSTEM]: Initializing Secure Connection Handshake...",
-      "[SYSTEM]: Verification key generated: SSL_RSA_SHA256",
-      "[SYSTEM]: Please enter your Name:"
-    ]);
-  };
-
-  const handleUtilities = () => {
-    if (activeStep) return;
-    appendToHistory([
-      "kruthik@portfolio:~$ ./list_utilities.sh",
-      "Resolving digital link registries...",
-      "---------------------------------------------------",
-      "  [1] LINKTREE -> https://linktr.ee/kruthik_tr",
-      "  [2] BENTO    -> https://bento.me/kruthiktr",
-      "  [3] GITHUB   -> https://github.com/KRUTHIKTR",
-      "---------------------------------------------------",
-      "All service status reports operational.",
-      ""
-    ]);
-  };
-
-  const handleDownloadCV = () => {
-    if (activeStep) return;
-    appendToHistory([
-      "kruthik@portfolio:~$ curl -O https://bento.me/kruthiktr/cv/resume.pdf",
-      "  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current",
-      "                                 Dload  Upload   Total   Spent    Left  Speed",
-      "100  342k  100  342k    0     0   856k      0 --:--:-- --:--:-- --:--:--  858k",
-      "Download complete: resume.pdf saved to guest_workspace.",
-      ""
-    ]);
-    // Trigger real download to linktree or resume page
-    window.open("https://linktr.ee/kruthik_tr", "_blank");
-  };
-
-  const handleInputSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if (!currentInputValue.trim()) return;
+    if (!formData.name || !formData.purpose || !formData.email || !formData.message) return;
 
-    const val = currentInputValue.trim();
-    setCurrentInputValue('');
+    setIsSending(true);
+    setIsSubmitted(false);
 
-    if (activeStep === 'name') {
-      setInputs(prev => ({ ...prev, name: val }));
-      appendToHistory(`Name: ${val}`);
-      setActiveStep('email');
-      appendToHistory("[SYSTEM]: Please enter your Email Coordinate:");
-    } else if (activeStep === 'email') {
-      setInputs(prev => ({ ...prev, email: val }));
-      appendToHistory(`Email: ${val}`);
-      setActiveStep('message');
-      appendToHistory("[SYSTEM]: Enter your Inquiry Message:");
-    } else if (activeStep === 'message') {
-      setInputs(prev => ({ ...prev, message: val }));
-      appendToHistory(`Message: ${val}`);
-      setActiveStep('submitting');
-      appendToHistory("[SYSTEM]: Bundling payload packets & initiating handshake...");
-      
-      // Simulate API submit latency
-      setTimeout(() => {
-        appendToHistory([
-          "[SYSTEM]: Response Code: 200 OK",
-          "[SYSTEM]: SECURE CONNECTION ESTABLISHED SUCCESSFULLY.",
-          "[SYSTEM]: Kruthik T R has been alerted of your inquiry.",
-          ""
-        ]);
-        setActiveStep(null);
-        setInputs({ name: '', email: '', message: '' });
-      }, 1500);
-    }
+    // Simulate connection transmission latency
+    setTimeout(() => {
+      setIsSending(false);
+      setIsSubmitted(true);
+    }, 1200);
+  };
+
+  const handleReset = () => {
+    setFormData({ name: '', purpose: '', email: '', message: '' });
+    setIsSubmitted(false);
   };
 
   return (
@@ -125,7 +47,7 @@ export default function ContactForm({ isZeroG }) {
         </h2>
         <div className="h-[2px] w-24 bg-[#06b6d4]" />
         <p className="text-slate-400 max-w-xl mt-4 text-base font-sans leading-relaxed">
-          Establish a secure connection. Reach out via email, check social hubs, or spin up the terminal connection below.
+          Establish a secure connection. Reach out via email, check social hubs, or complete the conversational interface.
         </p>
       </div>
 
@@ -226,89 +148,119 @@ export default function ContactForm({ isZeroG }) {
           </TiltCard>
         </div>
 
-        {/* Right Column: SSH Command-Line Window (7 cols) */}
+        {/* Right Column: Conversational Paragraph Form (7 cols) */}
         <div className="lg:col-span-7">
-          <TiltCard isZeroG={isZeroG} className="bg-[#050505]/95 border border-white/10 rounded-2xl h-full flex flex-col justify-between relative overflow-hidden font-mono">
+          <TiltCard isZeroG={isZeroG} className="bg-white/5 border border-white/10 rounded-2xl p-8 h-full flex flex-col justify-between relative overflow-hidden">
             
-            {/* Terminal Window Header Bar */}
-            <div className="flex items-center justify-between bg-white/[0.03] border-b border-white/5 px-4 py-3 select-none">
-              <div className="flex items-center gap-1.5">
-                <span className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
-                <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/80" />
-                <span className="w-2.5 h-2.5 rounded-full bg-green-500/80" />
-              </div>
-              <span className="text-[10px] text-slate-500 font-bold flex items-center gap-1">
-                <TerminalSquare className="w-3.5 h-3.5 text-[#06b6d4]" /> kruthik@portfolio: ~ (ssh)
-              </span>
-              <div className="w-10" />
-            </div>
+            <AnimatePresence mode="wait">
+              {!isSubmitted ? (
+                <motion.form 
+                  key="form"
+                  onSubmit={handleSubmit} 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="space-y-8 text-left flex flex-col h-full justify-between"
+                >
+                  <div className="space-y-4">
+                    <span className="text-[9px] font-mono text-[#06b6d4] uppercase tracking-widest font-bold block mb-4">
+                      // CONVERSATIONAL_API_v2.0
+                    </span>
 
-            {/* Terminal Logs & Output Panel */}
-            <div className="flex-grow p-5 space-y-2 text-left overflow-y-auto text-xs max-h-[300px] font-mono text-slate-300 leading-relaxed bg-black/40">
-              {terminalHistory.map((line, idx) => (
-                <div key={idx} className="whitespace-pre-wrap break-all">
-                  {line.startsWith("kruthik@portfolio:~$") ? (
-                    <span className="text-[#06b6d4] font-bold">{line}</span>
-                  ) : line.startsWith("[SYSTEM]") ? (
-                    <span className="text-emerald-400">{line}</span>
-                  ) : (
-                    <span>{line}</span>
-                  )}
-                </div>
-              ))}
+                    {/* Interactive Paragraph with inline auto-resizing inputs */}
+                    <div className="text-base md:text-lg text-slate-300 leading-[2.5] font-sans font-normal">
+                      Hello Kruthik, my name is{" "}
+                      <input 
+                        type="text" 
+                        required
+                        placeholder="[ Your Name ]"
+                        value={formData.name}
+                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        disabled={isSending}
+                        className="bg-transparent border-b-2 border-white/10 focus:border-[#06b6d4] text-[#06b6d4] placeholder-slate-700 font-bold focus:outline-none focus:ring-0 px-2 py-0 text-center transition-all duration-300 font-mono text-sm inline-block rounded-none"
+                        style={{ width: formData.name ? `${Math.max(110, formData.name.length * 10)}px` : '110px' }}
+                      />
+                      . I am reaching out to discuss a{" "}
+                      <input 
+                        type="text" 
+                        required
+                        placeholder="[ Project / Job Opportunity ]"
+                        value={formData.purpose}
+                        onChange={(e) => setFormData({ ...formData, purpose: e.target.value })}
+                        disabled={isSending}
+                        className="bg-transparent border-b-2 border-white/10 focus:border-[#06b6d4] text-[#06b6d4] placeholder-slate-700 font-bold focus:outline-none focus:ring-0 px-2 py-0 text-center transition-all duration-300 font-mono text-sm inline-block rounded-none"
+                        style={{ width: formData.purpose ? `${Math.max(210, formData.purpose.length * 10)}px` : '210px' }}
+                      />
+                      . You can contact me back at{" "}
+                      <input 
+                        type="email" 
+                        required
+                        placeholder="[ Your Email ]"
+                        value={formData.email}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        disabled={isSending}
+                        className="bg-transparent border-b-2 border-white/10 focus:border-[#06b6d4] text-[#06b6d4] placeholder-slate-700 font-bold focus:outline-none focus:ring-0 px-2 py-0 text-center transition-all duration-300 font-mono text-sm inline-block rounded-none"
+                        style={{ width: formData.email ? `${Math.max(140, formData.email.length * 10)}px` : '140px' }}
+                      />
+                      . Here is a brief message:{" "}
+                      <textarea 
+                        required
+                        rows="3"
+                        placeholder="[ Write your message here... ]"
+                        value={formData.message}
+                        onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                        disabled={isSending}
+                        className="bg-transparent border-b-2 border-white/10 focus:border-[#06b6d4] text-[#06b6d4] placeholder-slate-700 font-bold focus:outline-none focus:ring-0 px-2 py-0 transition-all duration-300 font-mono text-sm w-full mt-4 resize-none block rounded-none leading-relaxed"
+                      />
+                    </div>
+                  </div>
 
-              {/* Dynamic inline input prompts based on active connection steps */}
-              {activeStep && activeStep !== 'submitting' && (
-                <form onSubmit={handleInputSubmit} className="flex items-center gap-1 text-[#06b6d4] font-bold mt-1">
-                  <span>
-                    {activeStep === 'name' && "Name: "}
-                    {activeStep === 'email' && "Email: "}
-                    {activeStep === 'message' && "Message: "}
-                  </span>
-                  <input
-                    type={activeStep === 'email' ? 'email' : 'text'}
-                    autoFocus
-                    required
-                    value={currentInputValue}
-                    onChange={(e) => setCurrentInputValue(e.target.value)}
-                    className="bg-transparent border-none text-white focus:outline-none focus:ring-0 p-0 text-xs flex-grow font-mono"
-                  />
-                </form>
+                  <div className="pt-6">
+                    <button 
+                      type="submit" 
+                      disabled={isSending}
+                      className="w-full flex items-center justify-center gap-2 bg-[#06b6d4] hover:bg-[#06b6d4]/90 text-white font-mono text-xs font-bold py-3.5 px-6 rounded-xl transition-all duration-300 shadow-[0_0_15px_rgba(6,182,212,0.15)] hover:shadow-[0_0_25px_rgba(6,182,212,0.3)] border border-[#06b6d4]/20 active:scale-[0.99] disabled:opacity-50"
+                    >
+                      {isSending ? (
+                        <span className="flex items-center gap-2">
+                          TRANSMITTING PAYLOAD PACKETS...
+                        </span>
+                      ) : (
+                        <>
+                          TRANSMIT SIGNALS <Send className="w-3.5 h-3.5 ml-1" />
+                        </>
+                      )}
+                    </button>
+                  </div>
+                </motion.form>
+              ) : (
+                <motion.div 
+                  key="success"
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="flex flex-col items-center justify-center h-full text-center space-y-6 py-12"
+                >
+                  <div className="p-4 bg-[#06b6d4]/10 border border-[#06b6d4]/25 rounded-full text-[#06b6d4] shadow-[0_0_20px_rgba(6,182,212,0.15)]">
+                    <CheckCircle className="w-12 h-12 animate-pulse" />
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <h3 className="text-lg font-bold text-white font-mono">// TRANSMISSION_SUCCESSFUL</h3>
+                    <p className="text-xs text-slate-400 font-sans max-w-sm leading-relaxed">
+                      Handshake complete. Connection established with Kruthik T R. Signal packets routed successfully.
+                    </p>
+                  </div>
+
+                  <button 
+                    onClick={handleReset}
+                    className="text-xs font-mono text-[#06b6d4] hover:underline"
+                  >
+                    // INITIATE_NEW_TRANSMISSION
+                  </button>
+                </motion.div>
               )}
-
-              <div ref={terminalEndRef} />
-            </div>
-
-            {/* Command Trigger Buttons */}
-            <div className="p-4 border-t border-white/5 bg-white/[0.01] space-y-4">
-              <div className="text-[8px] text-slate-500 uppercase tracking-widest text-left font-bold">
-                // SELECT COMMAND EXECUTABLE
-              </div>
-
-              <div className="grid grid-cols-3 gap-2">
-                <button
-                  onClick={handleConnect}
-                  disabled={!!activeStep}
-                  className="flex items-center justify-center gap-1 py-2 px-1 rounded-lg border border-white/10 hover:border-[#06b6d4] bg-white/5 hover:bg-[#06b6d4]/10 text-[9px] font-mono font-bold text-slate-300 hover:text-white transition-all disabled:opacity-30 disabled:pointer-events-none"
-                >
-                  [ 1. CONNECT ]
-                </button>
-                <button
-                  onClick={handleUtilities}
-                  disabled={!!activeStep}
-                  className="flex items-center justify-center gap-1 py-2 px-1 rounded-lg border border-white/10 hover:border-[#06b6d4] bg-white/5 hover:bg-[#06b6d4]/10 text-[9px] font-mono font-bold text-slate-300 hover:text-white transition-all disabled:opacity-30 disabled:pointer-events-none"
-                >
-                  [ 2. UTILITIES ]
-                </button>
-                <button
-                  onClick={handleDownloadCV}
-                  disabled={!!activeStep}
-                  className="flex items-center justify-center gap-1 py-2 px-1 rounded-lg border border-white/10 hover:border-emerald-400 bg-white/5 hover:bg-emerald-500/10 text-[9px] font-mono font-bold text-slate-300 hover:text-white transition-all disabled:opacity-30 disabled:pointer-events-none"
-                >
-                  [ 3. DOWNLOAD_CV ]
-                </button>
-              </div>
-            </div>
+            </AnimatePresence>
 
           </TiltCard>
         </div>
