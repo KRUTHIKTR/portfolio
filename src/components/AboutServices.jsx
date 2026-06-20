@@ -57,13 +57,13 @@ function K8sClusterMonitor() {
       <div className="flex items-center justify-between border-b border-white/5 pb-2.5 mb-4 relative z-10">
         <div className="flex items-center gap-2">
           <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
-          <span className="text-[9px] font-bold text-slate-300">K8S_CLUSTER_MONITOR // DEPLOYMENT_ACTIVE</span>
+          <span className="text-xs font-bold text-slate-300">K8S_CLUSTER_MONITOR // DEPLOYMENT_ACTIVE</span>
         </div>
-        <span className="text-[8px] text-emerald-400 font-bold">[ HEALTHY ]</span>
+        <span className="text-[10px] text-emerald-400 font-bold">[ HEALTHY ]</span>
       </div>
 
       {/* Cluster Node Specs */}
-      <div className="flex justify-between text-[8px] text-slate-500 mb-3 relative z-10 px-0.5">
+      <div className="flex justify-between text-[10px] text-slate-500 mb-3 relative z-10 px-0.5">
         <span>NAMESPACE: production</span>
         <span>HOST: gke-prod-01</span>
       </div>
@@ -71,7 +71,7 @@ function K8sClusterMonitor() {
       {/* System stats */}
       <div className="grid grid-cols-2 gap-3 mb-4 relative z-10">
         <div className="bg-white/[0.02] border border-white/5 rounded-xl p-2.5">
-          <div className="flex justify-between text-[8px] text-slate-500 mb-1">
+          <div className="flex justify-between text-[10px] text-slate-500 mb-1">
             <span>CPU UTIL</span>
             <span>{cpu}%</span>
           </div>
@@ -84,7 +84,7 @@ function K8sClusterMonitor() {
         </div>
 
         <div className="bg-white/[0.02] border border-white/5 rounded-xl p-2.5">
-          <div className="flex justify-between text-[8px] text-slate-500 mb-1">
+          <div className="flex justify-between text-[10px] text-slate-500 mb-1">
             <span>MEM UTIL</span>
             <span>{memory}%</span>
           </div>
@@ -100,8 +100,8 @@ function K8sClusterMonitor() {
       {/* Pod grid visualization */}
       <div className="bg-slate-950/60 border border-white/5 rounded-xl p-3 mb-4 relative z-10 flex items-center justify-between">
         <div className="space-y-1">
-          <span className="text-[8px] text-slate-500 block">REPLICAS STATUS</span>
-          <span className="text-[10px] text-white font-bold">9/9 RUNNING</span>
+          <span className="text-[10px] text-slate-500 block">REPLICAS STATUS</span>
+          <span className="text-xs text-white font-bold">9/9 RUNNING</span>
         </div>
         
         {/* 3x3 Grid representing Kubernetes Pods */}
@@ -111,18 +111,14 @@ function K8sClusterMonitor() {
               key={idx}
               animate={status === "deploying" ? { scale: [1, 1.15, 1], opacity: [0.6, 1, 0.6] } : { scale: 1, opacity: 1 }}
               transition={{ repeat: Infinity, duration: 1.5 }}
-              className={`w-3.5 h-3.5 rounded-sm border transition-colors duration-500 ${
-                status === "deploying"
-                  ? "bg-cyan-500/20 border-cyan-400 shadow-[0_0_8px_rgba(34,211,238,0.3)]"
-                  : "bg-emerald-500/20 border-emerald-500 shadow-[0_0_6px_rgba(16,185,129,0.2)]"
-              }`}
+              className="w-3.5 h-3.5 rounded-sm border transition-colors duration-500 bg-emerald-500/20 border-emerald-500 shadow-[0_0_6px_rgba(16,185,129,0.2)]"
             />
           ))}
         </div>
       </div>
 
       {/* Live System Logs Feed */}
-      <div className="bg-slate-950 border border-white/5 rounded-xl p-3 text-[9px] text-slate-400 space-y-1.5 h-20 overflow-hidden relative z-10 flex flex-col justify-end">
+      <div className="bg-slate-950 border border-white/5 rounded-xl p-3 text-xs text-slate-400 space-y-1.5 h-20 overflow-hidden relative z-10 flex flex-col justify-end">
         {logs.map((log, idx) => (
           <div key={idx} className="flex gap-1.5 items-start">
             <span className="text-[#06b6d4] font-bold select-none">&gt;</span>
@@ -255,7 +251,7 @@ function ServiceCard({ service, idx, phase, isLocked, onCardClick }) {
           <div className="absolute inset-0 p-4 flex flex-col justify-end">
             <div className="flex gap-4 justify-around items-center border border-indigo-500/10 rounded-lg p-2.5 bg-indigo-500/5 backdrop-blur-sm">
               {["node-1", "node-2", "node-3"].map((nodeName, nIdx) => (
-                <div key={nIdx} className="flex flex-col items-center gap-1 font-mono text-[7px] text-slate-400">
+                <div key={nIdx} className="flex flex-col items-center gap-1 font-mono text-[9px] text-slate-400">
                   <span className="w-2.5 h-2.5 rounded-sm bg-emerald-500/20 border border-emerald-500 animate-pulse" />
                   <span>{nodeName}</span>
                 </div>
@@ -268,7 +264,7 @@ function ServiceCard({ service, idx, phase, isLocked, onCardClick }) {
         {idx === 2 && isHovered && (
           <div className="absolute inset-0 p-4 flex flex-col justify-end font-mono">
             <div className="border border-emerald-500/10 rounded-lg p-2.5 bg-emerald-500/5 backdrop-blur-sm space-y-1.5">
-              <div className="flex justify-between text-[7px] text-slate-400">
+              <div className="flex justify-between text-[9px] text-slate-400">
                 <span>STAGING BUILD</span>
                 <span>{ciProgress}%</span>
               </div>
@@ -276,7 +272,7 @@ function ServiceCard({ service, idx, phase, isLocked, onCardClick }) {
                 <div className="h-full bg-emerald-400 transition-all duration-75" style={{ width: `${ciProgress}%` }} />
               </div>
               {ciProgress === 100 && (
-                <span className="text-[7px] text-emerald-400 border border-emerald-500/30 px-1 py-0.5 rounded bg-emerald-500/10 animate-bounce block text-center">
+                <span className="text-[9px] text-emerald-400 border border-emerald-500/30 px-1 py-0.5 rounded bg-emerald-500/10 animate-bounce block text-center">
                   [ SUCCESS: DEPLOYED ]
                 </span>
               )}
@@ -293,22 +289,22 @@ function ServiceCard({ service, idx, phase, isLocked, onCardClick }) {
             <span className={`p-3 rounded-xl border flex items-center justify-center transition-colors duration-500 ${iconThemeClass}`}>
               <ServiceIcon className="w-5 h-5" />
             </span>
-            <span className="text-[8px] font-mono text-[#06b6d4] font-bold border border-[#06b6d4]/20 px-1.5 py-0.5 rounded bg-[#06b6d4]/5 tracking-widest">// {service.status}</span>
+            <span className="text-xs font-mono text-[#06b6d4] font-bold border border-[#06b6d4]/20 px-1.5 py-0.5 rounded bg-[#06b6d4]/5 tracking-widest">// {service.status}</span>
           </div>
 
           {/* Title & Body */}
           <div className="pt-2 text-left">
-            <h3 className="text-lg font-bold text-white mb-2 transition-colors">
+            <h3 className="text-xl font-bold text-white mb-2 transition-colors">
               {service.title}
             </h3>
-            <p className="text-xs text-slate-400 leading-relaxed font-sans">
+            <p className="text-sm text-slate-400 leading-relaxed font-sans">
               {service.description}
             </p>
           </div>
         </div>
 
         {/* Interactive Telemetry Footer */}
-        <div className="border-t border-white/5 pt-4 flex justify-between items-center text-[10px] font-mono text-slate-500">
+        <div className="border-t border-white/5 pt-4 flex justify-between items-center text-xs font-mono text-slate-500">
           <span className="flex items-center gap-1.5">
             <span className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
               isActive 
@@ -319,7 +315,7 @@ function ServiceCard({ service, idx, phase, isLocked, onCardClick }) {
               {service.metric}
             </span>
           </span>
-          <span className="text-[8px] font-bold tracking-widest text-[#06b6d4]/80 group-hover:text-[#06b6d4] transition-colors">[ SELECT ]</span>
+          <span className="text-xs font-bold tracking-widest text-[#06b6d4]/80 group-hover:text-[#06b6d4] transition-colors">[ SELECT ]</span>
         </div>
       </div>
     </div>
@@ -333,18 +329,18 @@ function InfrastructureConsole({ activeIndex }) {
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#111_1px,transparent_1px),linear-gradient(to_bottom,#111_1px,transparent_1px)] bg-[size:16px_16px] opacity-15 pointer-events-none" />
 
       {/* Left Metadata Panel (1/3 width) */}
-      <div className="md:w-1/3 flex flex-col justify-between border-b md:border-b-0 md:border-r border-white/5 pb-4 md:pb-0 md:pr-6 relative z-10 text-[9px] text-slate-400 space-y-2">
+      <div className="md:w-1/3 flex flex-col justify-between border-b md:border-b-0 md:border-r border-white/5 pb-4 md:pb-0 md:pr-6 relative z-10 text-xs text-slate-400 space-y-2">
         <div className="space-y-1.5">
           <div className="flex items-center gap-2">
             <span className={`w-1.5 h-1.5 rounded-full ${activeIndex === null ? 'bg-slate-500 animate-pulse' : activeIndex === 0 ? 'bg-cyan-400 animate-ping' : activeIndex === 1 ? 'bg-indigo-400 animate-ping' : 'bg-emerald-400 animate-ping'}`} />
-            <span className="text-[10px] font-bold text-white uppercase">
+            <span className="text-xs font-bold text-white uppercase">
               {activeIndex === null ? 'SYS_MONITOR // STANDBY' : activeIndex === 0 ? 'SYS_HOLOGRAM // MODEL_REGISTRY' : activeIndex === 1 ? 'SYS_HOLOGRAM // VPC_TOPOLOGY' : 'SYS_HOLOGRAM // PIPELINE_DEPLOY'}
             </span>
           </div>
-          <p className="text-[8px] text-slate-500 tracking-wide">// NETWORK_ACCELERATED_MODE</p>
+          <p className="text-[10px] text-slate-500 tracking-wide">// NETWORK_ACCELERATED_MODE</p>
         </div>
 
-        <div className="space-y-1 text-[8px]">
+        <div className="space-y-1 text-[10px]">
           {activeIndex === null && (
             <>
               <div>SYS_LOAD: 0.14</div>
@@ -644,7 +640,7 @@ export default function AboutServices({ isZeroG }) {
                       <span className={`p-2.5 rounded-xl border flex items-center justify-center ${item.iconBg} ${item.iconColor}`}>
                         <MilestoneIcon className="w-4.5 h-4.5" />
                       </span>
-                      <span className="text-[8px] font-mono text-slate-500 font-bold tracking-widest uppercase">
+                      <span className="text-xs font-mono text-slate-500 font-bold tracking-widest uppercase">
                         // {item.subtitle}
                       </span>
                     </div>

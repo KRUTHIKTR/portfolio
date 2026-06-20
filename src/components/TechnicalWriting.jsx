@@ -14,7 +14,9 @@ const articles = [
     summary: "India doesn’t need another English-speaking chatbot. It needs an assistant that understands Bharat, focusing on localized vernacular translation and multilingual architectures.",
     findings: "Optimizing tokenizers for Indic regional languages reduces memory foot-print and improves training efficiency across diverse local dialects.",
     securityRisk: "Ensures linguistic data sovereignty by developing localized foundation models tailored to regional Indian demographics.",
-    link: "https://medium.com/@kruthiktrgowda"
+    links: [
+      { platform: "Medium", url: "https://medium.com/@kruthiktrgowda/india-speaks-sarvam-listens-the-rise-of-bharats-multilingual-ai-20a496ab8376" }
+    ]
   },
   {
     id: 2,
@@ -26,7 +28,11 @@ const articles = [
     summary: "The Viral Ghibli-Style AI Art Trend: A Privacy Nightmare? An audit explaining how consumer AI filters harvest facial biometrics, highlighting the hidden privacy traps in company policy terms.",
     findings: "Analysis of telemetry packets reveals that consumer filters transmit vector maps of facial landmarks to overseas servers under the guise of style transfer parameters.",
     securityRisk: "Permanent facial mapping profile generation without user-explicit data deletion or revocation rights.",
-    link: "https://medium.com/@kruthiktrgowda"
+    links: [
+      { platform: "Medium", url: "https://medium.com/@kruthiktrgowda/the-dark-side-of-ghibli-style-ai-art-privacy-concerns-you-need-to-know-58331086930e" },
+      { platform: "Blogger", url: "https://kruthiktr.blogspot.com/2025/03/the-hidden-cost-of-ai-generated-ghibli.html" },
+      { platform: "Dev.to", url: "https://dev.to/kruthiktr/the-hidden-cost-of-ai-generated-art-is-your-personal-data-at-risk-34bk" }
+    ]
   },
   {
     id: 3,
@@ -38,7 +44,11 @@ const articles = [
     summary: "The future of AI isn’t just in the cloud—it’s at the edge, where intelligence meets real-time action. Discussing why local edge sensors and IoT devices are replacing centralized cloud infrastructure to cut latency.",
     findings: "Inference pipelines on local gateway hardware (e.g. Raspberry Pi / Jetson Nano) reduced network response times (RTT) from 180ms to 22ms compared to centralized cloud VMs.",
     securityRisk: "Local data minimization reduces broad ingress vulnerabilities, completely mitigating typical man-in-the-middle telemetry intercepts.",
-    link: "https://medium.com/@kruthiktrgowda"
+    links: [
+      { platform: "Medium", url: "https://medium.com/@kruthiktrgowda/beyond-the-cloud-why-intelligent-edge-is-the-future-of-ai-and-computing-503497f19777" },
+      { platform: "Blogger", url: "https://kruthiktr.blogspot.com/2025/03/Beyond%20the%20Cloud%20Why%20Intelligent%20Edge%20is%20the%20Future%20of%20AI%20and%20Computing.html" },
+      { platform: "Dev.to", url: "https://dev.to/kruthiktr/beyond-the-cloud-why-intelligent-edge-is-the-future-of-ai-and-computing-1h84" }
+    ]
   }
 ];
 
@@ -202,15 +212,20 @@ export default function TechnicalWriting({ isZeroG }) {
                 ))}
               </div>
 
-              <a 
-                href={activeArticle.link}
-                target="_blank"
-                rel="noreferrer"
-                className="flex items-center justify-center gap-2 py-3 px-6 rounded-xl border border-white/10 hover:border-[#06b6d4] bg-white/5 hover:bg-[#06b6d4]/10 text-xs font-mono font-bold tracking-wider text-slate-300 hover:text-white transition-all duration-300"
-              >
-                <span>READ FULL PUBLICATION</span>
-                <ArrowUpRight className="w-4 h-4 text-[#06b6d4]" />
-              </a>
+              <div className="flex flex-wrap gap-2 justify-center">
+                {activeArticle.links.map((linkObj, idx) => (
+                  <a 
+                    key={idx}
+                    href={linkObj.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="flex items-center gap-1.5 py-2.5 px-4 rounded-xl border border-white/10 hover:border-[#06b6d4] bg-white/5 hover:bg-[#06b6d4]/10 text-[10px] font-mono font-bold tracking-wider text-slate-300 hover:text-white transition-all duration-300"
+                  >
+                    <span>READ ON {linkObj.platform.toUpperCase()}</span>
+                    <ArrowUpRight className="w-3.5 h-3.5 text-[#06b6d4]" />
+                  </a>
+                ))}
+              </div>
             </div>
 
           </TiltCard>

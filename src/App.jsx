@@ -81,7 +81,7 @@ cloud environments.
 - Phone: +91-7676174246
 - Email: kruthiktrgowda24@gmail.com
 - Github: https://github.com/KRUTHIKTR
-- LinkedIn: https://linkedin.com/in/kruthiktrgowda
+- LinkedIn: https://www.linkedin.com/in/kruthiktr/
 
 [JOURNEY & EXPERIENCE]
 1. Co-Founder & Technical Lead (CTO) | Berukodige Farm (Jan 2025 - Present)
@@ -264,12 +264,14 @@ Generated from Antigravity Systems HUD Terminal.
                 View Projects <ArrowUpRight className="w-4 h-4" />
               </a>
               
-              <button 
-                onClick={downloadDossier}
+              <a 
+                href="/Resume - Kruthik T R.pdf"
+                target="_blank"
+                rel="noreferrer"
                 className="flex items-center gap-2 font-mono text-xs font-bold text-white border border-white/10 hover:border-[#06b6d4] bg-white/5 hover:bg-white/10 px-8 py-3.5 rounded-full transition-all duration-300 hover:scale-[1.02]"
               >
-                Download CV <Download className="w-4 h-4" />
-              </button>
+                View Resume <ArrowUpRight className="w-4 h-4" />
+              </a>
             </div>
 
           </div>

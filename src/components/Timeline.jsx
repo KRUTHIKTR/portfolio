@@ -138,7 +138,7 @@ export default function Timeline({ isZeroG }) {
         </div>
 
         {/* Autoplay status badge */}
-        <div className="flex items-center gap-2 border border-white/10 bg-[#080808]/40 px-3 py-1.5 rounded-xl font-mono text-[9px]">
+        <div className="flex items-center gap-2 border border-white/10 bg-[#080808]/40 px-3.5 py-2 rounded-xl font-mono text-xs">
           <span className={`w-1.5 h-1.5 rounded-full ${isPaused ? 'bg-amber-400' : 'bg-emerald-400 animate-pulse'}`} />
           <span className="text-slate-400 uppercase">
             AUTOPLAY: {isPaused ? 'PAUSED (MANUAL_OVERRIDE)' : 'RUNNING (4.5s)'}
@@ -147,7 +147,7 @@ export default function Timeline({ isZeroG }) {
             onClick={() => setIsPaused(!isPaused)} 
             className="ml-2 hover:text-[#06b6d4] text-slate-500 transition-colors focus:outline-none"
           >
-            {isPaused ? <Play className="w-3 h-3" /> : <Pause className="w-3 h-3" />}
+            {isPaused ? <Play className="w-3.5 h-3.5" /> : <Pause className="w-3.5 h-3.5" />}
           </button>
         </div>
       </div>
@@ -175,22 +175,22 @@ export default function Timeline({ isZeroG }) {
                 >
                   <div className="flex items-center gap-4 text-left relative z-10">
                     {/* Role Icon */}
-                    <div className={`p-2 rounded-lg border ${
+                    <div className={`p-2.5 rounded-lg border ${
                       isSelected ? 'border-[#06b6d4]/30 bg-[#06b6d4]/10 text-[#06b6d4]' : 'border-white/5 bg-white/[0.02] text-slate-500'
                     }`}>
                       <Icon className="w-4 h-4" />
                     </div>
 
                     <div>
-                      <h3 className={`text-xs font-bold font-mono tracking-wider uppercase ${isSelected ? 'text-white' : 'text-slate-400 group-hover:text-slate-200'}`}>
+                      <h3 className={`text-sm font-bold font-mono tracking-wider uppercase ${isSelected ? 'text-white' : 'text-slate-400 group-hover:text-slate-200'}`}>
                         {item.company}
                       </h3>
-                      <p className="text-[10px] text-slate-500 font-sans mt-0.5">{item.role}</p>
+                      <p className="text-xs text-slate-500 font-sans mt-0.5">{item.role}</p>
                     </div>
                   </div>
 
                   {/* Period Tag */}
-                  <span className={`text-[8px] font-mono border px-1.5 py-0.5 rounded uppercase select-none ${
+                  <span className={`text-xs font-mono border px-2 py-0.5 rounded uppercase select-none ${
                     isSelected ? 'border-[#06b6d4]/30 text-[#06b6d4] bg-[#06b6d4]/5' : 'border-white/5 text-slate-600'
                   }`}>
                     {item.period.split(' ')[0]}
@@ -201,7 +201,7 @@ export default function Timeline({ isZeroG }) {
           </div>
 
           {/* System Spec console log */}
-          <div className="border border-white/5 bg-[#080808]/40 rounded-xl p-4 font-mono text-[9px] text-slate-500 text-left hidden lg:block mt-4">
+          <div className="border border-white/5 bg-[#080808]/40 rounded-xl p-4 font-mono text-xs text-slate-500 text-left hidden lg:block mt-4">
             <span className="text-white font-bold block mb-1">SYSTEM_SPECIFICATION:</span>
             <span>AUTO_CYCLE_RATE: 4500ms</span>
             <br />
@@ -224,20 +224,20 @@ export default function Timeline({ isZeroG }) {
                 <div className="flex flex-col gap-1 text-left">
                   
                   {/* Console Header */}
-                  <div className="flex items-center justify-between border-b border-white/5 pb-3 mb-4 font-mono text-[10px]">
+                  <div className="flex items-center justify-between border-b border-white/5 pb-3 mb-4 font-mono text-xs">
                     <div className="flex items-center gap-2">
-                      <Terminal className="w-3.5 h-3.5 text-[#06b6d4]" />
+                      <Terminal className="w-4 h-4 text-[#06b6d4]" />
                       <span className="font-bold text-white uppercase tracking-wider">
                         CONSOLE // DIAGNOSTIC_SCAN
                       </span>
                     </div>
-                    <span className={`text-[8px] font-bold border px-1.5 py-0.5 rounded uppercase ${currentItem.statusColor}`}>
+                    <span className={`text-xs font-bold border px-2 py-0.5 rounded uppercase ${currentItem.statusColor}`}>
                       {currentItem.status} ({currentItem.nodeId})
                     </span>
                   </div>
 
                   {/* Metadata log grid */}
-                  <div className="grid grid-cols-2 gap-4 font-mono text-[9px] text-slate-500 mb-6 bg-white/[0.02] border border-white/5 rounded-xl p-3">
+                  <div className="grid grid-cols-2 gap-4 font-mono text-xs text-slate-500 mb-6 bg-white/[0.02] border border-white/5 rounded-xl p-3.5">
                     <div className="flex flex-col">
                       <span className="text-slate-600">TIME PERIOD</span>
                       <span className="text-slate-300 font-bold">{currentItem.period}</span>
@@ -250,36 +250,36 @@ export default function Timeline({ isZeroG }) {
 
                   {/* Role & Company Header */}
                   <div className="mb-4">
-                    <h3 className="text-lg md:text-xl font-bold text-white leading-snug">
+                    <h3 className="text-xl md:text-2xl font-bold text-white leading-snug">
                       {currentItem.role}
                     </h3>
-                    <h4 className="text-sm font-semibold text-slate-400 mt-0.5">
+                    <h4 className="text-base font-semibold text-slate-400 mt-0.5">
                       {currentItem.company}
                     </h4>
                   </div>
 
                   {/* Diagnostic logs bullet stdout list */}
-                  <div className="bg-black border border-white/5 rounded-xl p-3.5 font-mono text-[10px] text-slate-400 space-y-2 mt-4">
-                    <div className="text-slate-500 border-b border-white/5 pb-1 flex justify-between mb-1.5">
+                  <div className="bg-black border border-white/5 rounded-xl p-4 font-mono text-xs text-slate-400 space-y-2 mt-4">
+                    <div className="text-slate-500 border-b border-white/5 pb-1.5 flex justify-between mb-1.5">
                       <span>$ fetch stdout_metrics.log</span>
-                      <span className="text-[7px] text-slate-600 font-normal">STDOUT</span>
+                      <span className="text-[10px] text-slate-600 font-normal">STDOUT</span>
                     </div>
                     {currentItem.bullets.map((bullet, bIdx) => (
                       <div key={bIdx} className="flex gap-2 items-start leading-relaxed text-slate-300">
                         <span className="text-emerald-400 font-bold select-none">[OK]</span>
-                        <span className="font-sans text-[11px] text-slate-300">{bullet}</span>
+                        <span className="font-sans text-sm text-slate-300">{bullet}</span>
                       </div>
                     ))}
                   </div>
 
                   {/* Package Tags */}
                   <div className="border-t border-white/5 pt-4 mt-6">
-                    <span className="text-[9px] font-mono text-slate-500 block mb-2">// LOADED_SKILL_PACKAGES:</span>
+                    <span className="text-xs font-mono text-slate-500 block mb-2">// LOADED_SKILL_PACKAGES:</span>
                     <div className="flex flex-wrap gap-2">
                       {currentItem.skills.map((skill, sIdx) => (
                         <span 
                           key={sIdx} 
-                          className="text-[9px] px-2.5 py-1 rounded-full font-mono bg-white/5 border border-white/10 text-slate-300 hover:border-[#06b6d4]/40 hover:bg-[#06b6d4]/5 transition-all duration-300"
+                          className="text-xs px-2.5 py-1 rounded-full font-mono bg-white/5 border border-white/10 text-slate-300 hover:border-[#06b6d4]/40 hover:bg-[#06b6d4]/5 transition-all duration-300"
                         >
                           {skill}
                         </span>
