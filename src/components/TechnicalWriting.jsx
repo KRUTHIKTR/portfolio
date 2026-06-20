@@ -7,26 +7,38 @@ const articles = [
   {
     id: 1,
     fileNum: "FILE_01",
-    shortTitle: "Biometric AI Art Risks",
-    title: "The Truth Behind Ghibli-Style AI Art",
-    tags: ["Biometric Privacy", "Cybersecurity"],
-    date: "July 2025",
-    summary: "An audit explaining how consumer AI filters harvest facial biometrics, highlighting the hidden privacy traps in company policy terms.",
-    findings: "Analysis of telemetry packets reveals that consumer filters transmit vector maps of facial landmarks to overseas servers under the guise of style transfer parameters.",
-    securityRisk: "Permanent facial mapping profile generation without user-explicit data deletion or revocation rights.",
-    link: "https://dev.to/kruthiktr"
+    shortTitle: "Bharat's Multilingual AI",
+    title: "India Speaks, Sarvam Listens: The Rise of Bharat’s Multilingual AI",
+    tags: ["Multilingual AI", "Indic LLMs", "Sarvam AI"],
+    date: "June 10, 2025",
+    summary: "India doesn’t need another English-speaking chatbot. It needs an assistant that understands Bharat, focusing on localized vernacular translation and multilingual architectures.",
+    findings: "Optimizing tokenizers for Indic regional languages reduces memory foot-print and improves training efficiency across diverse local dialects.",
+    securityRisk: "Ensures linguistic data sovereignty by developing localized foundation models tailored to regional Indian demographics.",
+    link: "https://medium.com/@kruthiktrgowda"
   },
   {
     id: 2,
     fileNum: "FILE_02",
+    shortTitle: "Biometric AI Art Risks",
+    title: "The Dark Side of Ghibli-Style AI Art: Privacy Concerns You Need to Know",
+    tags: ["Biometric Privacy", "Cybersecurity"],
+    date: "April 1, 2025",
+    summary: "The Viral Ghibli-Style AI Art Trend: A Privacy Nightmare? An audit explaining how consumer AI filters harvest facial biometrics, highlighting the hidden privacy traps in company policy terms.",
+    findings: "Analysis of telemetry packets reveals that consumer filters transmit vector maps of facial landmarks to overseas servers under the guise of style transfer parameters.",
+    securityRisk: "Permanent facial mapping profile generation without user-explicit data deletion or revocation rights.",
+    link: "https://medium.com/@kruthiktrgowda"
+  },
+  {
+    id: 3,
+    fileNum: "FILE_03",
     shortTitle: "Decentralized Edge AI",
-    title: "Beyond the Cloud: Why Intelligent Edge is the Future",
+    title: "Beyond the Cloud: Why Intelligent Edge is the Future of AI and Computing",
     tags: ["Edge AI", "Latency Optimization"],
-    date: "October 2025",
-    summary: "Discussing why local edge sensors and IoT devices are replacing centralized cloud infrastructure to cut latency and secure sensitive data.",
+    date: "March 31, 2025",
+    summary: "The future of AI isn’t just in the cloud—it’s at the edge, where intelligence meets real-time action. Discussing why local edge sensors and IoT devices are replacing centralized cloud infrastructure to cut latency.",
     findings: "Inference pipelines on local gateway hardware (e.g. Raspberry Pi / Jetson Nano) reduced network response times (RTT) from 180ms to 22ms compared to centralized cloud VMs.",
     securityRisk: "Local data minimization reduces broad ingress vulnerabilities, completely mitigating typical man-in-the-middle telemetry intercepts.",
-    link: "https://dev.to/kruthiktr"
+    link: "https://medium.com/@kruthiktrgowda"
   }
 ];
 
@@ -44,7 +56,7 @@ export default function TechnicalWriting({ isZeroG }) {
         </h2>
         <div className="h-[2px] w-24 bg-[#06b6d4]" />
         <p className="text-slate-400 max-w-2xl mt-4 text-sm font-sans leading-relaxed">
-          Access secure briefings on biometrics privacy leaks, local edge model execution, and cloud-native network architectures.
+          Access secure briefings on Indic multilingual LLMs, biometrics privacy leaks, and local edge model execution from my Medium publication channel.
         </p>
       </div>
 
