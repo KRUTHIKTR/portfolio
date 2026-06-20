@@ -79,12 +79,12 @@ export default function SkillsMatrix({ isZeroG }) {
     <section id="sphere" className="relative py-32 px-6 md:px-12 max-w-6xl mx-auto z-10 border-b border-white/5">
       {/* Section Header */}
       <div className="text-left mb-12">
-        <span className="text-xs font-mono uppercase tracking-widest text-[#06b6d4] font-semibold">// 04_TECHNICAL_ABILITIES</span>
+        <span className="text-sm font-mono uppercase tracking-widest text-[#06b6d4] font-semibold">// 04_TECHNICAL_ABILITIES</span>
         <h2 className="text-3xl md:text-5xl font-extrabold text-white mt-2 mb-4 font-sans tracking-tight">
           Skills & Technologies
         </h2>
         <div className="h-[2px] w-24 bg-[#06b6d4]" />
-        <p className="text-slate-400 max-w-2xl mt-4 text-sm font-sans leading-relaxed">
+        <p className="text-slate-400 max-w-2xl mt-4 text-base font-sans leading-relaxed">
           Hover or click on any technical skill node below. All core proficiencies are fully highlighted. Selecting a skill boots up its system query context on the telemetry console.
         </p>
       </div>
@@ -97,18 +97,18 @@ export default function SkillsMatrix({ isZeroG }) {
           {Object.entries(skillsData).map(([key, category]) => {
             const CatIcon = category.icon;
             return (
-              <div key={key} className="text-left space-y-3 border border-white/5 bg-[#080808]/40 rounded-2xl p-4 flex flex-col justify-between">
+              <div key={key} className="text-left space-y-3 border border-white/5 bg-[#080808]/40 rounded-2xl p-5 flex flex-col justify-between">
                 <div>
                   {/* Category Header */}
-                  <div className="flex items-center gap-2 text-slate-500 border-b border-white/5 pb-2 mb-3">
-                    <CatIcon className="w-3.5 h-3.5 text-[#06b6d4]/70" />
-                    <h3 className="text-[9px] uppercase font-mono tracking-widest font-bold">
+                  <div className="flex items-center gap-2.5 text-slate-400 border-b border-white/5 pb-2.5 mb-3.5">
+                    <CatIcon className="w-4 h-4 text-[#06b6d4]" />
+                    <h3 className="text-xs uppercase font-mono tracking-widest font-bold">
                       {category.title}
                     </h3>
                   </div>
                   
                   {/* Grid of highly visible skills */}
-                  <div className="flex flex-col gap-2">
+                  <div className="flex flex-col gap-2.5">
                     {category.skills.map((skill) => {
                       const isSelected = selectedSkill.name === skill.name;
                       return (
@@ -116,14 +116,14 @@ export default function SkillsMatrix({ isZeroG }) {
                           key={skill.name}
                           onClick={() => setSelectedSkill({ name: skill.name, usage: skill.usage })}
                           whileHover={{ scale: 1.02 }}
-                          className={`px-3.5 py-2.5 text-xs font-extrabold font-mono tracking-wider border rounded-xl cursor-pointer transition-all duration-300 flex items-center justify-between ${
+                          className={`px-4 py-3 text-sm font-extrabold font-mono tracking-wider border rounded-xl cursor-pointer transition-all duration-300 flex items-center justify-between ${
                             isSelected 
                               ? 'bg-[#06b6d4]/15 border-[#06b6d4] text-white shadow-[0_0_15px_rgba(6,182,212,0.25)]' 
                               : 'bg-white/[0.03] border-white/10 hover:border-[#06b6d4]/50 hover:bg-[#06b6d4]/5 text-slate-300 hover:text-white'
                           }`}
                         >
                           <span>{skill.name}</span>
-                          <span className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
+                          <span className={`w-2 h-2 rounded-full transition-all duration-300 ${
                             isSelected ? 'bg-emerald-400 shadow-[0_0_8px_#10b981] animate-pulse' : 'bg-slate-700'
                           }`} />
                         </motion.div>
@@ -142,16 +142,16 @@ export default function SkillsMatrix({ isZeroG }) {
             isZeroG={isZeroG} 
             className="border-white/10 bg-white/5 h-auto flex flex-col justify-between relative overflow-hidden"
           >
-            <div className="absolute top-0 right-0 p-2 text-[8px] font-mono text-slate-700 select-none">
+            <div className="absolute top-0 right-0 p-2.5 text-[10px] font-mono text-slate-600 select-none">
               HUD_v2.0
             </div>
             
-            <div className="space-y-6 text-left p-2">
+            <div className="space-y-6 text-left p-3">
               <div className="flex items-center justify-between">
-                <span className="text-[9px] font-mono font-semibold text-[#06b6d4] uppercase tracking-wider flex items-center gap-1.5">
-                  <Terminal className="w-3.5 h-3.5" /> SYSTEMS QUERY OUTPUT
+                <span className="text-xs font-mono font-semibold text-[#06b6d4] uppercase tracking-wider flex items-center gap-2">
+                  <Terminal className="w-4 h-4" /> SYSTEMS QUERY OUTPUT
                 </span>
-                <span className="w-2 h-2 rounded-full bg-[#06b6d4] shadow-[0_0_8px_#06b6d4]" />
+                <span className="w-2.5 h-2.5 rounded-full bg-[#06b6d4] shadow-[0_0_8px_#06b6d4]" />
               </div>
 
               {/* Console Screen */}
@@ -164,12 +164,12 @@ export default function SkillsMatrix({ isZeroG }) {
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
-                      className="space-y-4 font-mono text-[9px] text-slate-400 flex flex-col justify-between"
+                      className="space-y-4 font-mono text-xs text-slate-400 flex flex-col justify-between"
                     >
-                      <div className="space-y-1.5 text-left">
-                        <div className="text-slate-500 border-b border-white/5 pb-1 flex justify-between">
+                      <div className="space-y-2 text-left">
+                        <div className="text-slate-500 border-b border-white/5 pb-1.5 flex justify-between">
                           <span>$ query --comp {selectedSkill.name.toLowerCase().replace(/[^a-z0-9]/g, '-')}</span>
-                          <RefreshCw className="w-2.5 h-2.5 animate-spin text-[#06b6d4]" />
+                          <RefreshCw className="w-3 h-3 animate-spin text-[#06b6d4]" />
                         </div>
                         <div className="flex gap-2 items-start text-left">
                           <span className="text-[#06b6d4] font-bold select-none">&gt;&gt;</span>
@@ -185,12 +185,12 @@ export default function SkillsMatrix({ isZeroG }) {
                         </div>
                       </div>
 
-                      <div className="space-y-1 mt-4">
-                        <div className="flex justify-between text-[8px] text-slate-500 uppercase tracking-widest">
+                      <div className="space-y-1.5 mt-4">
+                        <div className="flex justify-between text-[10px] text-slate-500 uppercase tracking-widest">
                           <span>Loading specs</span>
                           <span>{bootProgress}%</span>
                         </div>
-                        <div className="h-1 w-full bg-white/[0.03] border border-white/5 rounded-full overflow-hidden">
+                        <div className="h-1.5 w-full bg-white/[0.03] border border-white/5 rounded-full overflow-hidden">
                           <div style={{ width: `${bootProgress}%` }} className="h-full bg-[#06b6d4] rounded-full" />
                         </div>
                       </div>
@@ -205,25 +205,25 @@ export default function SkillsMatrix({ isZeroG }) {
                       transition={{ duration: 0.2 }}
                       className="space-y-4 text-left"
                     >
-                      <div className="flex items-center gap-2 text-emerald-400 font-mono text-[9px] font-bold px-2 py-0.5 border border-emerald-500/20 bg-emerald-500/5 rounded self-start">
-                        <ShieldCheck className="w-3.5 h-3.5" /> QUERY STATUS: CONNECTED
+                      <div className="flex items-center gap-2 text-emerald-400 font-mono text-[10px] font-bold px-2 py-1 border border-emerald-500/20 bg-emerald-500/5 rounded self-start">
+                        <ShieldCheck className="w-4 h-4" /> QUERY STATUS: CONNECTED
                       </div>
 
-                      <div className="space-y-3.5">
+                      <div className="space-y-4">
                         <div>
-                          <span className="text-[8px] uppercase font-mono tracking-widest text-slate-500 block mb-0.5">
+                          <span className="text-[10px] uppercase font-mono tracking-widest text-slate-500 block mb-1">
                             Competency Key:
                           </span>
-                          <h4 className="text-base font-extrabold text-white font-mono">
+                          <h4 className="text-lg font-extrabold text-white font-mono">
                             {selectedSkill.name}
                           </h4>
                         </div>
 
                         <div>
-                          <span className="text-[8px] uppercase font-mono tracking-widest text-slate-500 block mb-1">
+                          <span className="text-[10px] uppercase font-mono tracking-widest text-slate-500 block mb-1.5">
                             System Application Context:
                           </span>
-                          <p className="text-xs text-slate-300 font-sans leading-relaxed">
+                          <p className="text-sm text-slate-300 font-sans leading-relaxed">
                             {selectedSkill.usage}
                           </p>
                         </div>
@@ -232,14 +232,14 @@ export default function SkillsMatrix({ isZeroG }) {
                   )}
                 </AnimatePresence>
                 
-                <div className="mt-4 pt-3 border-t border-white/5 flex justify-between items-center text-[8px] font-mono text-slate-600">
+                <div className="mt-4 pt-3 border-t border-white/5 flex justify-between items-center text-[10px] font-mono text-slate-600">
                   <span>QUERY_ID: 0x{selectedSkill.name.charCodeAt(0).toString(16).toUpperCase()}</span>
                   <span>INGRESS: OK</span>
                 </div>
               </div>
             </div>
 
-            <div className="mt-6 flex justify-between items-center text-[9px] font-mono text-slate-500 text-left p-2">
+            <div className="mt-6 flex justify-between items-center text-[10px] font-mono text-slate-500 text-left p-3">
               <span className="flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 bg-[#06b6d4] rounded-full" />
                 Connection: Active

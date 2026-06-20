@@ -86,16 +86,16 @@ export default function TechnicalWriting({ isZeroG }) {
                   <div className="flex items-center gap-3">
                     <FolderOpen className={`w-4 h-4 ${isSelected ? 'text-[#06b6d4]' : 'text-slate-500'}`} />
                     <div>
-                      <span className="text-[8px] font-mono text-slate-500 block">
+                      <span className="text-[10px] font-mono text-slate-500 block">
                         {article.fileNum}
                       </span>
-                      <h4 className={`text-xs font-bold font-mono tracking-wider ${isSelected ? 'text-white' : 'text-slate-400 group-hover:text-slate-200'}`}>
+                      <h4 className={`text-sm font-bold font-mono tracking-wider ${isSelected ? 'text-white' : 'text-slate-400 group-hover:text-slate-200'}`}>
                         {article.shortTitle}
                       </h4>
                     </div>
                   </div>
 
-                  <span className={`text-[8px] font-mono border px-1.5 py-0.5 rounded ${
+                  <span className={`text-[10px] font-mono border px-1.5 py-0.5 rounded ${
                     isSelected ? 'border-[#06b6d4]/30 text-[#06b6d4] bg-[#06b6d4]/5' : 'border-white/5 text-slate-600'
                   }`}>
                     OPEN
@@ -123,21 +123,21 @@ export default function TechnicalWriting({ isZeroG }) {
               />
             </AnimatePresence>
 
-            <div className="absolute top-0 right-0 p-2 text-[8px] font-mono text-slate-700 select-none">
+            <div className="absolute top-0 right-0 p-2.5 text-[10px] font-mono text-slate-700 select-none">
               DEC_FILE_v1.0
             </div>
 
-            <div className="space-y-6 text-left p-2.5">
+            <div className="space-y-6 text-left p-3">
               
               {/* Console Header */}
-              <div className="flex items-center justify-between border-b border-white/5 pb-3.5 mb-2 font-mono text-[9px]">
+              <div className="flex items-center justify-between border-b border-white/5 pb-3.5 mb-2 font-mono text-[10px]">
                 <div className="flex items-center gap-2">
-                  <FileText className="w-3.5 h-3.5 text-[#06b6d4]" />
+                  <FileText className="w-4 h-4 text-[#06b6d4]" />
                   <span className="font-bold text-white uppercase tracking-wider">
                     READER // DEC_CLASSIFIED_BREIFING
                   </span>
                 </div>
-                <span className="text-[8px] font-mono text-emerald-400 border border-emerald-500/20 bg-emerald-500/5 px-2 py-0.5 rounded">
+                <span className="text-[10px] font-mono text-emerald-400 border border-emerald-500/20 bg-emerald-500/5 px-2 py-0.5 rounded">
                   ACCESS: GRANTED
                 </span>
               </div>
@@ -154,34 +154,34 @@ export default function TechnicalWriting({ isZeroG }) {
                 >
                   {/* Article Title & Date */}
                   <div className="flex flex-col gap-1">
-                    <div className="flex justify-between items-center text-[9px] font-mono text-slate-500">
+                    <div className="flex justify-between items-center text-[10px] font-mono text-slate-500">
                       <span className="uppercase font-semibold text-[#06b6d4]">
                         {activeArticle.fileNum} // PUBLICATION_SUMMARY
                       </span>
-                      <span className="flex items-center gap-1">
-                        <Calendar className="w-3 h-3" /> {activeArticle.date}
+                      <span className="flex items-center gap-1.5">
+                        <Calendar className="w-3.5 h-3.5" /> {activeArticle.date}
                       </span>
                     </div>
-                    <h3 className="text-xl font-bold text-white tracking-tight leading-snug">
+                    <h3 className="text-2xl font-bold text-white tracking-tight leading-snug">
                       {activeArticle.title}
                     </h3>
                   </div>
 
                   {/* Summary / Abstract */}
-                  <div className="bg-black/40 border border-white/5 rounded-xl p-4 font-sans text-xs text-slate-300 leading-relaxed">
-                    <span className="text-[8.5px] uppercase font-mono text-slate-500 block mb-1.5">// ABSTRACT</span>
+                  <div className="bg-black/40 border border-white/5 rounded-xl p-4 font-sans text-sm text-slate-300 leading-relaxed">
+                    <span className="text-[10px] uppercase font-mono text-slate-500 block mb-1.5">// ABSTRACT</span>
                     {activeArticle.summary}
                   </div>
 
                   {/* Telemetry points */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 font-mono text-[9px] text-slate-400 bg-white/[0.01] border border-white/5 rounded-xl p-4">
-                    <div className="flex flex-col gap-1">
-                      <span className="text-slate-500 flex items-center gap-1 uppercase font-bold"><BookOpen className="w-3 h-3 text-[#06b6d4]" /> Technical Audit Findings</span>
-                      <span className="font-sans text-[10px] text-slate-300 leading-normal">{activeArticle.findings}</span>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 font-mono text-[10px] text-slate-400 bg-white/[0.01] border border-white/5 rounded-xl p-4">
+                    <div className="flex flex-col gap-1.5">
+                      <span className="text-slate-500 flex items-center gap-1.5 uppercase font-bold"><BookOpen className="w-3.5 h-3.5 text-[#06b6d4]" /> Technical Audit Findings</span>
+                      <span className="font-sans text-xs text-slate-300 leading-relaxed">{activeArticle.findings}</span>
                     </div>
-                    <div className="flex flex-col gap-1">
-                      <span className="text-[#06b6d4] flex items-center gap-1 uppercase font-bold"><ShieldAlert className="w-3 h-3" /> Security Footprint</span>
-                      <span className="font-sans text-[10px] text-slate-300 leading-normal">{activeArticle.securityRisk}</span>
+                    <div className="flex flex-col gap-1.5">
+                      <span className="text-[#06b6d4] flex items-center gap-1.5 uppercase font-bold"><ShieldAlert className="w-3.5 h-3.5" /> Security Footprint</span>
+                      <span className="font-sans text-xs text-slate-300 leading-relaxed">{activeArticle.securityRisk}</span>
                     </div>
                   </div>
                 </motion.div>
@@ -190,12 +190,12 @@ export default function TechnicalWriting({ isZeroG }) {
             </div>
 
             {/* Read publication wide button */}
-            <div className="mt-8 pt-4 border-t border-white/5 p-2 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div className="mt-8 pt-4 border-t border-white/5 p-3 flex flex-col md:flex-row md:items-center justify-between gap-4">
               <div className="flex gap-2">
                 {activeArticle.tags.map((tag, idx) => (
                   <span 
                     key={idx}
-                    className="text-[9px] font-mono font-semibold px-2 py-0.5 rounded-full bg-[#06b6d4]/5 border border-[#06b6d4]/10 text-[#06b6d4]"
+                    className="text-[10px] font-mono font-semibold px-2.5 py-1 rounded-full bg-[#06b6d4]/5 border border-[#06b6d4]/10 text-[#06b6d4]"
                   >
                     {tag}
                   </span>
@@ -206,10 +206,10 @@ export default function TechnicalWriting({ isZeroG }) {
                 href={activeArticle.link}
                 target="_blank"
                 rel="noreferrer"
-                className="flex items-center justify-center gap-2 py-2.5 px-6 rounded-xl border border-white/10 hover:border-[#06b6d4] bg-white/5 hover:bg-[#06b6d4]/10 text-[10px] font-mono font-bold tracking-wider text-slate-300 hover:text-white transition-all duration-300"
+                className="flex items-center justify-center gap-2 py-3 px-6 rounded-xl border border-white/10 hover:border-[#06b6d4] bg-white/5 hover:bg-[#06b6d4]/10 text-xs font-mono font-bold tracking-wider text-slate-300 hover:text-white transition-all duration-300"
               >
                 <span>READ FULL PUBLICATION</span>
-                <ArrowUpRight className="w-3.5 h-3.5 text-[#06b6d4]" />
+                <ArrowUpRight className="w-4 h-4 text-[#06b6d4]" />
               </a>
             </div>
 

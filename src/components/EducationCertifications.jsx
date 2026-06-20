@@ -130,8 +130,8 @@ export default function EducationCertifications({ isZeroG }) {
             
             {/* Left Branch - Academic Milestones */}
             <div className="space-y-6 flex flex-col justify-center text-left sm:text-right">
-              <div className="pb-2 border-b border-white/5 mb-2 flex items-center sm:justify-end gap-2 text-slate-500 font-mono text-[9px] uppercase tracking-widest font-bold">
-                <GraduationCap className="w-3.5 h-3.5 text-[#06b6d4]" />
+              <div className="pb-2 border-b border-white/5 mb-2 flex items-center sm:justify-end gap-2 text-slate-400 font-mono text-xs uppercase tracking-widest font-bold">
+                <GraduationCap className="w-4 h-4 text-[#06b6d4]" />
                 <span>Academic Branch</span>
               </div>
               
@@ -149,14 +149,14 @@ export default function EducationCertifications({ isZeroG }) {
                       isActive ? 'bg-[#06b6d4]' : 'bg-white/10 group-hover:bg-white/20'
                     }`} />
                     
-                    <div className={`p-3.5 rounded-xl border transition-all duration-300 relative z-10 ${
+                    <div className={`p-4 rounded-xl border transition-all duration-300 relative z-10 ${
                       isActive 
                         ? 'border-[#06b6d4] bg-[#06b6d4]/10 shadow-[0_0_12px_rgba(6,182,212,0.15)] text-white' 
                         : 'border-white/5 bg-[#080808]/80 hover:border-white/20 text-slate-400 hover:text-slate-200'
                     }`}>
-                      <span className="text-[8px] font-mono text-slate-500 block mb-0.5">{node.date}</span>
-                      <h4 className="text-xs font-bold font-mono tracking-wide">{node.title}</h4>
-                      <p className="text-[9px] text-slate-500 font-sans mt-0.5">{node.institution}</p>
+                      <span className="text-[10px] font-mono text-slate-500 block mb-0.5">{node.date}</span>
+                      <h4 className="text-sm font-bold font-mono tracking-wide">{node.title}</h4>
+                      <p className="text-xs text-slate-500 font-sans mt-0.5">{node.institution}</p>
                     </div>
                   </div>
                 );
@@ -165,8 +165,8 @@ export default function EducationCertifications({ isZeroG }) {
 
             {/* Right Branch - Professional Licenses */}
             <div className="space-y-6 flex flex-col justify-center text-left">
-              <div className="pb-2 border-b border-white/5 mb-2 flex items-center gap-2 text-slate-500 font-mono text-[9px] uppercase tracking-widest font-bold">
-                <Award className="w-3.5 h-3.5 text-emerald-400" />
+              <div className="pb-2 border-b border-white/5 mb-2 flex items-center gap-2 text-slate-400 font-mono text-xs uppercase tracking-widest font-bold">
+                <Award className="w-4 h-4 text-emerald-400" />
                 <span>Credentials Branch</span>
               </div>
 
@@ -184,14 +184,14 @@ export default function EducationCertifications({ isZeroG }) {
                       isActive ? 'bg-emerald-400' : 'bg-white/10 group-hover:bg-white/20'
                     }`} />
 
-                    <div className={`p-3.5 rounded-xl border transition-all duration-300 relative z-10 ${
+                    <div className={`p-4 rounded-xl border transition-all duration-300 relative z-10 ${
                       isActive 
                         ? 'border-emerald-500 bg-emerald-500/10 shadow-[0_0_12px_rgba(16,185,129,0.15)] text-white' 
                         : 'border-white/5 bg-[#080808]/80 hover:border-white/20 text-slate-400 hover:text-slate-200'
                     }`}>
-                      <span className="text-[8px] font-mono text-slate-500 block mb-0.5">{node.date}</span>
-                      <h4 className="text-xs font-bold font-mono tracking-wide">{node.title}</h4>
-                      <p className="text-[9px] text-slate-500 font-sans mt-0.5">{node.institution}</p>
+                      <span className="text-[10px] font-mono text-slate-500 block mb-0.5">{node.date}</span>
+                      <h4 className="text-sm font-bold font-mono tracking-wide">{node.title}</h4>
+                      <p className="text-xs text-slate-500 font-sans mt-0.5">{node.institution}</p>
                     </div>
                   </div>
                 );
@@ -207,16 +207,16 @@ export default function EducationCertifications({ isZeroG }) {
             isZeroG={isZeroG} 
             className="border-white/10 bg-white/5 h-auto flex flex-col justify-between relative overflow-hidden"
           >
-            <div className="absolute top-0 right-0 p-2 text-[8px] font-mono text-slate-700 select-none">
+            <div className="absolute top-0 right-0 p-2.5 text-[10px] font-mono text-slate-700 select-none">
               SEC_TREE_v1.0
             </div>
 
-            <div className="space-y-6 text-left p-2.5">
+            <div className="space-y-6 text-left p-3">
               <div className="flex items-center justify-between border-b border-white/5 pb-3">
-                <span className="text-[9px] font-mono font-semibold text-[#06b6d4] uppercase tracking-wider flex items-center gap-1.5">
-                  <Key className="w-3.5 h-3.5" /> NODE DECRYPTION CONSOLE
+                <span className="text-xs font-mono font-semibold text-[#06b6d4] uppercase tracking-wider flex items-center gap-2">
+                  <Key className="w-4 h-4" /> NODE DECRYPTION CONSOLE
                 </span>
-                <span className="text-[8px] font-mono text-emerald-400 border border-emerald-500/20 bg-emerald-500/5 px-2 py-0.5 rounded uppercase">
+                <span className="text-[10px] font-mono text-emerald-400 border border-emerald-500/20 bg-emerald-500/5 px-2 py-0.5 rounded uppercase">
                   ACTIVE
                 </span>
               </div>
@@ -232,29 +232,29 @@ export default function EducationCertifications({ isZeroG }) {
                     transition={{ duration: 0.2 }}
                     className="space-y-4 text-left"
                   >
-                    <div className="flex items-center gap-2 text-emerald-400 font-mono text-[9px] font-bold px-2 py-0.5 border border-emerald-500/20 bg-emerald-500/5 rounded self-start">
-                      <ShieldCheck className="w-3.5 h-3.5" /> STATUS: DECRYPTED
+                    <div className="flex items-center gap-2 text-emerald-400 font-mono text-[10px] font-bold px-2 py-1 border border-emerald-500/20 bg-emerald-500/5 rounded self-start">
+                      <ShieldCheck className="w-4 h-4" /> STATUS: DECRYPTED
                     </div>
 
-                    <div className="space-y-3">
+                    <div className="space-y-4">
                       <div>
-                        <span className="text-[8px] uppercase font-mono tracking-widest text-slate-500 block mb-0.5">
+                        <span className="text-[10px] uppercase font-mono tracking-widest text-slate-500 block mb-1">
                           {activeNode.category} // Title:
                         </span>
-                        <h4 className="text-sm font-extrabold text-white font-mono leading-tight">
+                        <h4 className="text-base font-extrabold text-white font-mono leading-tight">
                           {activeNode.title}
                         </h4>
-                        <p className="text-[10px] text-slate-400 font-sans mt-0.5">{activeNode.institution}</p>
+                        <p className="text-xs text-slate-400 font-sans mt-1">{activeNode.institution}</p>
                       </div>
 
                       <div>
-                        <span className="text-[8px] uppercase font-mono tracking-widest text-slate-500 block mb-1.5">
+                        <span className="text-[10px] uppercase font-mono tracking-widest text-slate-500 block mb-1.5">
                           Node Attributes & Achievements:
                         </span>
                         <ul className="space-y-2">
                           {activeNode.details.map((detail, idx) => (
-                            <li key={idx} className="flex gap-2 items-start font-sans text-xs text-slate-300 leading-relaxed">
-                              <span className="w-1.5 h-1.5 rounded-full bg-[#06b6d4] mt-1.5 flex-shrink-0" />
+                            <li key={idx} className="flex gap-2 items-start font-sans text-sm text-slate-300 leading-relaxed">
+                              <span className="w-1.5 h-1.5 rounded-full bg-[#06b6d4] mt-2 flex-shrink-0" />
                               <span>{detail}</span>
                             </li>
                           ))}
@@ -264,14 +264,14 @@ export default function EducationCertifications({ isZeroG }) {
                   </motion.div>
                 </AnimatePresence>
 
-                <div className="mt-4 pt-3 border-t border-white/5 flex justify-between items-center text-[8px] font-mono text-slate-600">
+                <div className="mt-4 pt-3 border-t border-white/5 flex justify-between items-center text-[10px] font-mono text-slate-600">
                   <span>NODE_ID: 0x{activeNode.id.toUpperCase()}</span>
                   <span>INTEGRITY: 100%</span>
                 </div>
               </div>
             </div>
 
-            <div className="mt-6 flex justify-between items-center text-[9px] font-mono text-slate-500 text-left p-2.5">
+            <div className="mt-6 flex justify-between items-center text-[10px] font-mono text-slate-500 text-left p-3">
               <span className="flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 bg-[#06b6d4] rounded-full" />
                 Connection: Secure

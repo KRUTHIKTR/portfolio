@@ -12,12 +12,19 @@
 }
 
 @layer base {
+  html {
+    font-size: 16px;
+  }
+  @media (min-width: 768px) {
+    html {
+      font-size: 17.2px;
+    }
+  }
   body {
     @apply bg-[#040406] text-[#ECECF1] font-sans antialiased overflow-x-hidden selection:bg-cyan-500/30 selection:text-cyan-200;
   }
 }
 
-/* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
 }
