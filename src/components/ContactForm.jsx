@@ -5,7 +5,8 @@ import TiltCard from './TiltCard';
 
 export default function ContactForm({ isZeroG }) {
   const [latency, setLatency] = useState(45);
-  const [formData, setFormData] = useState({ name: '', purpose: '', email: '', message: '' });
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [focusedField, setFocusedField] = useState(null);
   const [isSending, setIsSending] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -20,12 +21,12 @@ export default function ContactForm({ isZeroG }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!formData.name || !formData.purpose || !formData.email || !formData.message) return;
+    if (!formData.name || !formData.email || !formData.message) return;
 
     setIsSending(true);
     setIsSubmitted(false);
 
-    // Simulate connection transmission latency
+    // Simulate signal transmission
     setTimeout(() => {
       setIsSending(false);
       setIsSubmitted(true);
@@ -33,7 +34,7 @@ export default function ContactForm({ isZeroG }) {
   };
 
   const handleReset = () => {
-    setFormData({ name: '', purpose: '', email: '', message: '' });
+    setFormData({ name: '', email: '', message: '' });
     setIsSubmitted(false);
   };
 
@@ -47,7 +48,7 @@ export default function ContactForm({ isZeroG }) {
         </h2>
         <div className="h-[2px] w-24 bg-[#06b6d4]" />
         <p className="text-slate-400 max-w-xl mt-4 text-base font-sans leading-relaxed">
-          Establish a secure connection. Reach out via email, check social hubs, or complete the conversational interface.
+          Establish a secure connection. Reach out via email, check social hubs, or submit an inquiry below.
         </p>
       </div>
 
@@ -148,69 +149,76 @@ export default function ContactForm({ isZeroG }) {
           </TiltCard>
         </div>
 
-        {/* Right Column: Conversational Paragraph Form (7 cols) */}
+        {/* Right Column: Minimalist Glowing Outline Form (7 cols) */}
         <div className="lg:col-span-7">
           <TiltCard isZeroG={isZeroG} className="bg-white/5 border border-white/10 rounded-2xl p-8 h-full flex flex-col justify-between relative overflow-hidden">
             
             <AnimatePresence mode="wait">
               {!isSubmitted ? (
                 <motion.form 
-                  key="form"
+                  key="form-outline"
                   onSubmit={handleSubmit} 
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  className="space-y-8 text-left flex flex-col h-full justify-between"
+                  className="space-y-6 text-left flex flex-col h-full justify-between"
                 >
-                  <div className="space-y-4">
-                    <span className="text-[9px] font-mono text-[#06b6d4] uppercase tracking-widest font-bold block mb-4">
-                      // CONVERSATIONAL_API_v2.0
-                    </span>
+                  <div className="space-y-6">
+                    <h3 className="text-xs uppercase font-mono tracking-widest text-[#06b6d4] font-bold">
+                      // SECURE_MESSAGE_API
+                    </h3>
 
-                    {/* Interactive Paragraph with inline auto-resizing inputs */}
-                    <div className="text-base md:text-lg text-slate-300 leading-[2.5] font-sans font-normal">
-                      Hello Kruthik, my name is{" "}
+                    {/* Name Input */}
+                    <div className="relative group">
+                      <div className={`absolute -inset-0.5 rounded-xl bg-gradient-to-r from-[#06b6d4] to-emerald-500 opacity-0 blur-md transition duration-500 group-hover:opacity-10 ${
+                        focusedField === 'name' ? 'opacity-20' : ''
+                      }`} />
                       <input 
                         type="text" 
                         required
-                        placeholder="[ Your Name ]"
+                        placeholder="Name"
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        onFocus={() => setFocusedField('name')}
+                        onBlur={() => setFocusedField(null)}
                         disabled={isSending}
-                        className="bg-transparent border-b-2 border-white/10 focus:border-[#06b6d4] text-[#06b6d4] placeholder-slate-700 font-bold focus:outline-none focus:ring-0 px-2 py-0 text-center transition-all duration-300 font-mono text-sm inline-block rounded-none"
-                        style={{ width: formData.name ? `${Math.max(110, formData.name.length * 10)}px` : '110px' }}
+                        className="relative w-full bg-black/45 border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white placeholder-slate-600 focus:outline-none focus:ring-0 focus:border-[#06b6d4] transition-all duration-300 font-sans"
                       />
-                      . I am reaching out to discuss a{" "}
-                      <input 
-                        type="text" 
-                        required
-                        placeholder="[ Project / Job Opportunity ]"
-                        value={formData.purpose}
-                        onChange={(e) => setFormData({ ...formData, purpose: e.target.value })}
-                        disabled={isSending}
-                        className="bg-transparent border-b-2 border-white/10 focus:border-[#06b6d4] text-[#06b6d4] placeholder-slate-700 font-bold focus:outline-none focus:ring-0 px-2 py-0 text-center transition-all duration-300 font-mono text-sm inline-block rounded-none"
-                        style={{ width: formData.purpose ? `${Math.max(210, formData.purpose.length * 10)}px` : '210px' }}
-                      />
-                      . You can contact me back at{" "}
+                    </div>
+
+                    {/* Email Input */}
+                    <div className="relative group">
+                      <div className={`absolute -inset-0.5 rounded-xl bg-gradient-to-r from-[#06b6d4] to-emerald-500 opacity-0 blur-md transition duration-500 group-hover:opacity-10 ${
+                        focusedField === 'email' ? 'opacity-20' : ''
+                      }`} />
                       <input 
                         type="email" 
                         required
-                        placeholder="[ Your Email ]"
+                        placeholder="Email Address"
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        onFocus={() => setFocusedField('email')}
+                        onBlur={() => setFocusedField(null)}
                         disabled={isSending}
-                        className="bg-transparent border-b-2 border-white/10 focus:border-[#06b6d4] text-[#06b6d4] placeholder-slate-700 font-bold focus:outline-none focus:ring-0 px-2 py-0 text-center transition-all duration-300 font-mono text-sm inline-block rounded-none"
-                        style={{ width: formData.email ? `${Math.max(140, formData.email.length * 10)}px` : '140px' }}
+                        className="relative w-full bg-black/45 border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white placeholder-slate-600 focus:outline-none focus:ring-0 focus:border-[#06b6d4] transition-all duration-300 font-sans"
                       />
-                      . Here is a brief message:{" "}
+                    </div>
+
+                    {/* Message Textarea */}
+                    <div className="relative group">
+                      <div className={`absolute -inset-0.5 rounded-xl bg-gradient-to-r from-[#06b6d4] to-emerald-500 opacity-0 blur-md transition duration-500 group-hover:opacity-10 ${
+                        focusedField === 'message' ? 'opacity-20' : ''
+                      }`} />
                       <textarea 
                         required
-                        rows="3"
-                        placeholder="[ Write your message here... ]"
+                        rows="5"
+                        placeholder="Message"
                         value={formData.message}
                         onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                        onFocus={() => setFocusedField('message')}
+                        onBlur={() => setFocusedField(null)}
                         disabled={isSending}
-                        className="bg-transparent border-b-2 border-white/10 focus:border-[#06b6d4] text-[#06b6d4] placeholder-slate-700 font-bold focus:outline-none focus:ring-0 px-2 py-0 transition-all duration-300 font-mono text-sm w-full mt-4 resize-none block rounded-none leading-relaxed"
+                        className="relative w-full bg-black/45 border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white placeholder-slate-600 focus:outline-none focus:ring-0 focus:border-[#06b6d4] transition-all duration-300 font-sans resize-none leading-relaxed"
                       />
                     </div>
                   </div>
@@ -219,15 +227,15 @@ export default function ContactForm({ isZeroG }) {
                     <button 
                       type="submit" 
                       disabled={isSending}
-                      className="w-full flex items-center justify-center gap-2 bg-[#06b6d4] hover:bg-[#06b6d4]/90 text-white font-mono text-xs font-bold py-3.5 px-6 rounded-xl transition-all duration-300 shadow-[0_0_15px_rgba(6,182,212,0.15)] hover:shadow-[0_0_25px_rgba(6,182,212,0.3)] border border-[#06b6d4]/20 active:scale-[0.99] disabled:opacity-50"
+                      className="w-full flex items-center justify-center gap-2 bg-[#06b6d4] hover:bg-[#06b6d4]/90 text-white font-mono text-xs font-bold py-4 px-6 rounded-xl transition-all duration-300 shadow-[0_0_15px_rgba(6,182,212,0.15)] hover:shadow-[0_0_25px_rgba(6,182,212,0.3)] border border-[#06b6d4]/20 active:scale-[0.99] disabled:opacity-50"
                     >
                       {isSending ? (
                         <span className="flex items-center gap-2">
-                          TRANSMITTING PAYLOAD PACKETS...
+                          TRANSMITTING...
                         </span>
                       ) : (
                         <>
-                          TRANSMIT SIGNALS <Send className="w-3.5 h-3.5 ml-1" />
+                          SEND MESSAGE <Send className="w-3.5 h-3.5 ml-1" />
                         </>
                       )}
                     </button>
@@ -242,11 +250,11 @@ export default function ContactForm({ isZeroG }) {
                   className="flex flex-col items-center justify-center h-full text-center space-y-6 py-12"
                 >
                   <div className="p-4 bg-[#06b6d4]/10 border border-[#06b6d4]/25 rounded-full text-[#06b6d4] shadow-[0_0_20px_rgba(6,182,212,0.15)]">
-                    <CheckCircle className="w-12 h-12 animate-pulse" />
+                    <CheckCircle className="w-12 h-12" />
                   </div>
                   
                   <div className="space-y-2">
-                    <h3 className="text-lg font-bold text-white font-mono">// TRANSMISSION_SUCCESSFUL</h3>
+                    <h3 className="text-lg font-bold text-white font-mono">// TRANSMISSION_COMPLETE</h3>
                     <p className="text-xs text-slate-400 font-sans max-w-sm leading-relaxed">
                       Handshake complete. Connection established with Kruthik T R. Signal packets routed successfully.
                     </p>
