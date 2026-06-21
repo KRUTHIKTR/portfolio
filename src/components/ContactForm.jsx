@@ -247,9 +247,9 @@ export default function ContactForm({ isZeroG }) {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  className="space-y-6 text-left flex flex-col h-full justify-between"
+                  className="space-y-6 text-left flex flex-col h-full"
                 >
-                  <div className="space-y-6">
+                  <div className="space-y-6 flex-grow flex flex-col">
                     <h3 className="text-sm uppercase font-mono tracking-widest text-[#06b6d4] font-bold">
                       // SECURE_MESSAGE_API
                     </h3>
@@ -291,25 +291,24 @@ export default function ContactForm({ isZeroG }) {
                     </div>
 
                     {/* Message Textarea */}
-                    <div className="relative group">
+                    <div className="relative group flex-grow flex flex-col">
                       <div className={`absolute -inset-0.5 rounded-xl bg-gradient-to-r from-[#06b6d4] to-emerald-500 opacity-0 blur-md transition duration-500 group-hover:opacity-10 ${
                         focusedField === 'message' ? 'opacity-20' : ''
                       }`} />
                       <textarea 
                         required
-                        rows="5"
                         placeholder="Message"
                         value={formData.message}
                         onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                         onFocus={() => setFocusedField('message')}
                         onBlur={() => setFocusedField(null)}
                         disabled={isSending}
-                        className="relative w-full bg-black/45 border border-white/10 rounded-xl px-4 py-3.5 text-base text-white placeholder-slate-600 focus:outline-none focus:ring-0 focus:border-[#06b6d4] transition-all duration-300 font-sans resize-none leading-relaxed"
+                        className="relative w-full flex-grow bg-black/45 border border-white/10 rounded-xl px-4 py-3.5 text-base text-white placeholder-slate-600 focus:outline-none focus:ring-0 focus:border-[#06b6d4] transition-all duration-300 font-sans resize-none leading-relaxed min-h-[150px]"
                       />
                     </div>
                   </div>
 
-                  <div className="pt-6">
+                  <div className="pt-2">
                     <button 
                       type="submit" 
                       disabled={isSending}
