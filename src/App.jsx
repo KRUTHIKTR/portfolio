@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowUpRight, Download, Activity, ShieldAlert, Cpu, Menu, X } from 'lucide-react';
+import { ArrowUpRight, Download, Cpu, Menu, X, Terminal } from 'lucide-react';
 
 // Subcomponents
 import AboutServices from './components/AboutServices';
@@ -10,12 +10,32 @@ import SkillsMatrix from './components/SkillsMatrix';
 import TechnicalWriting from './components/TechnicalWriting';
 import EducationCertifications from './components/EducationCertifications';
 import ContactForm from './components/ContactForm';
+import SystemShellConsole from './components/SystemShellConsole';
 
 export default function App() {
-  const [isZeroG, setIsZeroG] = useState(false);
-  const [showWarning, setShowWarning] = useState(false);
+  const [isConsoleOpen, setIsConsoleOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const isZeroG = false; // Kept static to support subcomponents
+  
+  // Terminal interaction states
+  const [systemStatus, setSystemStatus] = useState('[ MLOPS_ENG ]');
+  const [isScanning, setIsScanning] = useState(false);
+  const [notification, setNotification] = useState(null);
+
+  const triggerScan = () => {
+    setIsScanning(true);
+    setTimeout(() => {
+      setIsScanning(false);
+    }, 2800);
+  };
+
+  const showNotification = (msg) => {
+    setNotification(msg);
+    setTimeout(() => {
+      setNotification(null);
+    }, 4500);
+  };
 
   // Typing animation text state
   const textToType = "I am Kruthik T R. Co-Founder & CTO.";
@@ -57,14 +77,6 @@ export default function App() {
     }, 2500);
     return () => clearInterval(wordInterval);
   }, []);
-
-  const toggleGravity = () => {
-    setIsZeroG(!isZeroG);
-    setShowWarning(true);
-    setTimeout(() => {
-      setShowWarning(false);
-    }, 3500);
-  };
 
   // Dossier exporter logic
   const downloadDossier = () => {
@@ -133,11 +145,40 @@ Generated from Antigravity Systems HUD Terminal.
         style={{ width: `${scrollProgress}%` }}
       />
 
+      {/* Dynamic Security Scan Sweep Overlay */}
+      <AnimatePresence>
+        {isScanning && (
+          <motion.div 
+            initial={{ y: '-10vh' }}
+            animate={{ y: '110vh' }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 2.5, ease: 'easeInOut' }}
+            className="fixed left-0 right-0 h-[6px] bg-gradient-to-r from-transparent via-[#06b6d4] to-transparent shadow-[0_0_20px_#06b6d4] z-50 pointer-events-none"
+            style={{ top: 0 }}
+          />
+        )}
+      </AnimatePresence>
+
+      {/* Floating System Notifications */}
+      <AnimatePresence>
+        {notification && (
+          <motion.div
+            initial={{ opacity: 0, y: -50, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -20, scale: 0.95 }}
+            className="fixed top-24 left-1/2 -translate-x-1/2 z-50 bg-[#080808]/90 border border-[#06b6d4]/30 rounded-xl px-6 py-3.5 backdrop-blur-xl flex items-center gap-3 shadow-[0_10px_30px_rgba(6,182,212,0.2)] font-mono text-xs text-white"
+          >
+            <div className="w-1.5 h-1.5 rounded-full bg-[#06b6d4] animate-ping" />
+            <span>{notification}</span>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Navigation Header */}
       <nav className="fixed top-0 left-0 right-0 w-full bg-[#080808]/85 backdrop-blur-md border-b border-white/5 py-4 md:py-5 px-6 md:px-16 flex justify-between items-center z-40">
         <a href="#hero" className="flex items-center gap-2.5 font-mono text-sm md:text-lg font-extrabold text-white tracking-widest group">
           <span className="w-1.5 h-1.5 bg-[#06b6d4] shadow-[0_0_8px_#06b6d4] transition-all" />
-          KRUTHIK T R <span className="text-[10px] text-[#06b6d4] font-bold bg-[#06b6d4]/10 border border-[#06b6d4]/25 px-2 py-0.5 ml-2 tracking-wider rounded hidden sm:inline-block">[ MLOPS_ENG ]</span>
+          KRUTHIK T R <span className="text-[10px] text-[#06b6d4] font-bold bg-[#06b6d4]/10 border border-[#06b6d4]/25 px-2 py-0.5 ml-2 tracking-wider rounded hidden sm:inline-block">{systemStatus}</span>
         </a>
         
         {/* Desktop navigation */}
@@ -199,51 +240,7 @@ Generated from Antigravity Systems HUD Terminal.
         </AnimatePresence>
       </nav>
 
-      {/* Zero-G Warning Banner */}
-      <AnimatePresence>
-        {showWarning && (
-          <motion.div
-            initial={{ opacity: 0, y: -50 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -50 }}
-            className="fixed top-24 left-1/2 -translate-x-1/2 z-50 bg-[#080808]/95 border border-[#06b6d4]/50 rounded-full px-6 py-2.5 backdrop-blur-md flex items-center gap-3 shadow-[0_0_20px_rgba(29,185,84,0.3)]"
-          >
-            <ShieldAlert className="w-4 h-4 text-[#06b6d4] animate-bounce" />
-            <span className="text-xs font-mono text-white tracking-wide">
-              {isZeroG ? 'WARNING: ZERO-G PHYSICS ACTIVATED. LAYOUT FLOATING ENGAGED.' : 'GRAVITY RESTORED. SYSTEM ENFORCING STANDARD LAYOUT.'}
-            </span>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
-      {/* Floating zero-g structural overlays */}
-      {isZeroG && (
-        <div className="absolute inset-0 pointer-events-none overflow-hidden z-20">
-          {Array.from({ length: 8 }).map((_, i) => (
-            <motion.div
-              key={i}
-              initial={{ 
-                x: Math.random() * window.innerWidth, 
-                y: Math.random() * window.innerHeight + 100
-              }}
-              animate={{
-                x: [Math.random() * 40, -Math.random() * 40, Math.random() * 40],
-                y: [Math.random() * 40, -Math.random() * 40, Math.random() * 40],
-              }}
-              transition={{
-                duration: 6 + i,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-              className="absolute w-2 h-2 rounded-full border border-[#06b6d4]/20 bg-[#06b6d4]/5"
-              style={{
-                top: `${20 + i * 10}%`,
-                left: `${10 + i * 12}%`,
-              }}
-            />
-          ))}
-        </div>
-      )}
 
       {/* Main Page Layout */}
       <main className="relative z-10">
@@ -261,7 +258,7 @@ Generated from Antigravity Systems HUD Terminal.
             <div className="pb-2">
               <div className="inline-flex items-center gap-2 border border-[#06b6d4]/20 bg-[#06b6d4]/5 rounded-full px-5 py-2 font-mono text-xs text-[#06b6d4] font-bold uppercase tracking-wider">
                 <span className="w-1.5 h-1.5 bg-[#06b6d4] rounded-full shadow-[0_0_8px_#06b6d4] animate-pulse" />
-                [ SYSTEM: MLOPS_ACTIVE ]
+                SYSTEM: {systemStatus.replace('[ ', '').replace(' ]', '')}
               </div>
             </div>
 
@@ -362,23 +359,32 @@ Generated from Antigravity Systems HUD Terminal.
         </div>
       </footer>
 
-      {/* GRAVITY WIDGET */}
+      {/* SYSTEM CONSOLE WIDGET */}
       <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50">
         <motion.button
-          onClick={toggleGravity}
+          onClick={() => setIsConsoleOpen(!isConsoleOpen)}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           className={`flex items-center gap-1.5 sm:gap-2.5 font-mono text-[10px] sm:text-xs font-bold px-3.5 py-2.5 sm:px-5 sm:py-3 rounded-full border transition-all duration-300 relative group overflow-hidden ${
-            isZeroG 
-              ? 'bg-[#080808]/90 border-[#06b6d4] text-[#06b6d4] shadow-[0_0_20px_rgba(29,185,84,0.4)]' 
+            isConsoleOpen 
+              ? 'bg-[#080808]/90 border-[#06b6d4] text-[#06b6d4] shadow-[0_0_20px_rgba(6,182,212,0.3)]' 
               : 'bg-[#080808]/90 border-white/10 text-slate-400 hover:border-[#06b6d4]/50 hover:text-white shadow-[0_4px_12px_rgba(0,0,0,0.3)]'
           }`}
         >
-          <span className={`absolute inset-0 w-full h-full bg-gradient-to-r from-[#06b6d4]/10 to-emerald-500/10 transition-opacity duration-300 ${isZeroG ? 'opacity-100' : 'opacity-0'}`} />
-          <Activity className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${isZeroG ? 'animate-spin text-[#06b6d4]' : 'text-slate-500'}`} style={{ animationDuration: '4s' }} />
-          <span>{isZeroG ? 'Gravity Active' : 'Gravity Control'}</span>
+          <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-[#06b6d4]/5 to-[#06b6d4]/10 transition-opacity duration-300" />
+          <Terminal className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#06b6d4]" />
+          <span>{isConsoleOpen ? 'Shell: Active' : 'System Shell'}</span>
         </motion.button>
       </div>
+
+      {/* Interactive System Terminal Console */}
+      <SystemShellConsole 
+        isOpen={isConsoleOpen} 
+        onClose={() => setIsConsoleOpen(false)}
+        onStatusChange={setSystemStatus}
+        onTriggerScan={triggerScan}
+        onShowNotification={showNotification}
+      />
     </div>
   );
 }
