@@ -67,7 +67,7 @@ export default function ContactForm({ isZeroG }) {
   };
 
   return (
-    <section id="contact" className="relative py-32 px-6 md:px-12 max-w-6xl mx-auto z-10 border-b border-white/5">
+    <section id="contact" className="relative py-12 md:py-32 px-6 md:px-12 max-w-6xl mx-auto z-10 border-b border-white/5">
       {/* Section Header */}
       <div className="text-left mb-16">
         <span className="text-xs font-mono uppercase tracking-widest text-[#06b6d4] font-semibold">// 08_GET_IN_TOUCH</span>

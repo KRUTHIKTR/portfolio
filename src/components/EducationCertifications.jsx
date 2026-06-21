@@ -72,19 +72,6 @@ const nodesData = {
       "Focused on technical skill building, networking, and professional career readiness."
     ]
   },
-  "cert-3": {
-    id: "cert-3",
-    branch: "right",
-    category: "Professional License",
-    title: "GSSoC Contributor Certificate",
-    institution: "Girlscript Summer of Code",
-    date: "Issued Oct 2025",
-    color: "#10b981",
-    details: [
-      "Open source contributions to core developer repositories.",
-      "Collaborated with international project maintainers on active codebases."
-    ]
-  },
   "cert-4": {
     id: "cert-4",
     branch: "right",
@@ -105,7 +92,7 @@ export default function EducationCertifications({ isZeroG }) {
   const activeNode = nodesData[activeNodeId];
 
   return (
-    <section id="education" className="relative py-32 px-6 md:px-12 max-w-6xl mx-auto z-10 border-b border-white/5">
+    <section id="education" className="relative py-12 md:py-32 px-6 md:px-12 max-w-6xl mx-auto z-10 border-b border-white/5">
       {/* Section Header */}
       <div className="text-left mb-16">
         <span className="text-xs font-mono uppercase tracking-widest text-[#06b6d4] font-semibold">// 07_ACADEMICS_TECH_TREE</span>

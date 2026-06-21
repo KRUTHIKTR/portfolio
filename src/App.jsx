@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowUpRight, Download, Activity, ShieldAlert, Cpu } from 'lucide-react';
+import { ArrowUpRight, Download, Activity, ShieldAlert, Cpu, Menu, X } from 'lucide-react';
 
 // Subcomponents
 import AboutServices from './components/AboutServices';
@@ -15,6 +15,7 @@ export default function App() {
   const [isZeroG, setIsZeroG] = useState(false);
   const [showWarning, setShowWarning] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // Typing animation text state
   const textToType = "I am Kruthik T R. Co-Founder & CTO.";
@@ -133,18 +134,69 @@ Generated from Antigravity Systems HUD Terminal.
       />
 
       {/* Navigation Header */}
-      <nav className="fixed top-0 left-0 right-0 w-full bg-[#080808]/85 backdrop-blur-md border-b border-white/5 py-5 px-8 md:px-16 flex justify-between items-center z-40">
+      <nav className="fixed top-0 left-0 right-0 w-full bg-[#080808]/85 backdrop-blur-md border-b border-white/5 py-4 md:py-5 px-6 md:px-16 flex justify-between items-center z-40">
         <a href="#hero" className="flex items-center gap-2.5 font-mono text-sm md:text-lg font-extrabold text-white tracking-widest group">
           <span className="w-1.5 h-1.5 bg-[#06b6d4] shadow-[0_0_8px_#06b6d4] transition-all" />
-          KRUTHIK T R <span className="text-[10px] text-[#06b6d4] font-bold bg-[#06b6d4]/10 border border-[#06b6d4]/25 px-2 py-0.5 ml-2 tracking-wider rounded">[ MLOPS_ENG ]</span>
+          KRUTHIK T R <span className="text-[10px] text-[#06b6d4] font-bold bg-[#06b6d4]/10 border border-[#06b6d4]/25 px-2 py-0.5 ml-2 tracking-wider rounded hidden sm:inline-block">[ MLOPS_ENG ]</span>
         </a>
         
-        <div className="flex gap-2 md:gap-4 text-xs md:text-sm font-sans font-bold tracking-widest text-slate-400">
+        {/* Desktop navigation */}
+        <div className="hidden md:flex gap-4 text-sm font-sans font-bold tracking-widest text-slate-400">
           <a href="#about" className="hover:text-[#06b6d4] hover:bg-white/[0.04] px-4 py-2 rounded-full transition-all duration-300">ABOUT</a>
           <a href="#lab" className="hover:text-[#06b6d4] hover:bg-white/[0.04] px-4 py-2 rounded-full transition-all duration-300">PROJECTS</a>
           <a href="#sphere" className="hover:text-[#06b6d4] hover:bg-white/[0.04] px-4 py-2 rounded-full transition-all duration-300">SKILLS</a>
           <a href="#contact" className="hover:text-white hover:bg-white/[0.04] px-4 py-2 rounded-full transition-all duration-300">CONTACT</a>
         </div>
+
+        {/* Mobile menu trigger */}
+        <button 
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          className="md:hidden p-2 text-slate-400 hover:text-white transition-colors focus:outline-none"
+        >
+          {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+        </button>
+
+        {/* Mobile Dropdown Drawer */}
+        <AnimatePresence>
+          {isMobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.2 }}
+              className="absolute top-full left-0 right-0 bg-[#080808]/95 backdrop-blur-xl border-b border-white/5 py-6 px-8 flex flex-col gap-4 font-sans font-bold tracking-widest text-slate-400 md:hidden shadow-2xl"
+            >
+              <a 
+                href="#about" 
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="hover:text-[#06b6d4] hover:bg-white/[0.04] px-4 py-3 rounded-xl transition-all duration-300 text-sm"
+              >
+                ABOUT
+              </a>
+              <a 
+                href="#lab" 
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="hover:text-[#06b6d4] hover:bg-white/[0.04] px-4 py-3 rounded-xl transition-all duration-300 text-sm"
+              >
+                PROJECTS
+              </a>
+              <a 
+                href="#sphere" 
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="hover:text-[#06b6d4] hover:bg-white/[0.04] px-4 py-3 rounded-xl transition-all duration-300 text-sm"
+              >
+                SKILLS
+              </a>
+              <a 
+                href="#contact" 
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="hover:text-white hover:bg-white/[0.04] px-4 py-3 rounded-xl transition-all duration-300 text-sm"
+              >
+                CONTACT
+              </a>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </nav>
 
       {/* Zero-G Warning Banner */}
@@ -197,7 +249,7 @@ Generated from Antigravity Systems HUD Terminal.
       <main className="relative z-10">
         
         {/* Section 1: Hero ("Introduction") */}
-        <section id="hero" className="relative min-h-screen flex items-center justify-center pt-20 pb-16 px-6 md:px-12 overflow-hidden border-b border-white/5">
+        <section id="hero" className="relative min-h-fit sm:min-h-screen flex items-start sm:items-center justify-center pt-24 sm:pt-20 pb-16 px-6 md:px-12 overflow-hidden border-b border-white/5">
           
           {/* Neon Light Backing Orbs */}
           <div className="absolute top-1/4 left-1/10 w-[550px] h-[550px] rounded-full bg-cyan-500/[0.04] blur-[130px] pointer-events-none mix-blend-screen animate-pulse-glow z-0" />
@@ -219,7 +271,7 @@ Generated from Antigravity Systems HUD Terminal.
                 initial={{ opacity: 0, y: 25 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                className="text-6xl sm:text-8xl md:text-9xl lg:text-[7.5rem] font-extrabold tracking-tighter text-white font-sans uppercase whitespace-nowrap block hover:text-[#06b6d4] transition-colors duration-500 cursor-default select-none leading-none"
+                className="text-4xl min-[360px]:text-5xl sm:text-8xl md:text-9xl lg:text-[7.5rem] font-extrabold tracking-tighter text-white font-sans uppercase whitespace-nowrap block hover:text-[#06b6d4] transition-colors duration-500 cursor-default select-none leading-none"
               >
                 KRUTHIK T R
               </motion.h1>
@@ -229,10 +281,10 @@ Generated from Antigravity Systems HUD Terminal.
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, delay: 0.25 }}
-                className="text-base md:text-2xl font-bold tracking-tight text-slate-300 font-sans flex items-center justify-center gap-2 flex-wrap"
+                className="text-sm md:text-2xl font-bold tracking-tight text-slate-300 font-sans flex items-center justify-center gap-1.5 flex-wrap"
               >
                 <span>Deploying</span>
-                <span className="text-[#06b6d4] font-extrabold min-w-[120px] text-center inline-block">
+                <span className="text-[#06b6d4] font-extrabold min-w-[90px] md:min-w-[120px] text-center inline-block">
                   <AnimatePresence mode="wait">
                     <motion.span
                       key={rotationWords[wordIndex]}
@@ -251,15 +303,15 @@ Generated from Antigravity Systems HUD Terminal.
             </div>
 
             {/* Description */}
-            <p className="text-base md:text-lg text-white/70 max-w-3xl mx-auto leading-relaxed font-sans">
+            <p className="text-sm md:text-lg text-white/70 max-w-3xl mx-auto leading-relaxed font-sans px-2">
               I am an AI & Data Science graduate and Co-Founder at Berukodige Farm. I specialize in training accurate machine learning models and hosting them securely on cloud-native infrastructure.
             </p>
 
             {/* CTA Buttons */}
-            <div className="pt-4 flex justify-center gap-4 flex-wrap">
+            <div className="pt-4 flex justify-center gap-3 sm:gap-4 flex-wrap">
               <a 
                 href="#lab" 
-                className="flex items-center gap-2 font-mono text-sm font-bold text-black bg-[#06b6d4] hover:bg-[#06b6d4]/90 px-10 py-4.5 rounded-full transition-all duration-300 shadow-[0_4px_15px_rgba(6,182,212,0.3)] hover:shadow-[0_4px_25px_rgba(6,182,212,0.5)] hover:scale-[1.02]"
+                className="flex items-center gap-2 font-mono text-xs sm:text-sm font-bold text-black bg-[#06b6d4] hover:bg-[#06b6d4]/90 px-6 py-3.5 sm:px-10 sm:py-4.5 rounded-full transition-all duration-300 shadow-[0_4px_15px_rgba(6,182,212,0.3)] hover:shadow-[0_4px_25px_rgba(6,182,212,0.5)] hover:scale-[1.02]"
               >
                 View Projects <ArrowUpRight className="w-4 h-4" />
               </a>
@@ -268,7 +320,7 @@ Generated from Antigravity Systems HUD Terminal.
                 href="/Resume - Kruthik T R.pdf"
                 target="_blank"
                 rel="noreferrer"
-                className="flex items-center gap-2 font-mono text-xs font-bold text-white border border-white/10 hover:border-[#06b6d4] bg-white/5 hover:bg-white/10 px-8 py-3.5 rounded-full transition-all duration-300 hover:scale-[1.02]"
+                className="flex items-center gap-2 font-mono text-[10px] sm:text-xs font-bold text-white border border-white/10 hover:border-[#06b6d4] bg-white/5 hover:bg-white/10 px-5 py-3 sm:px-8 sm:py-3.5 rounded-full transition-all duration-300 hover:scale-[1.02]"
               >
                 View Resume <ArrowUpRight className="w-4 h-4" />
               </a>
@@ -311,20 +363,20 @@ Generated from Antigravity Systems HUD Terminal.
       </footer>
 
       {/* GRAVITY WIDGET */}
-      <div className="fixed bottom-6 right-6 z-50">
+      <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50">
         <motion.button
           onClick={toggleGravity}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          className={`flex items-center gap-2.5 font-mono text-xs font-bold px-5 py-3 rounded-full border transition-all duration-300 relative group overflow-hidden ${
+          className={`flex items-center gap-1.5 sm:gap-2.5 font-mono text-[10px] sm:text-xs font-bold px-3.5 py-2.5 sm:px-5 sm:py-3 rounded-full border transition-all duration-300 relative group overflow-hidden ${
             isZeroG 
               ? 'bg-[#080808]/90 border-[#06b6d4] text-[#06b6d4] shadow-[0_0_20px_rgba(29,185,84,0.4)]' 
               : 'bg-[#080808]/90 border-white/10 text-slate-400 hover:border-[#06b6d4]/50 hover:text-white shadow-[0_4px_12px_rgba(0,0,0,0.3)]'
           }`}
         >
           <span className={`absolute inset-0 w-full h-full bg-gradient-to-r from-[#06b6d4]/10 to-emerald-500/10 transition-opacity duration-300 ${isZeroG ? 'opacity-100' : 'opacity-0'}`} />
-          <Activity className={`w-4 h-4 ${isZeroG ? 'animate-spin text-[#06b6d4]' : 'text-slate-500'}`} style={{ animationDuration: '4s' }} />
-          <span>{isZeroG ? 'Gravity Controls: Active' : 'Gravity Control'}</span>
+          <Activity className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${isZeroG ? 'animate-spin text-[#06b6d4]' : 'text-slate-500'}`} style={{ animationDuration: '4s' }} />
+          <span>{isZeroG ? 'Gravity Active' : 'Gravity Control'}</span>
         </motion.button>
       </div>
     </div>

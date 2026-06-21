@@ -76,7 +76,7 @@ export default function SkillsMatrix({ isZeroG }) {
   }, [selectedSkill.name]);
 
   return (
-    <section id="sphere" className="relative py-32 px-6 md:px-12 max-w-6xl mx-auto z-10 border-b border-white/5">
+    <section id="sphere" className="relative py-12 md:py-32 px-6 md:px-12 max-w-6xl mx-auto z-10 border-b border-white/5">
       {/* Section Header */}
       <div className="text-left mb-12">
         <span className="text-sm font-mono uppercase tracking-widest text-[#06b6d4] font-semibold">// 04_TECHNICAL_ABILITIES</span>

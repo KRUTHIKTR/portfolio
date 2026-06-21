@@ -325,7 +325,7 @@ function ServiceCard({ service, idx, phase, isLocked, onCardClick }) {
 // Wide Infrastructure Console Hologram Panel
 function InfrastructureConsole({ activeIndex }) {
   return (
-    <div className="border border-white/10 bg-[#080808]/90 rounded-2xl p-5 font-mono text-left relative overflow-hidden backdrop-blur-xl shadow-[0_0_30px_rgba(6,182,212,0.03)] h-44 flex flex-col md:flex-row gap-6 mt-8 z-10">
+    <div className="border border-white/10 bg-[#080808]/90 rounded-2xl p-5 font-mono text-left relative overflow-hidden backdrop-blur-xl shadow-[0_0_30px_rgba(6,182,212,0.03)] h-auto min-h-[320px] md:h-44 flex flex-col md:flex-row gap-6 mt-8 z-10">
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#111_1px,transparent_1px),linear-gradient(to_bottom,#111_1px,transparent_1px)] bg-[size:16px_16px] opacity-15 pointer-events-none" />
 
       {/* Left Metadata Panel (1/3 width) */}
@@ -373,7 +373,7 @@ function InfrastructureConsole({ activeIndex }) {
       </div>
 
       {/* Right Diagram Blueprint Panel (2/3 width) */}
-      <div className="md:w-2/3 flex items-center justify-center relative z-10 h-full">
+      <div className="w-full h-36 md:h-full md:w-2/3 flex items-center justify-center relative z-10">
         {activeIndex === null && (
           <div className="w-full h-full flex flex-col justify-center items-center opacity-60">
             <svg className="w-full h-24 text-slate-800" viewBox="0 0 500 100" preserveAspectRatio="none">
@@ -593,7 +593,7 @@ export default function AboutServices({ isZeroG }) {
   return (
     <>
       {/* Section 2: About Me */}
-      <section id="about" className="relative min-h-screen flex flex-col justify-center py-20 px-6 md:px-12 max-w-6xl mx-auto z-10 border-b border-white/5">
+      <section id="about" className="relative min-h-fit md:min-h-screen flex flex-col justify-center py-12 md:py-20 px-6 md:px-12 max-w-6xl mx-auto z-10 border-b border-white/5">
         {/* Main Grid: Heading + Bio + Telemetry */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start mb-12">
           
@@ -663,7 +663,7 @@ export default function AboutServices({ isZeroG }) {
       </section>
 
       {/* Section 3: Core Expertise Services */}
-      <section id="services" className="relative min-h-screen flex flex-col justify-center py-20 px-6 md:px-12 max-w-6xl mx-auto z-10 border-b border-white/5">
+      <section id="services" className="relative min-h-fit md:min-h-screen flex flex-col justify-center py-12 md:py-20 px-6 md:px-12 max-w-6xl mx-auto z-10 border-b border-white/5">
         <div className="text-left mb-12">
           <span className="text-xs font-mono uppercase tracking-widest text-[#06b6d4] font-semibold">// 02_SERVICES</span>
           <h2 className="text-3xl md:text-5xl font-extrabold text-white mt-2 font-sans tracking-tight">

@@ -51,21 +51,6 @@ const timelineData = [
     icon: Award
   },
   {
-    id: 4,
-    role: "Open Source DevOps Contributor (GSSoC'25)",
-    company: "GirlScript Summer of Code",
-    period: "July 2025 - Oct 2025",
-    nodeId: "DevOps_Node_04",
-    status: "COMPLETED",
-    statusColor: "text-cyan-400 border-cyan-500/30 bg-cyan-500/5",
-    bullets: [
-      "Selected as an active contributor for open-source project deployment configurations.",
-      "Collaborated to audit codebases, streamline CI/CD configurations, and fix Docker setup issues."
-    ],
-    skills: ["Git & GitHub", "DevOps Workflows", "Dockerfiles", "Bash Scripting"],
-    icon: GitBranch
-  },
-  {
     id: 5,
     role: "Google Cloud Innovator",
     company: "Google Developers",
@@ -123,7 +108,7 @@ export default function Timeline({ isZeroG }) {
   const currentItem = timelineData[activeIndex];
 
   return (
-    <section id="orbit" className="relative py-28 px-6 md:px-12 max-w-6xl mx-auto z-10 border-b border-white/5">
+    <section id="orbit" className="relative py-12 md:py-28 px-6 md:px-12 max-w-6xl mx-auto z-10 border-b border-white/5">
       {/* Section Header */}
       <div className="text-left mb-12 flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div>

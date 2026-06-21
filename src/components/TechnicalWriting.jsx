@@ -57,7 +57,7 @@ export default function TechnicalWriting({ isZeroG }) {
   const activeArticle = articles[activeIndex];
 
   return (
-    <section id="blogs" className="relative py-32 px-6 md:px-12 max-w-6xl mx-auto z-10 border-b border-white/5">
+    <section id="blogs" className="relative py-12 md:py-32 px-6 md:px-12 max-w-6xl mx-auto z-10 border-b border-white/5">
       {/* Section Header */}
       <div className="text-left mb-16">
         <span className="text-xs font-mono uppercase tracking-widest text-[#06b6d4] font-semibold">// 06_TECHNICAL_WRITING</span>

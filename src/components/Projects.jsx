@@ -87,18 +87,6 @@ const projectsData = [
     themeColor: "#6366f1",
     lightColor: "rgba(99, 102, 241, 0.08)",
     glowColor: "group-hover:border-indigo-500/40"
-  },
-  {
-    id: 8,
-    title: "GSSoC'25 Contribution",
-    category: "open-source",
-    accuracy: "Selected Contributor",
-    description: "Participated in reviewing community-driven codebase architectures, addressing issues, and collaborating with mentors to merge verified commits into major public open-source repositories.",
-    github: "https://gssoc.girlscript.tech/",
-    tags: ["Open Source", "Code Audit", "Git Workflows"],
-    themeColor: "#ec4899",
-    lightColor: "rgba(236, 72, 153, 0.08)",
-    glowColor: "group-hover:border-pink-500/40"
   }
 ];
 
@@ -382,39 +370,6 @@ function DataSentienceTelemetry({ isHovered }) {
   );
 }
 
-// 8. GSSoc merge branches workflow
-function GSSocTelemetry({ isHovered }) {
-  return (
-    <svg className="w-full h-full p-2" viewBox="0 0 200 80">
-      <text x="24" y="20" fill="#ec4899" className="font-mono text-[9px] tracking-widest font-bold">GIT_MERGE_ACTIVITY</text>
-      
-      <line x1="20" y1="50" x2="180" y2="50" stroke="rgba(255,255,255,0.15)" strokeWidth="1" />
-      
-      <path d="M 60 50 Q 80 25 100 25 T 140 50" fill="none" stroke="#ec4899" strokeWidth="1" />
-      
-      <circle cx="40" cy="50" r="3" fill="#fff" />
-      <circle cx="70" cy="32" r="3" fill="#ec4899" />
-      <circle cx="110" cy="32" r="3" fill="#ec4899" />
-      <circle cx="160" cy="50" r="3.5" fill="#10b981" />
-      
-      {isHovered && (
-        <motion.circle 
-          cx="160" 
-          cy="50" 
-          r="8" 
-          fill="none" 
-          stroke="#10b981" 
-          strokeWidth="0.8" 
-          animate={{ scale: [1, 1.8], opacity: [0.6, 0] }}
-          transition={{ repeat: Infinity, duration: 1.2 }}
-        />
-      )}
-      
-      <text x="160" y="66" textAnchor="middle" fill="#10b981" className="font-mono text-[8px] font-bold">MERGED</text>
-    </svg>
-  );
-}
-
 function ProjectCard({ project, isZeroG }) {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
@@ -465,7 +420,6 @@ function ProjectCard({ project, isZeroG }) {
             {project.id === 5 && <AcciRescueTelemetry isHovered={isHovered} />}
             {project.id === 6 && <FertigationTelemetry isHovered={isHovered} />}
             {project.id === 7 && <DataSentienceTelemetry isHovered={isHovered} />}
-            {project.id === 8 && <GSSocTelemetry isHovered={isHovered} />}
           </div>
 
           {/* Title & Accuracy Tag */}
@@ -544,7 +498,7 @@ export default function Projects({ isZeroG }) {
   });
 
   return (
-    <section id="lab" className="relative py-32 px-6 md:px-12 max-w-6xl mx-auto z-10 border-b border-white/5">
+    <section id="lab" className="relative py-12 md:py-32 px-6 md:px-12 max-w-6xl mx-auto z-10 border-b border-white/5">
       {/* Section Header */}
       <div className="text-left mb-12">
         <span className="text-xs font-mono uppercase tracking-widest text-[#06b6d4] font-semibold">// 05_FEATURED_WORK</span>
